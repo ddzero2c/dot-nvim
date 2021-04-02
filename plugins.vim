@@ -29,7 +29,7 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'kyazdani42/nvim-tree.lua'
 
     " Color
-    Plug 'ddzero2c/lumiere.vim'
+    Plug 'ddzero2c/lumiere.vim', { 'branch': 'main' }
     Plug 'sheerun/vim-polyglot'
     Plug 'ntpeters/vim-better-whitespace'
 
