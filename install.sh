@@ -117,7 +117,7 @@ echo 'Installing dot-nvim'
 
 # move old nvim directory if it exists
 [ -d "$HOME/.config/nvim" ] && moveoldnvim
-git clone https://github.com/ddzero2c/nvcode.git ~/.config/nvim
+git clone https://github.com/ddzero2c/dot-nvim.git ~/.config/nvim
 
 # install pip
 which pip3 >/dev/null && echo "pip installed, moving on..." || asktoinstallpip
