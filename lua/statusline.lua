@@ -59,6 +59,34 @@ gls.left[1] = {
 print(vim.fn.getbufvar(0, 'ts'))
 vim.fn.getbufvar(0, 'ts')
 
+local function lsp_status(status)
+    shorter_stat = ''
+    for match in string.gmatch(status, "[^%s]+")  do
+        err_warn = string.find(match, "^[WE]%d+", 0)
+        if not err_warn then
+            shorter_stat = shorter_stat .. ' ' .. match
+        end
+    end
+    return shorter_stat
+end
+
+local function get_coc_lsp()
+  local status = vim.fn['coc#status']()
+  if not status or status == '' then
+      return ''
+  end
+  return lsp_status(status)
+end
+
+function get_diagnostic_info()
+  if vim.fn.exists('*coc#rpc#start_server') == 1 then
+    return get_coc_lsp()
+    end
+  return ''
+end
+
+CocStatus = get_diagnostic_info
+
 gls.left[2] = {
     GitIcon = {
         provider = function()
@@ -119,12 +147,13 @@ gls.right[4] = {DiagnosticInfo = {provider = 'DiagnosticInfo', icon = '  ', h
 
 gls.right[5] = {
     ShowLspClient = {
-        provider = 'GetLspClient',
-        condition = function()
-            local tbl = {['dashboard'] = true, [' '] = true}
-            if tbl[vim.bo.filetype] then return false end
-            return true
-        end,
+        provider = 'CocStatus',
+        --provider = 'GetLspClient',
+        --condition = function()
+        --    local tbl = {['dashboard'] = true, [' '] = true}
+        --    if tbl[vim.bo.filetype] then return false end
+        --    return true
+        --end,
         icon = ' ',
         highlight = {colors.grey, colors.bg}
     }
