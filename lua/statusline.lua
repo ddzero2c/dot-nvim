@@ -82,6 +82,7 @@ gls.left[3] = {
 }
 
 gls.left[4] = {
+    DiffAdd = {
         provider = 'DiffAdd',
         condition = condition.hide_in_width,
         icon = '  ',
