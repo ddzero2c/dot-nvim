@@ -10,6 +10,7 @@ set showtabline=2
 set signcolumn=yes
 set termguicolors
 set icm=nosplit " live preview
+imap <C-c> <Esc>
 
 " system clipboard
 set clipboard+=unnamed

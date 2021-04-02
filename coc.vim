@@ -29,13 +29,15 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gr <Plug>(coc-references)
 
 " symbol
-nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>ar <Plug>(coc-rename)
 autocmd CursorHold * silent call CocActionAsync('highlight')
+command! -nargs=0 CocRename :call CocActionAsync('rename')
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>af  <Plug>(coc-format-selected)
+nmap <leader>af  <Plug>(coc-format-selected)
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+command! -nargs=0 CocFormat :call CocActionAsync('format')
 
 augroup mygroup
   autocmd!
@@ -61,12 +63,12 @@ endfunction
 " use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
-nnoremap <silent><nowait> <leader>dg  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <leader>ad  :<C-u>CocList diagnostics<cr>
 
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-vmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction)
-nmap <leader>qf  <Plug>(coc-fix-current)
+xmap <leader>ac  <Plug>(coc-codeaction-selected)
+vmap <leader>ac  <Plug>(coc-codeaction-selected)
+nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>aq  <Plug>(coc-fix-current)
 inoremap <silent><expr> <c-space> coc#refresh()
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.

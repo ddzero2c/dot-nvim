@@ -27,6 +27,14 @@ let g:which_key_map['p'] = [ ':Telescope find_files'                           ,
 
 let g:which_key_map['M'] = [ ':MarkdownPreviewToggle'                          , 'markdown preview']
 
+let g:which_key_map.a = {
+      \ 'name' : '+coc' ,
+      \ 'c' : [':CocAction'                      , 'code action'],
+      \ 'q' : [':CocFix'                         , 'quickfix'],
+      \ 'r' : [':CocRename'                      , 'rename'],
+      \ 'd' : [':CocDiagnostics'                 , 'diagnostics'],
+      \ }
+
 " b is for buffer
 let g:which_key_map.b = {
       \ 'name' : '+buffer' ,
