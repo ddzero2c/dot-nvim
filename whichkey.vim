@@ -1,4 +1,5 @@
 " Leader Key Maps
+let g:mapleader = "\<Space>"
 
 " Timeout
 let g:which_key_timeout = 100

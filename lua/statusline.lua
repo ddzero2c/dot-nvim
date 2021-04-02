@@ -146,7 +146,7 @@ gls.right[3] = {
 gls.right[4] = {DiagnosticInfo = {provider = 'DiagnosticInfo', icon = '  ', highlight = {colors.info_yellow, colors.bg}}}
 
 gls.right[5] = {
-    ShowLspClient = {
+    CocStatus = {
         provider = 'CocStatus',
         --provider = 'GetLspClient',
         --condition = function()
