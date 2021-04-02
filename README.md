@@ -11,5 +11,5 @@ bash <(curl -s https://raw.githubusercontent.com/ddzero2c/dot-nvim/main/install.
 Enter `nvim` and install plugins:
 
 ```
-:PackerInstall
+:PlugInstall
 ```

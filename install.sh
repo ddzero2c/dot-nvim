@@ -61,8 +61,9 @@ installpynvim() {
 	pip3 install pynvim --user
 }
 
-installpacker() {
-	git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+installvimplug() {
+	curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim" --create-dirs \
+		https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 }
 
 asktoinstallnode() {
@@ -128,10 +129,10 @@ which node >/dev/null && echo "node installed, moving on..." || asktoinstallnode
 # install pynvim
 pip3 list | grep pynvim >/dev/null && echo "pynvim installed, moving on..." || installpynvim
 
-if [ -a "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]; then
-	echo 'packer already installed'
+if [ -a "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim" ]; then
+	echo 'vim-plug already installed'
 else
-	installpacker
+	installvimplug
 fi
 
-echo "launch nvim and run :PackerInstall"
+echo "launch nvim and run :PlugInstall"
