@@ -26,6 +26,8 @@ return require('packer').startup(function(use)
     use 'MattesGroeger/vim-bookmarks'
     use { 'dstein64/nvim-scrollview', branch = 'main' }
 
+    -- LSP
+    use {'neoclide/coc.nvim', branch = 'release'}
 
     -- Treesitter
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
