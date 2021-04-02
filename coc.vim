@@ -5,6 +5,14 @@ let g:coc_global_extensions = [
             \'coc-prettier', 'coc-eslint', 'coc-tsserver', 'coc-styled-components', 'coc-react-refactor',
             \'coc-solargraph']
 
+set statusline=
+set statusline+=%{coc#status()}
+set statusline+=\ %<%F\                                "File+path
+set statusline+=%=(%{FugitiveHead()})
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=/%{&fileformat}
+set statusline+=\ %l:%c
+
 set hidden
 set nobackup
 set nowritebackup

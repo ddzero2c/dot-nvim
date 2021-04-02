@@ -6,6 +6,7 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'liuchengxu/vim-which-key'
     Plug 'MattesGroeger/vim-bookmarks'
     Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
+    Plug 'honza/vim-snippets'
 
     " LSP
     Plug 'neoclide/coc.nvim', { 'branch': 'release' }
@@ -17,9 +18,6 @@ call plug#begin(stdpath('data') . '/plugged')
     " Icons
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'ryanoasis/vim-devicons'
-
-    " Status Line and Bufferline
-    Plug 'glepnir/galaxyline.nvim'
 
     " Telescope
     Plug 'nvim-lua/popup.nvim'
