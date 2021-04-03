@@ -4,6 +4,6 @@ require'nvim-treesitter.configs'.setup {
     ignore_install = {"haskell"},
     highlight = {
         enable = true -- false will disable the whole extension
-    },
+    }
 }
 

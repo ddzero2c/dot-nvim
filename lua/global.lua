@@ -42,7 +42,10 @@ O = {
         diagnostics = {virtual_text = true, signs = true, underline = true}
     },
     tailwindls = {
-        filetypes = {'html', 'css', 'scss', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact'}
+        filetypes = {
+            'html', 'css', 'scss', 'javascript', 'javascriptreact',
+            'typescript', 'typescriptreact'
+        }
     },
     clang = {
         diagnostics = {virtual_text = true, signs = true, underline = true}

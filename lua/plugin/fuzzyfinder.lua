@@ -5,7 +5,10 @@ local actions = require('telescope.actions')
 require('telescope').load_extension('media_files')
 require('telescope').setup {
     defaults = {
-        vimgrep_arguments = {'rg', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case'},
+        vimgrep_arguments = {
+            'rg', '--no-heading', '--with-filename', '--line-number',
+            '--column', '--smart-case'
+        },
         prompt_position = "top",
         prompt_prefix = " ",
         selection_caret = " ",
@@ -14,7 +17,10 @@ require('telescope').setup {
         selection_strategy = "reset",
         sorting_strategy = "descending",
         layout_strategy = "horizontal",
-        layout_defaults = {horizontal = {mirror = false}, vertical = {mirror = false}},
+        layout_defaults = {
+            horizontal = {mirror = false},
+            vertical = {mirror = false}
+        },
         file_sorter = require'telescope.sorters'.get_fuzzy_file,
         file_ignore_patterns = {},
         generic_sorter = require'telescope.sorters'.get_generic_fuzzy_sorter,
@@ -57,7 +63,7 @@ require('telescope').setup {
             n = {
                 ["<C-j>"] = actions.move_selection_next,
                 ["<C-k>"] = actions.move_selection_previous,
-                ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+                ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist
                 -- ["<C-i>"] = my_cool_custom_action,
             }
         }
