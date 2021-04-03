@@ -1,12 +1,14 @@
 set nu
 set ic
-set mouse=a
+set mouse=
 set expandtab
 set undofile
 set showtabline=2
 set signcolumn=yes
 set termguicolors
 set icm=nosplit " live preview
+set shortmess+=c
+
 imap <C-c> <Esc>
 
 autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab

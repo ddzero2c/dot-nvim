@@ -33,6 +33,11 @@ require'compe'.setup {
     }
 }
 
+vim.api.nvim_set_keymap("i", "<C-f>", "compe#scroll({ 'delta': +4 })",
+                        {silent = true, expr = true, noremap = true})
+vim.api.nvim_set_keymap("i", "<C-b>", "compe#scroll({ 'delta': -4 })",
+                        {silent = true, expr = true, noremap = true})
+
 -- 
 -- 
 -- 
