@@ -49,8 +49,10 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install' }
 
     " Git
+    Plug 'lewis6991/gitsigns.nvim' ", requires = {'nvim-lua/plenary.nvim'}
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-rhubarb'
+    Plug 'f-person/git-blame.nvim'
 
     " Easily Create Gists
     Plug 'mattn/vim-gist'
