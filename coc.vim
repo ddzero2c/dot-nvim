@@ -3,7 +3,7 @@ let g:coc_global_extensions = [
             \'coc-word', 'coc-emoji', 'coc-snippets',
             \'coc-json', 'coc-yaml',
             \'coc-prettier', 'coc-eslint', 'coc-tsserver', 'coc-styled-components', 'coc-react-refactor',
-            \'coc-solargraph']
+            \'coc-solargraph', 'coc-go']
 
 set statusline=
 set statusline+=%{coc#status()}
