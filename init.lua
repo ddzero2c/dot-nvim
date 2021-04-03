@@ -12,6 +12,7 @@ require('plugin.statusline')
 require('plugin.gitsign')
 require('plugin.colorizer')
 require('plugin.formatter')
+require('plugin.snippet')
 
 require('lsp.popup')
 require('lsp.kind')

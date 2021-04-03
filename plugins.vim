@@ -17,6 +17,15 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'mfussenegger/nvim-jdtls'
     Plug 'kabouzeid/nvim-lspinstall'
 
+    " Snippets
+    Plug 'hrsh7th/vim-vsnip'
+    Plug 'cstrap/python-snippets'
+    Plug 'ylcnfrht/vscode-python-snippet-pack'
+    Plug 'xabikos/vscode-javascript'
+    Plug 'golang/vscode-go'
+    Plug 'andys8/vscode-jest-snippets'
+    "Plug 'rust-lang/vscode-rust'
+
     " Formatter
     Plug 'sbdchd/neoformat'
 
