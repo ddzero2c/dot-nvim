@@ -6,10 +6,10 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'liuchengxu/vim-which-key'
     Plug 'MattesGroeger/vim-bookmarks'
     Plug 'dstein64/nvim-scrollview'
-    Plug 'honza/vim-snippets'
 
     " LSP
     "Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+    "Plug 'honza/vim-snippets'
     Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/nvim-compe'
     Plug 'glepnir/lspsaga.nvim'
@@ -42,6 +42,7 @@ call plug#begin(stdpath('data') . '/plugged')
 
     " Color
     Plug 'ddzero2c/lumiere.vim'
+    Plug 'norcalli/nvim-colorizer.lua'
     Plug 'sheerun/vim-polyglot'
     Plug 'ntpeters/vim-better-whitespace'
 
