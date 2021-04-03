@@ -5,11 +5,20 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'rlue/vim-barbaric'
     Plug 'liuchengxu/vim-which-key'
     Plug 'MattesGroeger/vim-bookmarks'
-    Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
+    Plug 'dstein64/nvim-scrollview'
     Plug 'honza/vim-snippets'
 
     " LSP
-    Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+    "Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'hrsh7th/nvim-compe'
+    Plug 'glepnir/lspsaga.nvim'
+    Plug 'onsails/lspkind-nvim'
+    Plug 'mfussenegger/nvim-jdtls'
+    Plug 'kabouzeid/nvim-lspinstall'
+
+    " Formatter
+    Plug 'sbdchd/neoformat'
 
     " Treesitter
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
@@ -18,6 +27,9 @@ call plug#begin(stdpath('data') . '/plugged')
     " Icons
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'ryanoasis/vim-devicons'
+
+    " Status Line
+    Plug 'glepnir/galaxyline.nvim'
 
     " Telescope
     Plug 'nvim-lua/popup.nvim'
@@ -29,7 +41,7 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'kyazdani42/nvim-tree.lua'
 
     " Color
-    Plug 'ddzero2c/lumiere.vim', { 'branch': 'main' }
+    Plug 'ddzero2c/lumiere.vim'
     Plug 'sheerun/vim-polyglot'
     Plug 'ntpeters/vim-better-whitespace'
 

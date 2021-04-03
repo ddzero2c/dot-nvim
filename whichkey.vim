@@ -27,14 +27,6 @@ let g:which_key_map['p'] = [ ':Telescope find_files'                           ,
 
 let g:which_key_map['M'] = [ ':MarkdownPreviewToggle'                          , 'markdown preview']
 
-let g:which_key_map.a = {
-      \ 'name' : '+coc' ,
-      \ 'c' : [':CocAction'                      , 'code action'],
-      \ 'q' : [':CocFix'                         , 'quickfix'],
-      \ 'r' : [':CocRename'                      , 'rename'],
-      \ 'd' : [':CocDiagnostics'                 , 'diagnostics'],
-      \ }
-
 " b is for buffer
 let g:which_key_map.b = {
       \ 'name' : '+buffer' ,
@@ -139,15 +131,8 @@ let g:which_key_map.l = {
       \ 'f' : [':LspFormatting'                      , 'format'],
       \ 'I' : [':LspInfo'                            , 'lsp info'],
       \ 'v' : [':LspVirtualTextToggle'               , 'lsp toggle virtual text'],
-      \ 'l' : [':Lspsaga lsp_finder'                 , 'lsp finder'],
-      \ 'L' : [':Lspsaga show_line_diagnostics'      , 'line_diagnostics'],
-      \ 'p' : [':Lspsaga preview_definition'         , 'preview definition'],
       \ 'q' : [':Telescope quickfix'                 , 'quickfix'],
       \ 'r' : [':Lspsaga rename'                     , 'rename'],
-      \ 'T' : [':LspTypeDefinition'                  , 'type defintion'],
-      \ 'x' : [':cclose'                             , 'close quickfix'],
-      \ 's' : [':Telescope lsp_document_symbols'     , 'document symbols'],
-      \ 'S' : [':Telescope lsp_workspace_symbols'    , 'workspace symbols'],
       \ }
       " \ 'H' : [':Lspsaga signature_help'             , 'signature_help'],
       " \ 'o' : [':Vista!!'                            , 'outline'],
