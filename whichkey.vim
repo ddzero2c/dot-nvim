@@ -122,6 +122,7 @@ let g:which_key_map.G = {
       " \ 'a' : [':Gist -a'                          , 'post gist anon'],
 
 " l is for language server protocol
+command! LspFormatting lua vim.lsp.buf.formatting()
 let g:which_key_map.l = {
       \ 'name' : '+lsp' ,
       \ 'a' : [':Lspsaga code_action'                , 'code action'],

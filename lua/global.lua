@@ -6,7 +6,6 @@ O = {
         linter = '',
         -- @usage can be 'yapf', 'black'
         formatter = '',
-        autoformat = false,
         isort = false,
         diagnostics = {virtual_text = true, signs = true, underline = true}
     },
@@ -15,30 +14,26 @@ O = {
     },
     lua = {
         -- @usage can be 'lua-format'
-        formatter = '',
-        autoformat = false,
+        formatter = 'lua-format',
         diagnostics = {virtual_text = true, signs = true, underline = true}
     },
     sh = {
         -- @usage can be 'shellcheck'
-        linter = '',
+        linter = 'shellcheck',
         -- @usage can be 'shfmt'
-        formatter = '',
-        autoformat = false,
+        formatter = 'shfmt',
         diagnostics = {virtual_text = true, signs = true, underline = true}
     },
     tsserver = {
         -- @usage can be 'eslint'
-        linter = '',
+        linter = 'eslint',
         -- @usage can be 'prettier'
-        formatter = '',
-        autoformat = false,
+        formatter = 'prettier',
         diagnostics = {virtual_text = true, signs = true, underline = true}
     },
     json = {
         -- @usage can be 'prettier'
-        formatter = '',
-        autoformat = false,
+        formatter = 'eslint',
         diagnostics = {virtual_text = true, signs = true, underline = true}
     },
     tailwindls = {
@@ -50,8 +45,8 @@ O = {
     clang = {
         diagnostics = {virtual_text = true, signs = true, underline = true}
     }
-    -- css = {formatter = '', autoformat = false, virtual_text = true},
-    -- json = {formatter = '', autoformat = false, virtual_text = true}
+    -- css = {formatter = '', virtual_text = true},
+    -- json = {formatter = '', virtual_text = true}
 }
 
 DATA_PATH = vim.fn.stdpath('data')

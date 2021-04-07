@@ -11,6 +11,7 @@ set shortmess+=c
 
 imap <C-c> <Esc>
 
+autocmd FileType sh setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
