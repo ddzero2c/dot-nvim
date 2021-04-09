@@ -30,7 +30,6 @@
   },
   "tsserver.npm": "/usr/local/bin/npm",
   "tsserver.log": "verbose",
-  "git.addGBlameToVirtualText": true,
   "go.goplsOptions": {
     "gofumpt": true
   },

@@ -4,10 +4,11 @@ set mouse=
 set expandtab
 set undofile
 set showtabline=2
+set laststatus=2
 set signcolumn=yes
 set termguicolors
 set icm=nosplit " live preview
-set shortmess+=c
+"set shortmess+=c
 
 imap <C-c> <Esc>
 

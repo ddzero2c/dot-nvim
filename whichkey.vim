@@ -135,7 +135,5 @@ let g:which_key_map.l = {
       \ 'q' : [':Telescope quickfix'                 , 'quickfix'],
       \ 'r' : [':Lspsaga rename'                     , 'rename'],
       \ }
-      " \ 'H' : [':Lspsaga signature_help'             , 'signature_help'],
-      " \ 'o' : [':Vista!!'                            , 'outline'],
 
 call which_key#register('<Space>', "g:which_key_map")

@@ -8,14 +8,14 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'dstein64/nvim-scrollview'
 
     " LSP
-    "Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-    "Plug 'honza/vim-snippets'
-    Plug 'neovim/nvim-lspconfig'
-    Plug 'hrsh7th/nvim-compe'
-    Plug 'glepnir/lspsaga.nvim'
-    Plug 'onsails/lspkind-nvim'
-    Plug 'mfussenegger/nvim-jdtls'
-    Plug 'kabouzeid/nvim-lspinstall'
+    Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+    Plug 'honza/vim-snippets'
+    "Plug 'neovim/nvim-lspconfig'
+    "Plug 'hrsh7th/nvim-compe'
+    "Plug 'glepnir/lspsaga.nvim'
+    "Plug 'onsails/lspkind-nvim'
+    "Plug 'mfussenegger/nvim-jdtls'
+    "Plug 'kabouzeid/nvim-lspinstall'
 
     " Snippets
     Plug 'hrsh7th/vim-vsnip'
@@ -38,7 +38,8 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'ryanoasis/vim-devicons'
 
     " Status Line
-    Plug 'glepnir/galaxyline.nvim'
+    "Plug 'glepnir/galaxyline.nvim'
+    Plug 'liuchengxu/eleline.vim'
 
     " Telescope
     Plug 'nvim-lua/popup.nvim'
