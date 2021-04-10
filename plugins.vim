@@ -6,6 +6,7 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'liuchengxu/vim-which-key'
     Plug 'MattesGroeger/vim-bookmarks'
     Plug 'dstein64/nvim-scrollview'
+    Plug 'editorconfig/editorconfig-vim'
 
     " LSP
     Plug 'neoclide/coc.nvim', { 'branch': 'release' }
@@ -18,7 +19,7 @@ call plug#begin(stdpath('data') . '/plugged')
     "Plug 'kabouzeid/nvim-lspinstall'
 
     " Snippets
-    Plug 'hrsh7th/vim-vsnip'
+    "Plug 'hrsh7th/vim-vsnip'
     Plug 'cstrap/python-snippets'
     Plug 'ylcnfrht/vscode-python-snippet-pack'
     Plug 'xabikos/vscode-javascript'
@@ -27,7 +28,7 @@ call plug#begin(stdpath('data') . '/plugged')
     "Plug 'rust-lang/vscode-rust'
 
     " Formatter
-    Plug 'sbdchd/neoformat'
+    "Plug 'sbdchd/neoformat'
 
     " Treesitter
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
