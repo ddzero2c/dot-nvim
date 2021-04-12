@@ -3,7 +3,8 @@ let g:coc_global_extensions = [
             \'coc-word', 'coc-emoji', 'coc-snippets',
             \'coc-json', 'coc-yaml',
             \'coc-prettier', 'coc-eslint', 'coc-tsserver', 'coc-styled-components', 'coc-react-refactor',
-            \'coc-solargraph', 'coc-go', 'coc-java']
+            \'coc-solargraph', 'coc-go',
+            \'coc-java', 'coc-java-debug', 'coc-xml']
 
 set hidden
 set nobackup
@@ -31,6 +32,9 @@ command! -nargs=0 CocImport      :call CocAction('runCommand', 'editor.action.or
 
 nmap <silent> gI :CocImport<CR>
 nmap <silent> g= :CocFormat<CR>
+xmap <silent> g= <Plug>(coc-format-selected)
+nmap <silent> g= <Plug>(coc-format-selected)
+
 nmap <silent> gR :CocRename<CR>
 
 nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
@@ -72,3 +76,5 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
+
+"nmap <F1> :CocCommand java.debug.vimspector.start<CR>

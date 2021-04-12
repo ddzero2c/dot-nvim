@@ -57,7 +57,7 @@ let g:which_key_map.F = {
 " m is for mark
 " I'd rather use regular marks but they never clear
 let g:which_key_map.m = {
-    \ 'name': '+fold',
+    \ 'name': '+mark',
     \ 't' : [':BookmarkToggle'   , 'toggle'],
     \ 'j' : [':BookmarkNext'   , 'next mark'],
     \ 'k' : [':BookmarkPrev'   , 'prev mark']
@@ -89,24 +89,6 @@ let g:which_key_map.S = {
       \ 'l' : [':SessionLoad'           , 'load Session'],
       \ }
 
-" g is for git
-let g:which_key_map.g = {
-      \ 'name' : '+git' ,
-      \ 'b' : [':GitBlameToggle'                   , 'blame'],
-      \ 'B' : [':GBrowse'                          , 'browse'],
-      \ 'd' : [':Git diff'                         , 'diff'],
-      \ 'j' : [':NextHunk'                         , 'next hunk'],
-      \ 'k' : [':PrevHunk'                         , 'prev hunk'],
-      \ 'l' : [':Git log'                          , 'log'],
-      \ 'p' : [':PreviewHunk'                      , 'preview hunk'],
-      \ 'r' : [':ResetHunk'                        , 'reset hunk'],
-      \ 'R' : [':ResetBuffer'                      , 'reset buffer'],
-      \ 's' : [':StageHunk'                        , 'stage hunk'],
-      \ 'S' : [':Gstatus'                          , 'status'],
-      \ 'u' : [':UndoStageHunk'                    , 'undo stage hunk'],
-      \ }
-      " \ 'n' : [':Neogit'                           , 'neogit'],
-
 " G is for gist
 let g:which_key_map.G = {
       \ 'name' : '+gist' ,
@@ -136,4 +118,12 @@ let g:which_key_map.l = {
       \ 'r' : [':Lspsaga rename'                     , 'rename'],
       \ }
 
+" d is for debug
+let g:which_key_map.d = {
+      \ 'name' : '+debug' ,
+      \ 'b' : ['<Plug>VimspectorToggleBreakpoint'        , 'toggle breakpoint'],
+      \ 'c' : ['<Plug>VimspectorContinue'                 , 'continue'],
+      \ 'i' : ['<Plug>VimspectorStepInto'                 , 'step into'],
+      \ 'o' : ['<Plug>VimspectorStepOver'                 , 'step over'],
+      \ }
 call which_key#register('<Space>', "g:which_key_map")
