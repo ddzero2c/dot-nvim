@@ -12,6 +12,7 @@ call plug#begin(stdpath('data') . '/plugged')
     " LSP
     Plug 'neoclide/coc.nvim', { 'branch': 'release' }
     Plug 'honza/vim-snippets'
+    Plug 'fatih/vim-go'
     Plug 'puremourning/vimspector'
     "Plug 'neovim/nvim-lspconfig'
     "Plug 'hrsh7th/nvim-compe'
@@ -34,6 +35,7 @@ call plug#begin(stdpath('data') . '/plugged')
 
     " Treesitter
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+    Plug 'nvim-treesitter/playground'
     Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 
     " Icons

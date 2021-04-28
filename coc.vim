@@ -4,6 +4,7 @@ let g:coc_global_extensions = [
             \'coc-json', 'coc-yaml',
             \'coc-prettier', 'coc-eslint', 'coc-tsserver', 'coc-styled-components', 'coc-react-refactor',
             \'coc-solargraph', 'coc-go',
+            \'coc-lua',
             \'coc-java', 'coc-java-debug', 'coc-xml']
 
 set hidden
