@@ -45,7 +45,6 @@
   ],
   "coc.preferences.useQuickfixForLocations": true,
   "coc.source.emoji.filetypes": null,
-  "explorer.icon.enableNerdfont": true,
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
