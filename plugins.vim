@@ -12,7 +12,9 @@ call plug#begin(stdpath('data') . '/plugged')
     " LSP
     Plug 'neoclide/coc.nvim', { 'branch': 'release' }
     Plug 'honza/vim-snippets'
-    Plug 'fatih/vim-go'
+    "Plug 'fatih/vim-go'
+    "let g:go_doc_popup_window = 1
+
     Plug 'puremourning/vimspector'
     "Plug 'neovim/nvim-lspconfig'
     "Plug 'hrsh7th/nvim-compe'

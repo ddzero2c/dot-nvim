@@ -30,9 +30,11 @@
   },
   "tsserver.npm": "/usr/local/bin/npm",
   "tsserver.log": "verbose",
-  "go.goplsOptions": {
-    "gofumpt": true
+  "Lua.workspace.library": {
+    "/usr/local/share/nvim/runtime/lua": true,
+    "/usr/local/share/nvim/runtime/lua/vim/lsp": true
   },
+  "Lua.diagnostics.globals": ["vim"],
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "typescript",
@@ -41,7 +43,8 @@
     "typescriptreact",
     "yaml",
     "json",
-    "jsonc"
+    "jsonc",
+    "go"
   ],
   "coc.preferences.useQuickfixForLocations": true,
   "coc.source.emoji.filetypes": null,

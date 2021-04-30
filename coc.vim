@@ -32,9 +32,7 @@ command! -nargs=? CocFold        :call CocAction('fold', <f-args>)
 command! -nargs=0 CocImport      :call CocAction('runCommand', 'editor.action.organizeImport')
 
 nmap <silent> gI :CocImport<CR>
-nmap <silent> g= :CocFormat<CR>
-xmap <silent> g= <Plug>(coc-format-selected)
-nmap <silent> g= <Plug>(coc-format-selected)
+nmap <silent> gf :CocFormat<CR>
 
 nmap <silent> gR :CocRename<CR>
 
@@ -79,3 +77,5 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
 endif
 
 "nmap <F1> :CocCommand java.debug.vimspector.start<CR>
+
+autocmd BufWritePre *.go,*.java :silent call CocAction('runCommand', 'editor.action.organizeImport')

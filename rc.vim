@@ -2,9 +2,12 @@ set nu
 set ic
 set mouse=
 set undofile
+set showtabline=2
+set laststatus=2
+set ts=4
+set sts=4
+set sw=4
 set expandtab
-set showtabline=4
-set laststatus=4
 set signcolumn=yes
 set termguicolors
 set icm=nosplit " live preview
@@ -14,7 +17,7 @@ set exrc
 imap <C-c> <Esc>
 
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 expandtab
-autocmd FileType java setlocal ts=4 sts=4 sw=4 noexpandtab
+autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType lua setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal ts=2 sts=2 sw=2 expandtab
