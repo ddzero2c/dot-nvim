@@ -45,7 +45,7 @@ nmap <silent> gD  :CocDiagnostics<CR>
 xmap <silent> gA  <Plug>(coc-codeaction-selected)
 vmap <silent> gA  <Plug>(coc-codeaction-selected)
 nmap <silent> ga  <Plug>(coc-codeaction)
-nmap <silent> gF  <Plug>(coc-fix-current)
+nmap <silent> gq  <Plug>(coc-fix-current)
 
 augroup mygroup
   autocmd!

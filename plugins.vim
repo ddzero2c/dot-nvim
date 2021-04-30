@@ -69,11 +69,4 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-rhubarb'
     Plug 'f-person/git-blame.nvim'
-
-    " Easily Create Gists
-    Plug 'mattn/vim-gist'
-    Plug 'mattn/webapi-vim'
-
-    " Chinese Input Source Switching
-    Plug 'rlue/vim-barbaric'
 call plug#end()
