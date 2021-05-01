@@ -48,6 +48,7 @@
   ],
   "coc.preferences.useQuickfixForLocations": true,
   "coc.source.emoji.filetypes": null,
+  "imselect.enableStatusItem": false,
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
