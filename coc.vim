@@ -1,4 +1,5 @@
 let g:coc_global_extensions = [
+            \'coc-imselect',
             \'coc-stylelint', 'coc-html', 'coc-css',
             \'coc-word', 'coc-emoji', 'coc-snippets',
             \'coc-json', 'coc-yaml',
