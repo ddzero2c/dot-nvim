@@ -1,3 +1,5 @@
+colorscheme bored
+
 set nu
 set ic
 set mouse=

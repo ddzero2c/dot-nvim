@@ -46,7 +46,7 @@ call plug#begin(stdpath('data') . '/plugged')
 
     " Status Line
     "Plug 'glepnir/galaxyline.nvim'
-    Plug 'liuchengxu/eleline.vim'
+    "Plug 'liuchengxu/eleline.vim'
 
     " Telescope
     Plug 'nvim-lua/popup.nvim'
@@ -58,10 +58,11 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'kyazdani42/nvim-tree.lua'
 
     " Color
-    Plug 'ddzero2c/lumiere.vim'
-    Plug 'norcalli/nvim-colorizer.lua'
+    "Plug 'ddzero2c/lumiere.vim'
+    "Plug 'norcalli/nvim-colorizer.lua'
     Plug 'sheerun/vim-polyglot'
     Plug 'ntpeters/vim-better-whitespace'
+    "Plug 'https://git.sr.ht/~romainl/vim-bruin'
 
     " Markdown
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install' }
