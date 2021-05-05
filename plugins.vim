@@ -8,6 +8,7 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'dstein64/nvim-scrollview'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'AndrewRadev/tagalong.vim'
+    Plug 'junegunn/vim-easy-align'
 
     " LSP
     Plug 'neoclide/coc.nvim', { 'branch': 'release' }

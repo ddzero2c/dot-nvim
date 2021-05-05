@@ -21,10 +21,15 @@ autocmd! FileType which_key
 autocmd  FileType which_key set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
 
-let g:which_key_map['e'] = [ ':NvimTreeToggle'                                 , 'explorer' ]
-let g:which_key_map['?'] = [ ':NvimTreeFindFile'                               , 'find current file' ]
-let g:which_key_map['p'] = [ ':Telescope find_files'                           , 'find files' ]
-let g:which_key_map['f'] = [ ':Telescope live_grep'                            , 'file text' ]
-let g:which_key_map['M'] = [ ':MarkdownPreviewToggle'                          , 'markdown preview']
+let g:which_key_map['e'] = [ ':NvimTreeToggle',        'explorer' ]
+let g:which_key_map['?'] = [ ':NvimTreeFindFile',      'find current file' ]
+let g:which_key_map['p'] = [ ':Telescope find_files',  'find files' ]
+let g:which_key_map['g'] = [ ':Telescope live_grep',   'file text' ]
+let g:which_key_map['M'] = [ ':MarkdownPreviewToggle', 'markdown preview']
+let g:which_key_map['f'] = [ ':CocFormat',             'format file' ]
+let g:which_key_map['a'] = [ ':CocAction',             'code action' ]
+let g:which_key_map['r'] = [ ':CocRename',             'rename symbol' ]
+let g:which_key_map['q'] = [ ':CocFix',                'quick fix' ]
+let g:which_key_map['i'] = [ ':CocImport',             'organize import' ]
 
 call which_key#register('<Space>', "g:which_key_map")

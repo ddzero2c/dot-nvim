@@ -16,7 +16,9 @@ set icm=nosplit " live preview
 "set shortmess+=c
 set exrc
 
-imap <C-c> <Esc>
+map <C-c> <Esc>
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab

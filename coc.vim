@@ -32,16 +32,11 @@ command! -nargs=0 CocRename      :call CocActionAsync('rename')
 command! -nargs=0 CocFormat      :call CocActionAsync('format')
 command! -nargs=? CocFold        :call CocAction('fold', <f-args>)
 command! -nargs=0 CocImport      :call CocAction('runCommand', 'editor.action.organizeImport')
-
-nmap <silent> gI :CocImport<CR>
-nmap <silent> gF :CocFormat<CR>
-nmap <silent> gR :CocRename<CR>
-nmap <silent> gA  <Plug>(coc-codeaction)
-nmap <silent> gQ  <Plug>(coc-fix-current)
+command! -nargs=0 CocFix         :call CocActionAsync('doQuickfix')
 
 nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
-nmap <silent> gD  :CocDiagnostics<CR>
+nmap <silent> gG  :CocDiagnostics<CR>
 
 augroup mygroup
     autocmd!
