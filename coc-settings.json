@@ -1,6 +1,9 @@
 {
   "javascript.suggestionActions.enabled": false,
   "typescript.suggestionActions.enabled": false,
+  "codeLens.enable": true,
+  "java.referencesCodeLens.enabled": true,
+  "java.jdt.ls.vmargs": "-javaagent:/Users/ryder.hsu/tarball/jdtls/lombok.jar",
   "suggest.completionItemKindLabels": {
     "keyword": "\uf1de",
     "variable": "\ue79b",

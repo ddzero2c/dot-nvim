@@ -34,18 +34,14 @@ command! -nargs=? CocFold        :call CocAction('fold', <f-args>)
 command! -nargs=0 CocImport      :call CocAction('runCommand', 'editor.action.organizeImport')
 
 nmap <silent> gI :CocImport<CR>
-nmap <silent> gf :CocFormat<CR>
-
+nmap <silent> gF :CocFormat<CR>
 nmap <silent> gR :CocRename<CR>
+nmap <silent> gA  <Plug>(coc-codeaction)
+nmap <silent> gQ  <Plug>(coc-fix-current)
 
 nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
 nmap <silent> gD  :CocDiagnostics<CR>
-
-xmap <silent> gA  <Plug>(coc-codeaction-selected)
-vmap <silent> gA  <Plug>(coc-codeaction-selected)
-nmap <silent> ga  <Plug>(coc-codeaction)
-nmap <silent> gq  <Plug>(coc-fix-current)
 
 augroup mygroup
     autocmd!
@@ -80,4 +76,4 @@ endfunction
 
 "nmap <F1> :CocCommand java.debug.vimspector.start<CR>
 
-autocmd BufWritePre *.go,*.java :silent call CocAction('runCommand', 'editor.action.organizeImport')
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
