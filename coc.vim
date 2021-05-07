@@ -8,6 +8,8 @@ let g:coc_global_extensions = [
             \'coc-lua',
             \'coc-java', 'coc-java-debug', 'coc-xml']
 
+let g:coc_node_path = "/opt/homebrew/bin/node"
+
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 set hidden
 set nobackup
@@ -41,7 +43,7 @@ nmap <silent> gG  :CocDiagnostics<CR>
 augroup mygroup
     autocmd!
     " Setup formatexpr specified filetype(s).
-    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+    autocmd FileType typescript,json,sh,java,go,yaml setl formatexpr=CocAction('formatSelected')
     " Update signature help on jump placeholder.
     autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end

@@ -13,14 +13,13 @@ set expandtab
 set signcolumn=yes
 set termguicolors
 set icm=nosplit " live preview
-"set shortmess+=c
 set exrc
 
 map <C-c> <Esc>
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-autocmd FileType sh setlocal ts=4 sts=4 sw=4 expandtab
+autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType lua setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
