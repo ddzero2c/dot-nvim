@@ -1,8 +1,8 @@
 {
   "javascript.suggestionActions.enabled": false,
   "typescript.suggestionActions.enabled": false,
-  "codeLens.enable": true,
-  "java.referencesCodeLens.enabled": true,
+  "codeLens.enable": false,
+  "java.referencesCodeLens.enabled": false,
   "java.jdt.ls.vmargs": "-javaagent:/Users/ryder.hsu/tarball/jdtls/lombok.jar",
   "suggest.completionItemKindLabels": {
     "keyword": "\uf1de",
@@ -51,7 +51,6 @@
   ],
   "coc.preferences.useQuickfixForLocations": true,
   "coc.source.emoji.filetypes": null,
-  "imselect.enableStatusItem": false,
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
@@ -65,9 +64,8 @@
   },
   "languageserver": {
     "terraform": {
-      "command": "terraform-ls",
-      "args": ["serve"],
-      "filetypes": ["terraform", "tf"],
+      "command": "terraform-lsp",
+      "filetypes": ["terraform"],
       "initializationOptions": {}
     }
   }

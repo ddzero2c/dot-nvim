@@ -15,7 +15,7 @@ set termguicolors
 set icm=nosplit " live preview
 set exrc
 
-map <C-c> <Esc>
+inoremap <C-c> <Esc>
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
@@ -25,7 +25,10 @@ autocmd FileType lua setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType yaml,json setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType sass,scss,html setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType helm,dockerfile,terraform,hcl setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType css,sass,scss,html setlocal ts=2 sts=2 sw=2 expandtab
+
+autocmd BufRead,BufNewFile *.hcl set filetype=terraform
 
 " system clipboard
 set clipboard+=unnamed
