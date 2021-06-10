@@ -77,3 +77,6 @@ require('telescope').setup {
         }
     }
 }
+vim.cmd("nnoremap <leader>p :Telescope find_files<CR>")
+vim.cmd("nnoremap <leader>g :Telescope live_grep<CR>")
+

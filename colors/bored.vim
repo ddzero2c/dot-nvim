@@ -1,4 +1,4 @@
-hi clear
+"hi clear
 
 if exists("syntax_on")
   syntax reset
@@ -169,3 +169,9 @@ hi! link GitSignsChangeLn DiffChange
 hi! link GitSignsDelete DiffDelete
 hi! link GitSignsDeleteNr DiffDelete
 hi! link GitSignsDeleteLn DiffDelete
+
+hi IndentBlanklineChar guifg=#808080 gui=NONE
+hi IndentBlanklineSpaceChar guifg=#808080 gui=NONE
+hi IndentBlanklineSpaceCharBlankline guifg=#808080 gui=NONE
+hi IndentBlanklineContextChar guifg=#808080 gui=NONE
+
