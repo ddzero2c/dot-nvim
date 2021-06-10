@@ -46,8 +46,7 @@
     "typescriptreact",
     "yaml",
     "json",
-    "jsonc",
-    "go"
+    "jsonc"
   ],
   "coc.preferences.useQuickfixForLocations": true,
   "coc.source.emoji.filetypes": null,

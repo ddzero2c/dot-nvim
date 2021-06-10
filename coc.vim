@@ -5,8 +5,7 @@ let g:coc_global_extensions = [
             \'coc-word', 'coc-emoji', 'coc-snippets',
             \'coc-json', 'coc-yaml',
             \'coc-prettier', 'coc-eslint', 'coc-tsserver', 'coc-styled-components', 'coc-react-refactor',
-            \'coc-solargraph', 'coc-go',
-            \'coc-lua',
+            \'coc-solargraph', 'coc-go', 'coc-clangd', 'coc-lua',
             \'coc-java', 'coc-java-debug', 'coc-xml']
 
 let g:coc_node_path = "/opt/homebrew/bin/node"

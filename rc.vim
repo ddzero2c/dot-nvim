@@ -31,7 +31,7 @@ autocmd FileType css,sass,scss,html setlocal ts=2 sts=2 sw=2 expandtab
 autocmd BufRead,BufNewFile *.hcl set filetype=terraform
 
 " system clipboard
-set clipboard+=unnamed
+set clipboard^=unnamed,unnamedplus
 
 " json comment
 autocmd FileType json syntax match Comment +\/\/.\+$+
