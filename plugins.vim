@@ -9,16 +9,22 @@ call plug#begin(stdpath('data') . '/plugged')
 
     " LSP
     Plug 'neovim/nvim-lspconfig'
+    Plug 'nvim-lua/lsp-status.nvim'
     Plug 'hrsh7th/nvim-compe'
-    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-    let g:go_doc_keywordprg_enabled = 0
+    Plug 'onsails/lspkind-nvim'
+
+    " Languages
+
     Plug 'hashivim/vim-terraform'
     let g:terraform_align=1
     let g:terraform_fmt_on_save=1
 
     " Snippets
-    Plug 'hrsh7th/vim-vsnip'
-    Plug 'rafamadriz/friendly-snippets'
+    "Plug 'hrsh7th/vim-vsnip'
+    "Plug 'rafamadriz/friendly-snippets'
+    Plug 'SirVer/ultisnips'
+    Plug 'joaohkfaria/vim-jest-snippets'
+    Plug 'honza/vim-snippets'
 
     " Formatter
     "Plug 'sbdchd/neoformat'

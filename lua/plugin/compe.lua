@@ -1,66 +1,34 @@
 vim.o.completeopt = "menuone,noselect"
 
 require'compe'.setup {
-    enabled = true,
-    autocomplete = true,
-    debug = false,
-    min_length = 1,
-    preselect = 'enable',
-    throttle_time = 80,
-    source_timeout = 200,
-    incomplete_delay = 400,
-    max_abbr_width = 100,
-    max_kind_width = 100,
-    max_menu_width = 100,
-    documentation = true,
-
+	enabled = true,
+	autocomplete = true,
+	debug = false,
+	min_length = 1,
+	preselect = 'enable',
+	throttle_time = 80,
+	source_timeout = 200,
+	resolve_timeout = 800,
+	incomplete_delay = 400,
+	max_abbr_width = 100,
+	max_kind_width = 100,
+	max_menu_width = 100,
+	documentation = true,
     source = {
-        path = {kind = "   (Path)"},
-        buffer = {kind = "   (Buffer)"},
-        calc = {kind = "   (Calc)"},
-        vsnip = {kind = "   (Snippet)"},
-        nvim_lsp = {kind = "   (LSP)"},
-        -- nvim_lua = {kind = "  "},
-		nvim_lua = false,
-        spell = {kind = "   (Spell)"},
-        tags = false,
-        vim_dadbod_completion = true,
-        -- snippets_nvim = {kind = "  "},
-         ultisnips = {kind = "  "},
-        -- treesitter = {kind = "  "},
-        emoji = {kind = " ﲃ  (Emoji)", filetypes={"markdown", "text"}}
-        -- for emoji press : (idk if that in compe tho)
+        path = true;
+        buffer = true;
+        calc = true;
+        nvim_lsp = true;
+        nvim_lua = true;
+        vsnip = true;
+        ultisnips = true;
     }
 }
 
-vim.api.nvim_set_keymap("i", "<C-f>", "compe#scroll({ 'delta': +4 })",
-                        {silent = true, expr = true, noremap = true})
-vim.api.nvim_set_keymap("i", "<C-b>", "compe#scroll({ 'delta': -4 })",
-                        {silent = true, expr = true, noremap = true})
-
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- ﬘
--- 
--- 
--- 
--- m
--- 
--- 
--- 
--- 
+vim.cmd([[
+    inoremap <silent><expr> <C-j>     compe#confirm('<CR>')
+    inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+    inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+    inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+]])
 
