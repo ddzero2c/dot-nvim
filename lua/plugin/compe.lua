@@ -30,5 +30,8 @@ vim.cmd([[
     inoremap <silent><expr> <C-e>     compe#close('<C-e>')
     inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
     inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+    imap <expr> <C-j> vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
+    smap <expr> <C-j> vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
+    imap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
+    smap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
 ]])
-

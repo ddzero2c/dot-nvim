@@ -20,11 +20,11 @@ call plug#begin(stdpath('data') . '/plugged')
     let g:terraform_fmt_on_save=1
 
     " Snippets
-    "Plug 'hrsh7th/vim-vsnip'
-    "Plug 'rafamadriz/friendly-snippets'
-    Plug 'SirVer/ultisnips'
-    Plug 'joaohkfaria/vim-jest-snippets'
-    Plug 'honza/vim-snippets'
+    Plug 'hrsh7th/vim-vsnip'
+    Plug 'rafamadriz/friendly-snippets'
+    "Plug 'SirVer/ultisnips'
+    "Plug 'joaohkfaria/vim-jest-snippets'
+    "Plug 'honza/vim-snippets'
 
     " Formatter
     "Plug 'sbdchd/neoformat'
