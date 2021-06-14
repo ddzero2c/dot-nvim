@@ -14,9 +14,12 @@ require "format".setup {
 	javascript = {{cmd = {"prettier -w", "./node_modules/.bin/eslint --fix"}}}
 }
 
-vim.cmd([[
+vim.cmd(
+	[[
 augroup Format
     autocmd!
     autocmd BufWritePost *.lua FormatWrite
+    autocmd BufWritePost *.go FormatWrite
 augroup END
-	]])
+	]]
+)
