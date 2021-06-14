@@ -28,6 +28,7 @@ call plug#begin(stdpath('data') . '/plugged')
 
     " Formatter
     "Plug 'sbdchd/neoformat'
+    Plug 'lukas-reineke/format.nvim'
 
     " Treesitter
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }

@@ -23,7 +23,7 @@ nmap gA <Plug>(EasyAlign)
 
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
-autocmd FileType lua setlocal ts=4 sts=4 sw=4 expandtab
+autocmd FileType lua setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType yaml,json setlocal ts=2 sts=2 sw=2 expandtab
