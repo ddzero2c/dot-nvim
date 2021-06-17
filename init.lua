@@ -1,12 +1,12 @@
-vim.cmd("source ~/.config/nvim/plugins.vim")
-vim.cmd("source ~/.config/nvim/rc.vim")
+vim.cmd("source ~/.config/nvim/vimrc")
 
+require("plugins")
 require("settings.lsp")
 require("settings.compe")
 require("settings.kind")
-require("settings.format")
+
+require("settings.neoformat")
 require("settings.telescope")
 require("settings.treesitter")
 require("settings.indentline")
 require("settings.gitsign")
-require("settings.colorizer")

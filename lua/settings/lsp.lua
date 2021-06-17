@@ -3,64 +3,38 @@ lsp_status.register_progress()
 local lspconfig = require("lspconfig")
 
 -- key bindings
-vim.cmd(
-	[[
+vim.cmd [[
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> gR <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gr <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <silent> ga <cmd>lua lua vim.lsp.buf.code_action()<CR>
-nnoremap <silent> g= <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <silent> <leader>r <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> <leader>a <cmd>lua lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 ]]
-)
 
-vim.fn.sign_define(
-	"LspDiagnosticsSignError",
-	{
-		texthl = "LspDiagnosticsSignError",
-		text = "",
-		numhl = "LspDiagnosticsSignError"
-	}
-)
-vim.fn.sign_define(
-	"LspDiagnosticsSignWarning",
-	{
-		texthl = "LspDiagnosticsSignWarning",
-		text = "",
-		numhl = "LspDiagnosticsSignWarning"
-	}
-)
-vim.fn.sign_define(
-	"LspDiagnosticsSignHint",
-	{
-		texthl = "LspDiagnosticsSignHint",
-		text = "",
-		numhl = "LspDiagnosticsSignHint"
-	}
-)
-vim.fn.sign_define(
-	"LspDiagnosticsSignInformation",
-	{
-		texthl = "LspDiagnosticsSignInformation",
-		text = "",
-		numhl = "LspDiagnosticsSignInformation"
-	}
-)
+local err_sign = ""
+local warn_sign = ""
+local hint_sign = ""
+local info_sign = ""
+local err_hl = 'LspDiagnosticsSignError'
+local warn_hl = 'LspDiagnosticsSignWarning'
+local hint_hl = 'LspDiagnosticsSignHint'
+local info_hl = 'LspDiagnosticsSignInformation'
+vim.fn.sign_define(err_hl, { texthl = err_hl, text = err_sign, numhl = err_hl })
+vim.fn.sign_define(warn_hl, { texthl = warn_hl, text = warn_sign, numhl = warn_hl })
+vim.fn.sign_define(hint_hl, { texthl = hint_hl, text = hint_sign, numhl = hint_hl })
+vim.fn.sign_define(info_hl, { texthl = info_hl, text = info_sign, numhl = info_hl })
 
 -- diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
-	vim.lsp.with(
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics,
 	{
-		virtual_text = {
-			prefix = "",
-			spacing = 0
-		},
+		virtual_text = { prefix = "襁", spacing = 1 },
 		signs = true,
 		underline = true
 	}
@@ -84,58 +58,38 @@ local function documentHighlight(client, bufnr)
 end
 
 -- snippet support
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-	properties = {
-		"documentation",
-		"detail",
-		"additionalTextEdits"
-	}
+local snippet_capabilities = {
+  textDocument = {completion = {completionItem = {snippetSupport = true}}}
 }
 
 -- lsp status
-lsp_status.config(
-	{
-		status_symbol = "",
-		indicator_errors = "",
-		indicator_warnings = "",
-		indicator_info = "",
-		indicator_hint = "",
-		indicator_ok = "✔️",
-		spinner_frames = {
-			"⣾",
-			"⣽",
-			"⣻",
-			"⢿",
-			"⡿",
-			"⣟",
-			"⣯",
-			"⣷"
-		}
-	}
-)
-for _, v in pairs(capabilities) do
-	table.insert(lsp_status.capabilities, v)
-end
-vim.cmd(
-	[[
-	function! LspStatus() abort
-	  if luaeval('#vim.lsp.buf_get_clients() > 0')
-		return luaeval("require('lsp-status').status()")
-	  endif
-	  return ''
-	endfunction
+lsp_status.config({
+  status_symbol = "",
+  indicator_errors = err_sign,
+  indicator_warnings = warn_sign,
+  indicator_hint = hint_sign,
+  indicator_info = info_sign,
+  indicator_ok = "✔️",
+  spinner_frames = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" }
+})
 
-	set statusline+=\ %{LspStatus()}
+vim.cmd [[
+function! LspStatus() abort
+  if luaeval('#vim.lsp.buf_get_clients() > 0')
+    return luaeval("require('lsp-status').status()")
+  endif
+  return ''
+endfunction
+set statusline+=\ %{LspStatus()}
 ]]
-)
+
 
 local on_attach = function(client, bufnr)
 	documentHighlight(client, bufnr)
 	lsp_status.on_attach(client, bufnr)
 end
 
+local capabilities = vim.tbl_deep_extend('keep', lsp_status.capabilities, snippet_capabilities)
 local servers = {
 	"gopls",
 	"terraformls",
