@@ -9,7 +9,7 @@ nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> <leader>r <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <silent> <leader>a <cmd>lua lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> <leader>a <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
@@ -84,9 +84,9 @@ set statusline+=\ %{LspStatus()}
 ]]
 
 
-local on_attach = function(client, bufnr)
-	documentHighlight(client, bufnr)
-	lsp_status.on_attach(client, bufnr)
+local on_attach_general = function(client)
+	documentHighlight(client)
+	lsp_status.on_attach(client)
 end
 
 local capabilities = vim.tbl_deep_extend('keep', lsp_status.capabilities, snippet_capabilities)
@@ -95,23 +95,24 @@ local servers = {
 	"terraformls",
 	"jsonls",
 	"yamlls",
-	"tsserver",
 	"solargraph",
-	"sumneko_lua"
 }
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup {
-		on_attach = on_attach,
+		on_attach = on_attach_general,
 		capabilities = capabilities
 	}
 end
 
-local sumneko_root_path = "/Users/ryder.hsu/dev/poc/lua-language-server"
+-- sumneko_lua --
+local sumneko_root_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/lua-language-server"
 local sumneko_binary = sumneko_root_path .. "/bin/macOS/lua-language-server"
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 lspconfig.sumneko_lua.setup {
+  on_attach = on_attach_general,
+  capabilities = capabilities,
 	cmd = {
 		sumneko_binary,
 		"-E",
@@ -143,22 +144,72 @@ lspconfig.sumneko_lua.setup {
 	}
 }
 
---function go_organize_imports_sync(timeout_ms)
---   vim.lsp.buf.formatting_sync(nil, 1000)
---
---   local context = { source = { organizeImports = true } }
---   vim.validate { context = { context, 't', true } }
---   local params = vim.lsp.util.make_range_params()
---   params.context = context
---
---   local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeout_ms)
---   if not result then return end
---   result = result[1].result
---   if not result then return end
---   local edit = result[1].edit
---   vim.lsp.util.apply_workspace_edit(edit)
---end
---
-----vim.cmd("autocmd BufWritePre *.go lua vim.lsp.buf.code_action({ source = { organizeImports = true } })")
---vim.cmd("au BufWritePre *.go lua go_organize_imports_sync(1000)")
---vim.cmd("au BufWritePre *.go lua vim.lsp.buf.formatting_sync()")
+-- tsserver --
+local function eslint_config_exists()
+  local eslintrc = vim.fn.glob(".eslintrc*", 0, 1)
+
+  if not vim.tbl_isempty(eslintrc) then
+    return true
+  end
+
+  if vim.fn.filereadable("package.json") then
+    if vim.fn.json_decode(vim.fn.readfile("package.json"))["eslintConfig"] then
+      return true
+    end
+  end
+
+  return false
+end
+
+local eslint = {
+  lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
+  lintStdin = true,
+  lintFormats = {"%f:%l:%c: %m"},
+  lintIgnoreExitCode = true,
+  formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
+  formatStdin = true
+}
+
+lspconfig.tsserver.setup {
+  on_attach = function(client)
+    if client.config.flags then
+      client.config.flags.allow_incremental_sync = true
+    end
+    client.resolved_capabilities.document_formatting = false
+    on_attach_general(client)
+  end,
+  capabilities = capabilities
+}
+
+lspconfig.efm.setup {
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = true
+    client.resolved_capabilities.goto_definition = false
+    on_attach_general(client, bufnr)
+  end,
+  root_dir = function()
+    if not eslint_config_exists() then
+      return nil
+    end
+    return vim.fn.getcwd()
+  end,
+  settings = {
+    languages = {
+      javascript = {eslint},
+      javascriptreact = {eslint},
+      ["javascript.jsx"] = {eslint},
+      typescript = {eslint},
+      ["typescript.tsx"] = {eslint},
+      typescriptreact = {eslint}
+    }
+  },
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescript.tsx",
+    "typescriptreact"
+  },
+}
+

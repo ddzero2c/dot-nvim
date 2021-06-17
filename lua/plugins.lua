@@ -1,13 +1,10 @@
 local fn = vim.fn
-
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-
 if fn.empty(fn.glob(install_path)) > 0 then
 	fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", install_path})
 end
 
 vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile'
-
 require("packer").startup({function(use)
   use "wbthomason/packer.nvim"
 
@@ -22,6 +19,16 @@ require("packer").startup({function(use)
   use 'nvim-lua/lsp-status.nvim'
   use 'hrsh7th/nvim-compe'
   use 'onsails/lspkind-nvim'
+
+  use { 'https://github.com/sumneko/lua-language-server', opt = true,
+    run = [[
+    git submodule update --init --recursive
+    cd 3rd/luamake
+    compile/install.sh
+    cd ../..
+    ./3rd/luamake/luamake rebuild
+    ]]
+  }
 
   use { 'fatih/vim-go', run = ':GoUpdateBinaries', ft = {'go'}, config = function()
     vim.g.go_code_completion_enabled = 0
