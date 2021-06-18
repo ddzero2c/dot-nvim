@@ -24,18 +24,35 @@ require("packer").startup({function(use)
   use { 'iamcco/markdown-preview.nvim', ft = {'markdown'}, run = 'cd app && npm install' }
 
   -- LSP
+  local lsp_ft = {'go', 'terraform', 'ruby', 'lua', 'sh'}
   use { 'neovim/nvim-lspconfig',
     config = function()
+      vim.cmd [[
+      packadd lsp-status.nvim
+      packadd nvim-compe
+      packadd lspkind-nvim
+      packadd lspkind-nvim
+      packadd friendly-snippets
+      packadd vim-vsnip
+      ]]
       require('settings.lsp')
       require('settings.compe')
       require("lspkind").init({with_text = false})
+      vim.cmd [[
+      imap <expr> <C-j> vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
+      smap <expr> <C-j> vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
+      imap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
+      smap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
+      ]]
     end,
     requires = {
-      'nvim-lua/lsp-status.nvim',
-      'hrsh7th/nvim-compe',
-      'onsails/lspkind-nvim',
+      { 'nvim-lua/lsp-status.nvim', ft = lsp_ft },
+      { 'hrsh7th/nvim-compe' , ft = lsp_ft},
+      { 'onsails/lspkind-nvim', ft = lsp_ft },
+      { 'rafamadriz/friendly-snippets', ft = lsp_ft },
+      { 'hrsh7th/vim-vsnip', ft = lsp_ft },
     },
-    ft = {'go', 'terraform', 'ruby', 'lua', 'sh'}
+    ft = lsp_ft,
   }
 
   use { 'neoclide/coc.nvim',
@@ -68,19 +85,6 @@ require("packer").startup({function(use)
       vim.g.go_gopls_enabled = 0
       vim.g.go_def_mapping_enabled = 0
       vim.g.go_doc_keywordprg_enabled = 0
-    end
-  }
-
-  -- Snippets
-  use 'rafamadriz/friendly-snippets'
-  use { 'hrsh7th/vim-vsnip',
-    config = function()
-      vim.cmd [[
-      imap <expr> <C-j> vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
-      smap <expr> <C-j> vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
-      imap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
-      smap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
-      ]]
     end
   }
 
