@@ -20,7 +20,6 @@ require("packer").startup({function(use)
   use 'f-person/git-blame.nvim'
 
   use { 'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}, config = [[require('settings.gitsign')]] }
-  use { 'lukas-reineke/indent-blankline.nvim', branch = 'lua', config = [[require('settings.indentline')]] }
   use { 'iamcco/markdown-preview.nvim', ft = {'markdown'}, run = 'cd app && npm install' }
 
   -- LSP
@@ -139,6 +138,14 @@ require("packer").startup({function(use)
         css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
         css_fn = true -- Enable all CSS *functions*: rgb_fn, hsl_fn
       })
+    end
+  }
+
+  -- Indentline
+  use { 'lukas-reineke/indent-blankline.nvim',
+    branch = 'lua',
+    config = function()
+      vim.g.indent_blankline_show_trailing_blankline_indent = false
     end
   }
 end,
