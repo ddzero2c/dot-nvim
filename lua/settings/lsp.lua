@@ -36,7 +36,8 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	{
 		virtual_text = { prefix = "襁", spacing = 1 },
 		signs = true,
-		underline = true
+		underline = true,
+    update_in_insert = false,
 	}
 )
 

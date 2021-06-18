@@ -14,6 +14,12 @@ set signcolumn=yes
 set termguicolors
 set icm=nosplit " live preview
 set exrc
+
+set hidden
+set nobackup
+set nowritebackup
+set cmdheight=1
+set updatetime=300
 set shortmess+=c
 
 let g:mapleader = "\<Space>"

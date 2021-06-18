@@ -26,7 +26,17 @@ require("packer").startup({function(use)
       'hrsh7th/nvim-compe',
       'onsails/lspkind-nvim',
     },
-    ft = {'go', 'terraform', 'ruby'}
+    ft = {'go', 'terraform', 'ruby', 'lua'}
+  }
+
+  use { 'neoclide/coc.nvim', branch = 'release',
+    ft = {
+      'javascript', 'javascriptreact', 'typescript', 'typescriptreact',
+      'html', 'css', 'scss', 'yaml', 'json', 'graphql',
+    },
+    config = function ()
+      require("settings.coc")
+    end
   }
 
   use { 'https://github.com/sumneko/lua-language-server', opt = true,
