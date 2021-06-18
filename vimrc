@@ -1,6 +1,6 @@
 colorscheme bored
 
-set nu
+set nu rnu
 set ic
 set mouse=
 set undofile

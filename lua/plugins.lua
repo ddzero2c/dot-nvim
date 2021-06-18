@@ -13,6 +13,8 @@ require("packer").startup({function(use)
   use 'rlue/vim-barbaric'
   use 'editorconfig/editorconfig-vim'
   use 'AndrewRadev/tagalong.vim'
+  use 'ntpeters/vim-better-whitespace'
+  use 'sheerun/vim-polyglot'
 
   -- LSP
   use { 'neovim/nvim-lspconfig',
@@ -64,31 +66,32 @@ require("packer").startup({function(use)
     smap <expr> <C-j> vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
     imap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
     smap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
-
     ]]
   end }
 
   -- Formatter
-  use { 'sbdchd/neoformat', ft = {
-    'terraform',
-  }}
+  use { 'sbdchd/neoformat',
+    ft = { 'terraform' },
+    config = [[require('settings.neoformat')]]
+  }
   --use 'lukas-reineke/format.nvim'
 
   -- Treesitter
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/playground'
-  use { 'lukas-reineke/indent-blankline.nvim', branch = 'lua' }
-  use 'sheerun/vim-polyglot'
-  use 'ntpeters/vim-better-whitespace'
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = [[require('settings.treesitter')]] }
+  use { 'lukas-reineke/indent-blankline.nvim', branch = 'lua', config = [[require('settings.indentline')]] }
 
   -- Telescope
-  use { 'nvim-telescope/telescope.nvim', requires = {
-    'nvim-lua/popup.nvim',
-    'nvim-lua/plenary.nvim',
-    'nvim-telescope/telescope-media-files.nvim',
-    'kyazdani42/nvim-web-devicons',
-    'ryanoasis/vim-devicons',
-  }}
+  use { 'nvim-telescope/telescope.nvim',
+    requires = {
+      'nvim-lua/popup.nvim',
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope-media-files.nvim',
+      'kyazdani42/nvim-web-devicons',
+      'ryanoasis/vim-devicons',
+    },
+    config = [[require('settings.telescope')]]
+  }
 
   -- Color
   use { 'norcalli/nvim-colorizer.lua', config = function()
@@ -110,7 +113,10 @@ require("packer").startup({function(use)
   use { 'iamcco/markdown-preview.nvim', run = 'cd app && npm install' }
 
   -- Git
-  use { 'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'} }
+  use { 'lewis6991/gitsigns.nvim',
+    requires = {'nvim-lua/plenary.nvim'},
+    config = [[require('settings.gitsign')]]
+  }
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'
   use 'f-person/git-blame.nvim'
@@ -120,5 +126,5 @@ config = {
     open_fn = function()
       return require('packer.util').float({ border = 'single' })
     end
-  }
+  },
 }})
