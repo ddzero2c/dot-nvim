@@ -9,7 +9,7 @@ let colors_name = "bored"
 
 hi Normal ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE
 hi NonText ctermbg=NONE ctermfg=8 cterm=NONE guibg=NONE guifg=#808080 gui=NONE
-hi String ctermbg=NONE ctermfg=8 cterm=NONE guibg=lightgray guifg=NONE gui=NONE
+hi String ctermbg=NONE ctermfg=8 cterm=NONE guibg=#eeeeee guifg=NONE gui=NONE
 hi Comment ctermbg=NONE ctermfg=NONE cterm=italic guibg=NONE guifg=#808080 gui=italic
 hi Constant ctermbg=NONE ctermfg=NONE cterm=bold guibg=NONE guifg=NONE gui=bold
 hi Error ctermbg=15 ctermfg=9 cterm=reverse guibg=#ffffff guifg=#ec2100 gui=reverse
@@ -36,10 +36,10 @@ hi helpLeadBlank ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=
 hi helpNormal ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE
 hi Visual ctermbg=NONE ctermfg=darkcyan cterm=reverse,bold guibg=NONE guifg=darkcyan gui=reverse,bold
 hi VisualNOS ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE
-hi Pmenu ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=reverse
-hi PmenuSbar ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=reverse
+hi Pmenu ctermbg=NONE ctermfg=NONE cterm=NONE guibg=#dddddd guifg=NONE gui=NONE
+hi PmenuSbar ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE
 hi PmenuSel ctermbg=NONE ctermfg=darkcyan cterm=NONE guibg=NONE guifg=darkcyan gui=reverse,bold
-hi PmenuThumb ctermbg=NONE ctermfg=darkcyan cterm=NONE guibg=NONE guifg=darkcyan gui=reverse
+hi PmenuThumb ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=reverse
 hi FoldColumn ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE
 hi Folded ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE
 hi WildMenu ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE
@@ -62,6 +62,8 @@ hi ModeMsg ctermbg=NONE ctermfg=10 cterm=NONE guibg=NONE guifg=NONE gui=reverse
 hi MoreMsg ctermbg=NONE ctermfg=13 cterm=NONE guibg=NONE guifg=#ff00ff gui=NONE
 hi Question ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE
 hi WarningMsg ctermbg=NONE ctermfg=9 cterm=NONE guibg=NONE guifg=#ec2100 gui=NONE
+hi InfoMsg ctermbg=NONE ctermfg=8 cterm=NONE guibg=NONE guifg=#404040 gui=NONE
+hi HintMsg ctermbg=NONE ctermfg=8 cterm=NONE guibg=NONE guifg=#404040 gui=NONE
 hi Cursor ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE
 hi CursorColumn ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE
 hi QuickFixLine ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE

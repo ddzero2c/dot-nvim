@@ -44,6 +44,10 @@
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "",
+  "diagnostic.virtualTextCurrentLineOnly": false,
+  "diagnostic.virtualText": true,
+  "diagnostic.checkCurrentLine": false,
+  "diagnostic.virtualTextPrefix": "襁",
   "list.normalMappings": {
     "q": "do:exit"
   },
