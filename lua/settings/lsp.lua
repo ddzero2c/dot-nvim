@@ -90,6 +90,7 @@ end
 
 local capabilities = vim.tbl_deep_extend('keep', lsp_status.capabilities, snippet_capabilities)
 local servers = {
+  "bashls",
   "gopls",
   "terraformls",
   "jsonls",

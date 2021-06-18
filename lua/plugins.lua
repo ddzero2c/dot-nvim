@@ -35,7 +35,7 @@ require("packer").startup({function(use)
       'hrsh7th/nvim-compe',
       'onsails/lspkind-nvim',
     },
-    ft = {'go', 'terraform', 'ruby', 'lua'}
+    ft = {'go', 'terraform', 'ruby', 'lua', 'sh'}
   }
 
   use { 'neoclide/coc.nvim',
@@ -86,7 +86,7 @@ require("packer").startup({function(use)
 
   -- Formatter
   use { 'sbdchd/neoformat',
-    ft = { 'terraform' },
+    ft = { 'terraform', 'markdown' },
     config = function()
       vim.cmd[[
       augroup fmt
