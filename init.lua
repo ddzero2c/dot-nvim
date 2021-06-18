@@ -1,10 +1,2 @@
-vim.cmd('source ~/.config/nvim/plugins.vim')
-vim.cmd('source ~/.config/nvim/rc.vim')
-vim.cmd('source ~/.config/nvim/coc.vim')
-vim.cmd('source ~/.config/nvim/whichkey.vim')
-
-require('plugin.fuzzyfinder')
-require('plugin.syntax')
-require('plugin.indentline')
-require('plugin.gitsign')
---require('plugin.colorizer')
+vim.cmd("source ~/.config/nvim/vimrc")
+require("plugins")

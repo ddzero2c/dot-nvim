@@ -1,6 +1,6 @@
 colorscheme bored
 
-set nu
+set nu rnu
 set ic
 set mouse=
 set undofile
@@ -15,13 +15,19 @@ set termguicolors
 set icm=nosplit " live preview
 set exrc
 
+set hidden
+set nobackup
+set nowritebackup
+set cmdheight=1
+set updatetime=300
+set shortmess+=c
+
+let g:mapleader = "\<Space>"
 inoremap <C-c> <Esc>
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
 
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
-autocmd FileType lua setlocal ts=4 sts=4 sw=4 noexpandtab
+autocmd FileType vim,lua setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType yaml,json setlocal ts=2 sts=2 sw=2 expandtab
@@ -41,6 +47,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 " hightlight on yank
 augroup LuaHighlight
-    autocmd!
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+  autocmd!
+  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
