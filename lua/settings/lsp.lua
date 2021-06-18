@@ -32,30 +32,28 @@ vim.fn.sign_define(info_hl, { texthl = info_hl, text = info_sign, numhl = info_h
 
 -- diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-	vim.lsp.diagnostic.on_publish_diagnostics,
-	{
-		virtual_text = { prefix = "襁", spacing = 1 },
-		signs = true,
-		underline = true,
+  vim.lsp.diagnostic.on_publish_diagnostics,
+  {
+    virtual_text = { prefix = "襁", spacing = 1 },
+    signs = true,
+    underline = true,
     update_in_insert = false,
-	}
+  }
 )
 
 -- symbols highlight
 local function documentHighlight(client, bufnr)
-	-- Set autocommands conditional on server_capabilities
-	if client.resolved_capabilities.document_highlight then
-		vim.cmd(
-			[[
-			augroup lsp_document_highlight
-			autocmd! * <buffer>
-			autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-			autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-			augroup END
-			]],
-			false
-		)
-	end
+  -- Set autocommands conditional on server_capabilities
+  if client.resolved_capabilities.document_highlight then
+    vim.cmd([[
+      augroup lsp_document_highlight
+      autocmd! * <buffer>
+      autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+      autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+      ]],
+      false)
+  end
 end
 
 -- snippet support
@@ -86,23 +84,23 @@ set statusline+=\ %{LspStatus()}
 
 
 local on_attach_general = function(client, bufnr)
-	documentHighlight(client, bufnr)
-	lsp_status.on_attach(client, bufnr)
+  documentHighlight(client, bufnr)
+  lsp_status.on_attach(client, bufnr)
 end
 
 local capabilities = vim.tbl_deep_extend('keep', lsp_status.capabilities, snippet_capabilities)
 local servers = {
-	"gopls",
-	"terraformls",
-	"jsonls",
-	"yamlls",
-	"solargraph",
+  "gopls",
+  "terraformls",
+  "jsonls",
+  "yamlls",
+  "solargraph",
 }
 for _, lsp in ipairs(servers) do
-	lspconfig[lsp].setup {
-		on_attach = on_attach_general,
-		capabilities = capabilities
-	}
+  lspconfig[lsp].setup {
+    on_attach = on_attach_general,
+    capabilities = capabilities
+  }
 end
 
 -- sumneko_lua --
@@ -114,33 +112,33 @@ table.insert(runtime_path, "lua/?/init.lua")
 lspconfig.sumneko_lua.setup {
   on_attach = on_attach_general,
   capabilities = capabilities,
-	cmd = {
-		sumneko_binary,
-		"-E",
-		sumneko_root_path .. "/main.lua"
-	},
-	settings = {
-		Lua = {
-			runtime = {
-				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-				version = "LuaJIT",
-				-- Setup your lua path
-				path = runtime_path
-			},
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = {
-					"vim"
-				}
-			},
-			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true)
-			},
-			-- Do not send telemetry data containing a randomized but unique identifier
-			telemetry = {
-				enable = false
-			}
-		}
-	}
+  cmd = {
+    sumneko_binary,
+    "-E",
+    sumneko_root_path .. "/main.lua"
+  },
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = "LuaJIT",
+        -- Setup your lua path
+        path = runtime_path
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {
+          "vim"
+        }
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true)
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false
+      }
+    }
+  }
 }

@@ -24,8 +24,6 @@ set shortmess+=c
 
 let g:mapleader = "\<Space>"
 inoremap <C-c> <Esc>
-xmap gA <Plug>(EasyAlign)
-nmap gA <Plug>(EasyAlign)
 
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
