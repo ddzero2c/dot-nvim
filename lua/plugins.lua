@@ -21,7 +21,7 @@ require("packer").startup({function(use)
     config = function()
       require('settings.lsp')
       require('settings.compe')
-      require('settings.kind')
+      require("lspkind").init({with_text = false})
     end,
     requires = {
       'nvim-lua/lsp-status.nvim',
@@ -72,13 +72,26 @@ require("packer").startup({function(use)
   -- Formatter
   use { 'sbdchd/neoformat',
     ft = { 'terraform' },
-    config = [[require('settings.neoformat')]]
+    config = function()
+      vim.cmd[[
+      augroup fmt
+        autocmd!
+        autocmd BufWritePre * silent! undojoin | silent! Neoformat
+      augroup END
+      ]]
+    end
   }
   --use 'lukas-reineke/format.nvim'
 
   -- Treesitter
   use 'nvim-treesitter/playground'
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = [[require('settings.treesitter')]] }
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = function ()
+    require "nvim-treesitter.configs".setup {
+      ensure_installed = "maintained",
+      ignore_install = { "haskell" },
+      highlight = { enable = true }
+    }
+  end }
   use { 'lukas-reineke/indent-blankline.nvim', branch = 'lua', config = [[require('settings.indentline')]] }
 
   -- Telescope
