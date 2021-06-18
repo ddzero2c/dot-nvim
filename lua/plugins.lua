@@ -15,10 +15,19 @@ require("packer").startup({function(use)
   use 'AndrewRadev/tagalong.vim'
 
   -- LSP
-  use 'neovim/nvim-lspconfig'
-  use 'nvim-lua/lsp-status.nvim'
-  use 'hrsh7th/nvim-compe'
-  use 'onsails/lspkind-nvim'
+  use { 'neovim/nvim-lspconfig',
+    config = function()
+      require('settings.lsp')
+      require('settings.compe')
+      require('settings.kind')
+    end,
+    requires = {
+      'nvim-lua/lsp-status.nvim',
+      'hrsh7th/nvim-compe',
+      'onsails/lspkind-nvim',
+    },
+    ft = {'go', 'terraform', 'ruby'}
+  }
 
   use { 'https://github.com/sumneko/lua-language-server', opt = true,
     run = [[
@@ -51,9 +60,7 @@ require("packer").startup({function(use)
 
   -- Formatter
   use { 'sbdchd/neoformat', ft = {
-    'javascript', 'javascriptreact', 'typescript', 'typescriptreact',
-    'html', 'css', 'scss', 'markdown',
-    'yaml', 'json', 'terraform'
+    'terraform',
   }}
   --use 'lukas-reineke/format.nvim'
 
