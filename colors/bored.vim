@@ -12,7 +12,7 @@ hi NonText ctermbg=NONE ctermfg=8 cterm=NONE guibg=NONE guifg=#808080 gui=NONE
 hi String ctermbg=NONE ctermfg=8 cterm=NONE guibg=#eeeeee guifg=NONE gui=NONE
 hi Comment ctermbg=NONE ctermfg=NONE cterm=italic guibg=NONE guifg=#808080 gui=italic
 hi Constant ctermbg=NONE ctermfg=NONE cterm=bold guibg=NONE guifg=NONE gui=bold
-hi Error ctermbg=15 ctermfg=9 cterm=reverse guibg=#ffffff guifg=#ec2100 gui=reverse
+hi Error ctermbg=15 ctermfg=9 cterm=reverse guibg=NONE guifg=#ec2100 gui=bold
 hi Identifier ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE
 hi Ignore ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE
 hi Special ctermbg=NONE ctermfg=NONE cterm=bold guibg=NONE guifg=#0432ff gui=bold
@@ -61,7 +61,7 @@ hi SignColumn ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NON
 hi ModeMsg ctermbg=NONE ctermfg=10 cterm=NONE guibg=NONE guifg=NONE gui=reverse
 hi MoreMsg ctermbg=NONE ctermfg=13 cterm=NONE guibg=NONE guifg=#ff00ff gui=NONE
 hi Question ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE
-hi WarningMsg ctermbg=NONE ctermfg=9 cterm=NONE guibg=NONE guifg=#ec2100 gui=NONE
+hi WarningMsg ctermbg=NONE ctermfg=9 cterm=NONE guibg=NONE guifg=#a9a600 gui=bold
 hi InfoMsg ctermbg=NONE ctermfg=8 cterm=NONE guibg=NONE guifg=#404040 gui=NONE
 hi HintMsg ctermbg=NONE ctermfg=8 cterm=NONE guibg=NONE guifg=#404040 gui=NONE
 hi Cursor ctermbg=NONE ctermfg=NONE cterm=NONE guibg=NONE guifg=NONE gui=NONE

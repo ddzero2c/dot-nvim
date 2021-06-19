@@ -28,13 +28,14 @@ require("packer").startup({function(use)
     config = function()
       vim.cmd [[
       packadd lsp-status.nvim
+      packadd trouble.nvim
       packadd nvim-compe
-      packadd lspkind-nvim
       packadd lspkind-nvim
       packadd friendly-snippets
       packadd vim-vsnip
       ]]
       require('settings.lsp')
+      require("trouble").setup()
       require('settings.compe')
       require("lspkind").init({with_text = false})
       vim.cmd [[
@@ -42,6 +43,7 @@ require("packer").startup({function(use)
       smap <expr> <C-j> vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
       imap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
       smap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
+      nnoremap <silent> <C-l> <cmd>TroubleToggle<cr>
       ]]
     end,
     requires = {
@@ -50,6 +52,7 @@ require("packer").startup({function(use)
       { 'onsails/lspkind-nvim', ft = lsp_ft },
       { 'rafamadriz/friendly-snippets', ft = lsp_ft },
       { 'hrsh7th/vim-vsnip', ft = lsp_ft },
+      { 'folke/trouble.nvim', ft = lsp_ft },
     },
     ft = lsp_ft,
   }
