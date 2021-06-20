@@ -1,4 +1,6 @@
-colorscheme bored
+"colorscheme bored
+colorscheme pinkfloyd
+set background=light
 
 set nu rnu
 set ic
@@ -14,6 +16,7 @@ set signcolumn=yes
 set termguicolors
 set icm=nosplit " live preview
 set exrc
+set diffopt+=algorithm:histogram,indent-heuristic
 
 set hidden
 set nobackup

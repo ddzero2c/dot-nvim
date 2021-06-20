@@ -1,12 +1,12 @@
-" Name:       sunbather.vim
+" Name:       pinkfloyd.vim
 " Version:    0.1.0
-" Maintainer: github.com/nikolvs
+" Maintainer: github.com/ddzero2c
 " License:    The MIT License (MIT)
 "
 " A minimal pink colorscheme for Vim.
 "
-" Forked from paramount:
-" https://github.com/owickstrom/vim-colors-paramount
+" Forked from vim-sunbather:
+" https://github.com/nikolvs/vim-sunbather
 "
 """
 hi clear
@@ -15,7 +15,7 @@ if exists('syntax on')
     syntax reset
 endif
 
-let g:colors_name='sunbather'
+let g:colors_name='pinkfloyd'
 
 let s:black           = { "gui": "#000000", "cterm": "232" }
 let s:medium_gray     = { "gui": "#767676", "cterm": "243" }
@@ -31,7 +31,9 @@ let s:dark_pink       = { "gui": "#ff5f87", "cterm": "204" }
 let s:light_pink      = { "gui": "#d75f87", "cterm": "168" }
 let s:dark_red        = { "gui": "#C30771", "cterm": "1"   }
 let s:light_red       = { "gui": "#E32791", "cterm": "1"   }
+let s:most_red        = { "gui": "#ec2100", "cterm": "1"   }
 let s:orange          = { "gui": "#D75F5F", "cterm": "167" }
+let s:most_blue       = { "gui": "#0432ff", "cterm": "18"  }
 let s:darker_blue     = { "gui": "#005F87", "cterm": "18"  }
 let s:dark_blue       = { "gui": "#008EC4", "cterm": "32"  }
 let s:blue            = { "gui": "#20BBFC", "cterm": "12"  }
@@ -44,6 +46,9 @@ let s:light_purple    = { "gui": "#a790d5", "cterm": "140" }
 let s:yellow          = { "gui": "#F3E430", "cterm": "11"  }
 let s:light_yellow    = { "gui": "#ffff87", "cterm": "228" }
 let s:dark_yellow     = { "gui": "#A89C14", "cterm": "3"   }
+let s:diff_add        = { "gui": "#e6ffed", "cterm": "3"   }
+let s:diff_delete     = { "gui": "#ffeef0", "cterm": "3"   }
+let s:diff_text       = { "gui": "#acf2bd", "cterm": "3"   }
 
 let s:background = &background
 
@@ -59,18 +64,22 @@ if &background == "dark"
   let s:red             = s:light_red
   let s:visual          = s:light_pink
   let s:yellow          = s:light_yellow
+  let s:string          = s:light_black
+  let s:special         = s:blue
 else
   let s:bg              = s:actual_white
   let s:bg_subtle       = s:light_gray
   let s:bg_very_subtle  = s:lightest_gray
-  let s:norm            = s:light_black
-  let s:norm_subtle     = s:medium_gray
+  let s:norm            = s:black
+  let s:norm_subtle     = s:lighter_black
   let s:pink            = s:dark_pink
   let s:cyan            = s:dark_cyan
   let s:green           = s:dark_green
   let s:red             = s:dark_red
   let s:visual          = s:dark_pink
   let s:yellow          = s:dark_yellow
+  let s:string          = s:lightest_gray
+  let s:special         = s:most_blue
 endif
 
 " https://github.com/noahfrederick/vim-hemisu/
@@ -95,52 +104,55 @@ endif
 call s:h("Cursor",        {"bg": s:pink, "fg": s:norm })
 call s:h("Comment",       {"fg": s:bg_subtle, "gui": "italic"})
 
-call s:h("Constant",      {"fg": s:pink})
+call s:h("Constant",      {"fg": s:norm, "gui": "bold"})
 hi! link Character        Constant
 hi! link Number           Constant
 hi! link Boolean          Constant
 hi! link Float            Constant
-hi! link String           Constant
+call s:h("String",        {"fg": s:norm, "bg": s:string})
 
 "call s:h("Identifier",    {"fg": s:dark_blue})
 hi! link Identifier       Normal
-hi! link Function         Identifier
+hi! link Delimiter        Normal
 
-call s:h("Statement",     {"fg": s:norm_subtle})
+call s:h("Statement",     {"fg": s:norm_subtle, "gui": "bold"})
 hi! link Conditonal       Statement
 hi! link Repeat           Statement
 hi! link Label            Statement
 hi! link Keyword          Statement
 hi! link Exception        Statement
 
-call s:h("Operator",      {"fg": s:norm, "cterm": "bold", "gui": "bold"})
-
-call s:h("PreProc",     {"fg": s:norm_subtle})
+"call s:h("PreProc",     {"fg": s:norm_subtle})
+hi! link PreProc          Statement
 hi! link Include          PreProc
 hi! link Define           PreProc
 hi! link Macro            PreProc
 hi! link PreCondit        PreProc
 
-call s:h("Type",          {"fg": s:norm})
+call s:h("Type",          {"fg": s:norm, "gui": "bold,italic"})
 hi! link StorageClass     Type
 hi! link Structure        Type
 hi! link Typedef          Type
+hi! link Function         Type
 
-call s:h("Special",       {"fg": s:norm_subtle, "gui": "italic"})
+call s:h("Special",       {"fg": s:special, "gui": "bold,italic"})
+hi! link Operator         Special
 hi! link SpecialChar      Special
 hi! link Tag              Special
-hi! link Delimiter        Special
 hi! link SpecialComment   Special
 hi! link Debug            Special
 
 call s:h("Underlined",    {"fg": s:norm, "gui": "underline", "cterm": "underline"})
 call s:h("Ignore",        {"fg": s:bg})
-call s:h("Error",         {"fg": s:actual_white, "bg": s:red, "cterm": "bold"})
+call s:h("Error",         {"fg": s:actual_white, "bg": s:most_red, "cterm": "bold"})
 call s:h("Todo",          {"fg": s:pink, "gui": "underline", "cterm": "underline"})
 call s:h("SpecialKey",    {"fg": s:light_green})
 call s:h("NonText",       {"fg": s:medium_gray})
 call s:h("Directory",     {"fg": s:dark_blue})
-call s:h("ErrorMsg",      {"fg": s:red})
+call s:h("ErrorMsg",      {"fg": s:most_red, "gui": "bold"})
+call s:h("WarningMsg",    {"fg": s:yellow, "gui": "bold"})
+call s:h("HintMsg",       {"fg": s:lighter_black})
+call s:h("InfoMsg",       {"fg": s:lighter_black})
 call s:h("IncSearch",     {"bg": s:yellow, "fg": s:light_black})
 call s:h("Search",        {"bg": s:light_green, "fg": s:light_black})
 call s:h("MoreMsg",       {"fg": s:medium_gray, "cterm": "bold", "gui": "bold"})
@@ -154,14 +166,13 @@ call s:h("VertSplit",     {"bg": s:bg_very_subtle, "fg": s:bg_very_subtle})
 call s:h("Title",         {"fg": s:dark_blue})
 call s:h("Visual",        {"fg": s:norm, "bg": s:visual})
 call s:h("VisualNOS",     {"bg": s:bg_subtle})
-call s:h("WarningMsg",    {"fg": s:yellow})
 call s:h("WildMenu",      {"fg": s:bg, "bg": s:norm})
 call s:h("Folded",        {"fg": s:medium_gray})
 call s:h("FoldColumn",    {"fg": s:bg_subtle})
-call s:h("DiffAdd",       {"fg": s:green})
-call s:h("DiffDelete",    {"fg": s:red})
-call s:h("DiffChange",    {"fg": s:dark_yellow})
-call s:h("DiffText",      {"fg": s:dark_blue})
+call s:h("DiffAdd",       {"fg": s:norm, "bg": s:diff_add})
+call s:h("DiffDelete",    {"fg": s:norm, "bg": s:diff_delete})
+call s:h("DiffChange",    {"fg": s:norm, "bg": s:diff_add})
+call s:h("DiffText",      {"fg": s:norm, "bg": s:diff_text})
 call s:h("SignColumn",    {"fg": s:light_green})
 
 
@@ -220,3 +231,31 @@ hi link GitGutterAdd                LineNr
 hi link GitGutterDelete             LineNr
 hi link GitGutterChange             LineNr
 hi link GitGutterChangeDelete       LineNr
+
+hi! link CocErrorSign ErrorMsg
+hi! link CocWarningSign WarningMsg
+hi! link CocInfoSign InfoMsg
+hi! link CocHintSign HintMsg
+hi! link CocHighlightText Search
+
+hi! link LspReferenceText CocHighlightText
+hi! link LspDiagnosticsDefaultError           ErrorMsg
+hi! link LspDiagnosticsDefaultWarning         WarningMsg
+hi! link LspDiagnosticsDefaultInformation     InfoMsg
+hi! link LspDiagnosticsDefaultHint            HintMsg
+hi! link LspDiagnosticsVirtualTextError       ErrorMsg
+hi! link LspDiagnosticsVirtualTextWarning     WarningMsg
+hi! link LspDiagnosticsVirtualTextInformation InfoMsg
+hi! link LspDiagnosticsVirtualTextHint        HintMsg
+hi! link LspDiagnosticsUnderlineError         ErrorMsg
+hi! link LspDiagnosticsUnderlineWarning       WarningMsg
+hi! link LspDiagnosticsUnderlineInformation   InfoMsg
+hi! link LspDiagnosticsUnderlineHint          HintMsg
+hi! link LspDiagnosticsFloatingError          ErrorMsg
+hi! link LspDiagnosticsFloatingWarning        WarningMsg
+hi! link LspDiagnosticsFloatingInformation    InfoMsg
+hi! link LspDiagnosticsFloatingHint           HintMsg
+hi! link LspDiagnosticsSignError              ErrorMsg
+hi! link LspDiagnosticsSignWarning            WarningMsg
+hi! link LspDiagnosticsSignInformation        InfoMsg
+hi! link LspDiagnosticsSignHint               HintMsg
