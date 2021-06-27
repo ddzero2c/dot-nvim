@@ -93,8 +93,6 @@ local servers = {
   "bashls",
   "gopls",
   "terraformls",
-  "jsonls",
-  "yamlls",
   "solargraph",
 }
 for _, lsp in ipairs(servers) do

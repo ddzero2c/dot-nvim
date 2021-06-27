@@ -18,6 +18,15 @@ require("packer").startup({function(use)
   use 'ntpeters/vim-better-whitespace'
   use 'sheerun/vim-polyglot'
   use 'f-person/git-blame.nvim'
+  use 'towolf/vim-helm'
+  use { 'junegunn/vim-easy-align',
+    config = function()
+      vim.cmd[[
+      xmap ga <Plug>(EasyAlign)
+      nmap ga <Plug>(EasyAlign)
+      ]]
+    end
+  }
 
   use { 'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}, config = [[require('settings.gitsign')]] }
   use { 'iamcco/markdown-preview.nvim', ft = {'markdown'}, run = 'cd app && npm install' }
@@ -79,6 +88,7 @@ require("packer").startup({function(use)
     ]]
   }
 
+  use 'sebdah/vim-delve'
   use { 'fatih/vim-go',
     run = ':GoUpdateBinaries',
     ft = {'go'},

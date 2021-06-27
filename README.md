@@ -1,11 +1,15 @@
 # Neovim config
 
-## Install
+- Make sure you have [nvim installed](https://github.com/neovim/neovim/wiki/Installing-Neovim).
+- Make sure you have vim-plug installed:
 
-Make sure you have [nvim installed](https://github.com/neovim/neovim/wiki/Installing-Neovim).
+```bash
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```
 
 Enter `nvim` and install plugins:
 
 ```
-:PackerSync
+:PlugInstall
 ```

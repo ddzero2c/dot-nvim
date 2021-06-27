@@ -18,6 +18,10 @@ set icm=nosplit " live preview
 set exrc
 set diffopt+=algorithm:histogram,indent-heuristic
 
+" system clipboard
+set clipboard^=unnamed,unnamedplus
+
+
 set hidden
 set nobackup
 set nowritebackup
@@ -27,7 +31,7 @@ set updatetime=300
 set shortmess+=c
 
 let g:mapleader = "\<Space>"
-inoremap <C-c> <Esc>
+nmap <C-c> <Esc>
 
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
@@ -39,9 +43,6 @@ autocmd FileType helm,dockerfile,terraform,hcl setlocal ts=2 sts=2 sw=2 expandta
 autocmd FileType css,sass,scss,html setlocal ts=2 sts=2 sw=2 expandtab
 
 autocmd BufRead,BufNewFile *.hcl set filetype=terraform
-
-" system clipboard
-set clipboard^=unnamed,unnamedplus
 
 " json comment
 autocmd FileType json syntax match Comment +\/\/.\+$+

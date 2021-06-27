@@ -259,3 +259,13 @@ hi! link LspDiagnosticsSignError              ErrorMsg
 hi! link LspDiagnosticsSignWarning            WarningMsg
 hi! link LspDiagnosticsSignInformation        InfoMsg
 hi! link LspDiagnosticsSignHint               HintMsg
+
+hi! link GitSignsAdd DiffAdd
+hi! link GitSignsAddNr DiffAdd
+hi! link GitSignsAddLn DiffAdd
+hi! link GitSignsChange DiffChange
+hi! link GitSignsChangeNr DiffChange
+hi! link GitSignsChangeLn DiffChange
+hi! link GitSignsDelete DiffDelete
+hi! link GitSignsDeleteNr DiffDelete
+hi! link GitSignsDeleteLn DiffDelete

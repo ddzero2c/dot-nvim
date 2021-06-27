@@ -4,6 +4,7 @@ vim.g.coc_global_extensions = {
   'coc-prettier', 'coc-eslint', 'coc-tsserver', 'coc-styled-components', 'coc-react-refactor',
   'coc-highlight', 'coc-stylelint', 'coc-html', 'coc-css',
   'coc-snippets', 'coc-word', 'coc-json', 'coc-yaml',
+  'coc-go',
 }
 
 vim.cmd [[

@@ -30,6 +30,9 @@
   },
   "tsserver.npm": "/opt/homebrew/bin/npm",
   "tsserver.log": "verbose",
+  "go.goplsOptions": {
+    "completeUnimported": true
+  },
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "typescript",
@@ -38,7 +41,13 @@
     "typescriptreact",
     "yaml",
     "json",
+    "go"
   ],
+  "Lua.workspace.library": {
+    "/usr/local/share/nvim/runtime/lua": true,
+    "/usr/local/share/nvim/runtime/lua/vim/lsp": true
+  },
+  "Lua.diagnostics.globals": ["vim"],
   "coc.preferences.useQuickfixForLocations": true,
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
