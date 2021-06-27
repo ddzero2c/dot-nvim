@@ -12,7 +12,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'towolf/vim-helm'
 Plug 'sebdah/vim-delve'
 
-Plug 'sbdchd/neoformat', { 'for': ['terrafomr', 'markdown'] }
+Plug 'sbdchd/neoformat', { 'for': ['terrafomr', 'markdown', 'yaml'] }
 
 Plug 'f-person/git-blame.nvim'
 Plug 'lewis6991/gitsigns.nvim'
@@ -44,6 +44,9 @@ Plug 'https://github.com/sumneko/lua-language-server', {
       \  cd ../.. &&
       \  ./3rd/luamake/luamake rebuild'
 			\  }
+
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 call plug#end()
 
 "colorscheme bored
