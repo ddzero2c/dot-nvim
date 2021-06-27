@@ -1,3 +1,51 @@
+call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'rlue/vim-barbaric'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'AndrewRadev/tagalong.vim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'junegunn/vim-easy-align'
+
+Plug 'towolf/vim-helm'
+Plug 'sebdah/vim-delve'
+
+Plug 'sbdchd/neoformat', { 'for': ['terrafomr', 'markdown'] }
+
+Plug 'f-person/git-blame.nvim'
+Plug 'lewis6991/gitsigns.nvim'
+
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'ryanoasis/vim-devicons'
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/lsp-status.nvim'
+Plug 'hrsh7th/nvim-compe'
+Plug 'onsails/lspkind-nvim'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-media-files.nvim'
+
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/playground'
+
+Plug 'norcalli/nvim-colorizer.lua'
+Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
+
+Plug 'https://github.com/sumneko/lua-language-server', {
+			\  'do': 'git submodule update --init --recursive &&
+      \  cd 3rd/luamake &&
+      \  compile/install.sh &&
+      \  cd ../.. &&
+      \  ./3rd/luamake/luamake rebuild'
+			\  }
+call plug#end()
+
 "colorscheme bored
 colorscheme pinkfloyd
 set background=light
@@ -21,7 +69,6 @@ set diffopt+=algorithm:histogram,indent-heuristic
 " system clipboard
 set clipboard^=unnamed,unnamedplus
 
-
 set hidden
 set nobackup
 set nowritebackup
@@ -31,7 +78,8 @@ set updatetime=300
 set shortmess+=c
 
 let g:mapleader = "\<Space>"
-nmap <C-c> <Esc>
+nnoremap <C-c> <Esc>
+inoremap <C-c> <Esc>
 
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
