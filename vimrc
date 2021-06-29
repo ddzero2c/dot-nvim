@@ -10,7 +10,8 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'junegunn/vim-easy-align'
 
 Plug 'towolf/vim-helm'
-Plug 'sebdah/vim-delve'
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
 
 Plug 'sbdchd/neoformat', { 'for': ['terrafomr', 'markdown', 'yaml'] }
 
@@ -23,14 +24,14 @@ Plug 'ryanoasis/vim-devicons'
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp-status.nvim'
+Plug 'ray-x/lsp_signature.nvim'
 Plug 'hrsh7th/nvim-compe'
 Plug 'onsails/lspkind-nvim'
 
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-media-files.nvim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
+Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/playground'
 

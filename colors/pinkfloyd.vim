@@ -112,8 +112,8 @@ hi! link Float            Constant
 call s:h("String",        {"fg": s:norm, "bg": s:string})
 
 "call s:h("Identifier",    {"fg": s:dark_blue})
-hi! link Identifier       Normal
-hi! link Delimiter        Normal
+call s:h("Identifier",       {"fg": s:norm})
+hi! link Delimiter        Identifier
 
 call s:h("Statement",     {"fg": s:norm_subtle, "gui": "bold"})
 hi! link Conditonal       Statement
@@ -269,3 +269,22 @@ hi! link GitSignsChangeLn DiffChange
 hi! link GitSignsDelete DiffDelete
 hi! link GitSignsDeleteNr DiffDelete
 hi! link GitSignsDeleteLn DiffDelete
+
+hi! link DapUIVariable Normal
+hi! link DapUIScope Statement
+hi! link DapUIType Type
+hi! link DapUIDecoration Statement
+hi! link DapUIThread Constant
+hi! link DapUIStoppedThread Statement
+hi! link DapUIFrameName Normal
+hi! link DapUISource Type
+hi! link DapUILineNumber Statement
+hi! link DapUIFloatBorder Statement
+hi! link DapUIWatchesHeader Statement
+hi! link DapUIWatchesEmpty Error
+hi! link DapUIWatchesValue Constant
+hi! link DapUIWatchesError Error
+hi! link DapUIBreakpointsPath Statement
+hi! link DapUIBreakpointsInfo Constant
+hi! link DapUIBreakpointsCurrentLine Constant
+hi! link DapUIBreakpointsLine DapUILineNumber
