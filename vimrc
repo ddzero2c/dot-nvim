@@ -52,7 +52,7 @@ call plug#end()
 
 "colorscheme bored
 colorscheme pinkfloyd
-set background=dark
+set background=light
 
 set nu rnu
 set ic

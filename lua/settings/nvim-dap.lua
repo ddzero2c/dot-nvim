@@ -31,7 +31,7 @@ dap.configurations.go = {
 		name = "Debug test", -- configuration for debugging test files
 		request = "launch",
 		mode = "test",
-		program = "${file}",
+		program = ".",
 	},
 }
 
@@ -80,6 +80,6 @@ require("dapui").setup({
 	},
 	floating = {
 		max_height = nil, -- These can be integers or a float between 0 and 1.
-		max_width = nil,   -- Floats will be treated as percentage of your screen.
+		max_width = nil, -- Floats will be treated as percentage of your screen.
 	},
 })

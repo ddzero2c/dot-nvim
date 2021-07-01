@@ -46,9 +46,6 @@ let s:light_purple    = { "gui": "#a790d5", "cterm": "140" }
 let s:yellow          = { "gui": "#F3E430", "cterm": "11"  }
 let s:light_yellow    = { "gui": "#ffff87", "cterm": "228" }
 let s:dark_yellow     = { "gui": "#A89C14", "cterm": "3"   }
-let s:diff_add        = { "gui": "#e6ffed", "cterm": "3"   }
-let s:diff_delete     = { "gui": "#ffeef0", "cterm": "3"   }
-let s:diff_text       = { "gui": "#acf2bd", "cterm": "3"   }
 
 let s:background = &background
 
@@ -170,7 +167,7 @@ call s:h("WildMenu",      {"fg": s:bg, "bg": s:norm})
 call s:h("Folded",        {"fg": s:medium_gray})
 call s:h("FoldColumn",    {"fg": s:bg_subtle})
 call s:h("DiffAdd",       {"fg": s:black, "bg": s:green})
-call s:h("DiffDelete",    {"fg": s:black, "bg": s:red})
+call s:h("DiffDelete",    {"fg": s:black, "bg": s:pink})
 call s:h("DiffChange",    {"fg": s:black, "bg": s:green})
 call s:h("DiffText",      {"fg": s:black, "bg": s:dark_green})
 call s:h("SignColumn",    {"fg": s:light_green})

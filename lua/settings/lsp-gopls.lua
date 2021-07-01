@@ -13,7 +13,7 @@ require("lspconfig").gopls.setup({
 	},
 })
 
-function goimports(wait_ms)
+function GoOrgImports(wait_ms)
 	local params = vim.lsp.util.make_range_params()
 	params.context = { only = { "source.organizeImports" } }
 	local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
@@ -28,5 +28,5 @@ function goimports(wait_ms)
 	end
 end
 
-vim.cmd("autocmd BufWritePre *.go lua goimports(1000)")
 vim.cmd("autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync()")
+vim.cmd("autocmd BufWritePre *.go lua GoOrgImports(1000)")
