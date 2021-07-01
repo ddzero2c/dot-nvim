@@ -39,12 +39,12 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 
 Plug 'https://github.com/sumneko/lua-language-server', {
-			\  'do': 'git submodule update --init --recursive &&
-      \  cd 3rd/luamake &&
-      \  compile/install.sh &&
-      \  cd ../.. &&
-      \  ./3rd/luamake/luamake rebuild'
-			\  }
+            \  'do': 'git submodule update --init --recursive &&
+            \  cd 3rd/luamake &&
+            \  compile/install.sh &&
+            \  cd ../.. &&
+            \  ./3rd/luamake/luamake rebuild'
+            \  }
 
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
@@ -87,7 +87,7 @@ inoremap <C-c> <Esc>
 
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
-autocmd FileType vim,lua setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType vim,lua setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType yaml,json setlocal ts=2 sts=2 sw=2 expandtab
@@ -104,6 +104,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 " hightlight on yank
 augroup LuaHighlight
-  autocmd!
-  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+    autocmd!
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
