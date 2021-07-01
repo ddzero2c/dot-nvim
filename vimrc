@@ -3,7 +3,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'rlue/vim-barbaric'
+"Plug 'rlue/vim-barbaric'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'ntpeters/vim-better-whitespace'
@@ -13,7 +13,7 @@ Plug 'towolf/vim-helm'
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
-Plug 'sbdchd/neoformat', { 'for': ['terrafomr', 'markdown', 'yaml'] }
+Plug 'sbdchd/neoformat', { 'for': ['terrafomr', 'markdown', 'yaml', 'lua'] }
 
 Plug 'f-person/git-blame.nvim'
 Plug 'lewis6991/gitsigns.nvim'
@@ -52,7 +52,7 @@ call plug#end()
 
 "colorscheme bored
 colorscheme pinkfloyd
-set background=light
+set background=dark
 
 set nu rnu
 set ic

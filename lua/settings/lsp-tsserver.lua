@@ -5,6 +5,7 @@ local nvim_lsp = require("lspconfig")
 require("null-ls").setup {}
 
 nvim_lsp.tsserver.setup {
+  flags = require('settings.lsp').flags,
   capabilities = require('settings.lsp').capabilities,
   on_attach = function(client, bufnr)
     -- disable tsserver formatting if you plan on formatting via null-ls
