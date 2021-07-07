@@ -18,7 +18,7 @@ vim.fn.sign_define(info_hl, { texthl = info_hl, text = info_sign, numhl = info_h
 
 -- diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	virtual_text = { prefix = "襁", spacing = 1 },
+	virtual_text = false,
 	signs = true,
 	underline = true,
 	update_in_insert = false,

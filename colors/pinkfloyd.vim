@@ -31,6 +31,7 @@ let s:dark_pink       = { "gui": "#ff5f87", "cterm": "204" }
 let s:light_pink      = { "gui": "#d75f87", "cterm": "168" }
 let s:dark_red        = { "gui": "#C30771", "cterm": "1"   }
 let s:light_red       = { "gui": "#E32791", "cterm": "1"   }
+let s:lightest_red    = { "gui": "#FFDCE0", "cterm": "10"  }
 let s:most_red        = { "gui": "#ec2100", "cterm": "1"   }
 let s:orange          = { "gui": "#D75F5F", "cterm": "167" }
 let s:most_blue       = { "gui": "#0432ff", "cterm": "18"  }
@@ -41,6 +42,7 @@ let s:light_blue      = { "gui": "#b6d6fd", "cterm": "153" }
 let s:dark_cyan       = { "gui": "#20A5BA", "cterm": "6"   }
 let s:light_cyan      = { "gui": "#4FB8CC", "cterm": "14"  }
 let s:dark_green      = { "gui": "#10A778", "cterm": "2"   }
+let s:lightest_green  = { "gui": "#CAFFD8", "cterm": "10"  }
 let s:light_green     = { "gui": "#5FD7A7", "cterm": "10"  }
 let s:light_purple    = { "gui": "#a790d5", "cterm": "140" }
 let s:yellow          = { "gui": "#F3E430", "cterm": "11"  }
@@ -101,7 +103,7 @@ endif
 call s:h("Cursor",        {"bg": s:pink, "fg": s:norm })
 call s:h("Comment",       {"fg": s:bg_subtle, "gui": "italic"})
 
-call s:h("Constant",      {"fg": s:norm, "gui": "bold"})
+call s:h("Constant",      {"fg": s:norm, "gui": "bold,italic"})
 hi! link Character        Constant
 hi! link Number           Constant
 hi! link Boolean          Constant
@@ -126,13 +128,13 @@ hi! link Define           PreProc
 hi! link Macro            PreProc
 hi! link PreCondit        PreProc
 
-call s:h("Type",          {"fg": s:norm, "gui": "bold,italic"})
+call s:h("Type",          {"fg": s:norm, "gui": "bold"})
 hi! link StorageClass     Type
 hi! link Structure        Type
 hi! link Typedef          Type
 hi! link Function         Type
 
-call s:h("Special",       {"fg": s:special, "gui": "bold,italic"})
+call s:h("Special",       {"fg": s:special, "gui": "bold"})
 hi! link Operator         Special
 hi! link SpecialChar      Special
 hi! link Tag              Special
@@ -150,8 +152,8 @@ call s:h("ErrorMsg",      {"fg": s:most_red, "gui": "bold"})
 call s:h("WarningMsg",    {"fg": s:yellow, "gui": "bold"})
 call s:h("HintMsg",       {"fg": s:lighter_black})
 call s:h("InfoMsg",       {"fg": s:lighter_black})
-call s:h("IncSearch",     {"bg": s:yellow, "fg": s:light_black})
-call s:h("Search",        {"bg": s:light_green, "fg": s:light_black})
+call s:h("IncSearch",     {"bg": s:light_yellow, "fg": s:light_black})
+call s:h("Search",        {"bg": s:light_yellow, "fg": s:light_black})
 call s:h("MoreMsg",       {"fg": s:medium_gray, "cterm": "bold", "gui": "bold"})
 hi! link ModeMsg MoreMsg
 call s:h("LineNr",        {"fg": s:bg_subtle})
@@ -166,10 +168,10 @@ call s:h("VisualNOS",     {"bg": s:bg_subtle})
 call s:h("WildMenu",      {"fg": s:bg, "bg": s:norm})
 call s:h("Folded",        {"fg": s:medium_gray})
 call s:h("FoldColumn",    {"fg": s:bg_subtle})
-call s:h("DiffAdd",       {"fg": s:black, "bg": s:green})
-call s:h("DiffDelete",    {"fg": s:black, "bg": s:pink})
-call s:h("DiffChange",    {"fg": s:black, "bg": s:green})
-call s:h("DiffText",      {"fg": s:black, "bg": s:dark_green})
+call s:h("DiffAdd",       {"fg": s:black, "bg": s:lightest_green})
+call s:h("DiffDelete",    {"fg": s:black, "bg": s:lightest_red})
+call s:h("DiffChange",    {"fg": s:black, "bg": s:lightest_green})
+call s:h("DiffText",      {"fg": s:black, "bg": s:light_green})
 call s:h("SignColumn",    {"fg": s:light_green})
 
 

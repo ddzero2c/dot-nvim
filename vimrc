@@ -9,11 +9,11 @@ Plug 'AndrewRadev/tagalong.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'junegunn/vim-easy-align'
 
-Plug 'towolf/vim-helm'
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
-Plug 'sbdchd/neoformat', { 'for': ['terrafomr', 'markdown', 'yaml', 'lua'] }
+Plug 'towolf/vim-helm'
+Plug 'sbdchd/neoformat', { 'for': ['terraform', 'markdown', 'yaml', 'lua'] }
 
 Plug 'f-person/git-blame.nvim'
 Plug 'lewis6991/gitsigns.nvim'
@@ -36,7 +36,7 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/playground'
 
 Plug 'norcalli/nvim-colorizer.lua'
-Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'https://github.com/sumneko/lua-language-server', {
             \  'do': 'git submodule update --init --recursive &&
