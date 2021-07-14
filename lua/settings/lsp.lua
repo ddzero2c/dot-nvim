@@ -20,7 +20,7 @@ vim.fn.sign_define(info_hl, { texthl = info_hl, text = info_sign, numhl = info_h
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 	virtual_text = false,
 	signs = true,
-	underline = true,
+	underline = false,
 	update_in_insert = false,
 })
 
