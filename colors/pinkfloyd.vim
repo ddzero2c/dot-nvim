@@ -103,7 +103,7 @@ endif
 call s:h("Cursor",        {"bg": s:pink, "fg": s:norm })
 call s:h("Comment",       {"fg": s:bg_subtle, "gui": "italic"})
 
-call s:h("Constant",      {"fg": s:norm, "gui": "bold,italic"})
+call s:h("Constant",      {"fg": s:norm_subtle, "gui": "bold,italic"})
 hi! link Character        Constant
 hi! link Number           Constant
 hi! link Boolean          Constant
@@ -146,14 +146,14 @@ call s:h("Ignore",        {"fg": s:bg})
 call s:h("Error",         {"fg": s:actual_white, "bg": s:most_red, "cterm": "bold"})
 call s:h("Todo",          {"fg": s:pink, "gui": "underline", "cterm": "underline"})
 call s:h("SpecialKey",    {"fg": s:light_green})
-call s:h("NonText",       {"fg": s:medium_gray})
+call s:h("NonText",       {"fg": s:bg_very_subtle})
 call s:h("Directory",     {"fg": s:dark_blue})
 call s:h("ErrorMsg",      {"fg": s:most_red, "gui": "bold"})
 call s:h("WarningMsg",    {"fg": s:yellow, "gui": "bold"})
 call s:h("HintMsg",       {"fg": s:lighter_black})
 call s:h("InfoMsg",       {"fg": s:lighter_black})
-call s:h("IncSearch",     {"bg": s:light_yellow, "fg": s:light_black})
-call s:h("Search",        {"bg": s:light_yellow, "fg": s:light_black})
+call s:h("IncSearch",     {"bg": s:green, "fg": s:light_black})
+call s:h("Search",        {"bg": s:green, "fg": s:light_black})
 call s:h("MoreMsg",       {"fg": s:medium_gray, "cterm": "bold", "gui": "bold"})
 hi! link ModeMsg MoreMsg
 call s:h("LineNr",        {"fg": s:bg_subtle})
@@ -287,3 +287,5 @@ hi! link DapUIBreakpointsPath Statement
 hi! link DapUIBreakpointsInfo Constant
 hi! link DapUIBreakpointsCurrentLine Constant
 hi! link DapUIBreakpointsLine DapUILineNumber
+
+hi! link TSConstructor Function

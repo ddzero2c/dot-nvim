@@ -4,7 +4,7 @@ vim.cmd("source ~/.config/nvim/vimrc")
 require("settings.nvim-treesitter")
 require("settings.gitsign")
 require("settings.nvim-colorizer")
-require("settings.indent-blankline")
+--require("settings.indent-blankline")
 require("settings.nvim-dap")
 
 require("settings.lsp")

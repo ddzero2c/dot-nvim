@@ -36,7 +36,7 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/playground'
 
 Plug 'norcalli/nvim-colorizer.lua'
-Plug 'lukas-reineke/indent-blankline.nvim'
+"Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'https://github.com/sumneko/lua-language-server', {
             \  'do': 'git submodule update --init --recursive &&
@@ -80,6 +80,9 @@ set noswapfile
 set cmdheight=1
 set updatetime=300
 set shortmess+=c
+
+set list
+set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:↲,precedes:«,extends:»
 
 let g:mapleader = "\<Space>"
 nnoremap <C-c> <Esc>

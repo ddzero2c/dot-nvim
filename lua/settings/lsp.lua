@@ -80,9 +80,7 @@ M.on_attach = function(client, bufnr)
 	documentHighlight(client, bufnr)
 	lsp_status.on_attach(client, bufnr)
 	require("lsp_signature").on_attach({
-		floating_window = false,
-		hint_scheme = "Comment",
-		hint_prefix = "*",
+		floating_window = true,
 	})
 end
 
