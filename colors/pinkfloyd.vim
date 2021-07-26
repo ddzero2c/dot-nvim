@@ -64,7 +64,8 @@ if &background == "dark"
   let s:visual          = s:light_pink
   let s:yellow          = s:light_yellow
   let s:string          = s:light_black
-  let s:special         = s:blue
+  let s:special         = s:light_blue
+  let s:type            = s:lighter_gray
 else
   let s:bg              = s:actual_white
   let s:bg_subtle       = s:light_gray
@@ -79,6 +80,7 @@ else
   let s:yellow          = s:dark_yellow
   let s:string          = s:lightest_gray
   let s:special         = s:most_blue
+  let s:type            = s:light_black
 endif
 
 " https://github.com/noahfrederick/vim-hemisu/
@@ -128,7 +130,7 @@ hi! link Define           PreProc
 hi! link Macro            PreProc
 hi! link PreCondit        PreProc
 
-call s:h("Type",          {"fg": s:norm, "gui": "bold"})
+call s:h("Type",          {"fg": s:type, "gui": "bold"})
 hi! link StorageClass     Type
 hi! link Structure        Type
 hi! link Typedef          Type

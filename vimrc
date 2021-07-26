@@ -8,6 +8,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'junegunn/vim-easy-align'
+Plug 'easymotion/vim-easymotion'
 
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
@@ -39,6 +40,7 @@ Plug 'norcalli/nvim-colorizer.lua'
 "Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'https://github.com/sumneko/lua-language-server', {
+            \ 'frozen': 1,
             \  'do': 'git submodule update --init --recursive &&
             \  cd 3rd/luamake &&
             \  compile/install.sh &&
@@ -54,7 +56,7 @@ call plug#end()
 colorscheme pinkfloyd
 set background=light
 
-set nu rnu
+set nu
 set ic
 set mouse=
 set undofile
