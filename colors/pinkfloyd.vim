@@ -239,28 +239,6 @@ hi! link CocInfoSign InfoMsg
 hi! link CocHintSign HintMsg
 hi! link CocHighlightText Search
 
-hi! link LspReferenceText CocHighlightText
-hi! link LspDiagnosticsDefaultError           ErrorMsg
-hi! link LspDiagnosticsDefaultWarning         WarningMsg
-hi! link LspDiagnosticsDefaultInformation     InfoMsg
-hi! link LspDiagnosticsDefaultHint            HintMsg
-hi! link LspDiagnosticsVirtualTextError       ErrorMsg
-hi! link LspDiagnosticsVirtualTextWarning     WarningMsg
-hi! link LspDiagnosticsVirtualTextInformation InfoMsg
-hi! link LspDiagnosticsVirtualTextHint        HintMsg
-hi! link LspDiagnosticsUnderlineError         ErrorMsg
-hi! link LspDiagnosticsUnderlineWarning       WarningMsg
-hi! link LspDiagnosticsUnderlineInformation   InfoMsg
-hi! link LspDiagnosticsUnderlineHint          HintMsg
-hi! link LspDiagnosticsFloatingError          ErrorMsg
-hi! link LspDiagnosticsFloatingWarning        WarningMsg
-hi! link LspDiagnosticsFloatingInformation    InfoMsg
-hi! link LspDiagnosticsFloatingHint           HintMsg
-hi! link LspDiagnosticsSignError              ErrorMsg
-hi! link LspDiagnosticsSignWarning            WarningMsg
-hi! link LspDiagnosticsSignInformation        InfoMsg
-hi! link LspDiagnosticsSignHint               HintMsg
-
 hi! link GitSignsAdd DiffAdd
 hi! link GitSignsAddNr DiffAdd
 hi! link GitSignsAddLn DiffAdd
@@ -270,6 +248,7 @@ hi! link GitSignsChangeLn DiffChange
 hi! link GitSignsDelete DiffDelete
 hi! link GitSignsDeleteNr DiffDelete
 hi! link GitSignsDeleteLn DiffDelete
+hi! link GitSignsCurrentLineBlame Comment
 
 hi! link DapUIVariable Normal
 hi! link DapUIScope Statement

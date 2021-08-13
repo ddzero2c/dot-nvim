@@ -18,14 +18,14 @@ vim.fn.sign_define(info_hl, { texthl = info_hl, text = info_sign, numhl = info_h
 
 -- diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	virtual_text = false,
+	virtual_text = true,
 	signs = true,
 	underline = true,
-	update_in_insert = true,
+	update_in_insert = false,
 })
 
 -- symbols highlight
-local function documentHighlight(client, bufnr)
+local function documentHighlight(client)
 	-- Set autocommands conditional on server_capabilities
 	if client.resolved_capabilities.document_highlight then
 		vim.cmd(
@@ -61,7 +61,11 @@ M.on_attach = function(client, bufnr)
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
 	end
+	local function buf_set_option(...)
+		vim.api.nvim_buf_set_option(bufnr, ...)
+	end
 
+	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 	local opts = { noremap = true, silent = true }
 	buf_set_keymap("n", "gD", ":lua vim.lsp.buf.declaration()<CR>", opts)
 	buf_set_keymap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts)
@@ -77,7 +81,7 @@ M.on_attach = function(client, bufnr)
 	buf_set_keymap("n", "<C-p>", ":lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
 	buf_set_keymap("n", "<C-n>", ":lua vim.lsp.diagnostic.goto_next()<CR>", opts)
 
-	documentHighlight(client, bufnr)
+	documentHighlight(client)
 	lsp_status.on_attach(client, bufnr)
 	require("lsp_signature").on_attach({
 		floating_window = true,

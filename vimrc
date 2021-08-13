@@ -3,7 +3,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-"Plug 'rlue/vim-barbaric'
+Plug 'rlue/vim-barbaric'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'ntpeters/vim-better-whitespace'
@@ -16,7 +16,6 @@ Plug 'rcarriga/nvim-dap-ui'
 Plug 'towolf/vim-helm'
 Plug 'sbdchd/neoformat', { 'for': ['terraform', 'markdown', 'yaml', 'lua'] }
 
-Plug 'f-person/git-blame.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
@@ -27,7 +26,6 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp-status.nvim'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'hrsh7th/nvim-compe'
-Plug 'onsails/lspkind-nvim'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -37,7 +35,6 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/playground'
 
 Plug 'norcalli/nvim-colorizer.lua'
-"Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'https://github.com/sumneko/lua-language-server', {
             \ 'frozen': 1,
