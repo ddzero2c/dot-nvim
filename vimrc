@@ -24,15 +24,18 @@ Plug 'ryanoasis/vim-devicons'
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp-status.nvim'
-Plug 'ray-x/lsp_signature.nvim'
 Plug 'hrsh7th/nvim-compe'
+"Plug 'hrsh7th/nvim-cmp'
+"Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'ray-x/lsp_signature.nvim'
+Plug 'ray-x/go.nvim'
 
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
+Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/playground'
+Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'norcalli/nvim-colorizer.lua'
 
@@ -72,6 +75,9 @@ set diffopt+=algorithm:histogram,indent-heuristic
 " system clipboard
 set clipboard^=unnamed,unnamedplus
 
+set dictionary+=/Users/ryder.hsu/.config/nvim/10k.txt
+set dictionary+=/Users/ryder.hsu/.config/nvim/zh.txt
+
 set hidden
 set nobackup
 set nowritebackup
@@ -109,3 +115,7 @@ augroup LuaHighlight
     autocmd!
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
+
+autocmd FileType go nnoremap <leader>b :GoBreakToggle<cr>
+autocmd FileType go nnoremap <leader>d :GoDebug<cr>
+autocmd FileType go nnoremap <leader>D :GoDebug test<cr>

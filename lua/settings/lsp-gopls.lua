@@ -9,24 +9,18 @@ require("lspconfig").gopls.setup({
 				unusedparams = true,
 			},
 			staticcheck = true,
+			usePlaceholders = true,
 		},
 	},
 })
 
-function GoOrgImports(wait_ms)
-	local params = vim.lsp.util.make_range_params()
-	params.context = { only = { "source.organizeImports" } }
-	local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
-	for _, res in pairs(result or {}) do
-		for _, r in pairs(res.result or {}) do
-			if r.edit then
-				vim.lsp.util.apply_workspace_edit(r.edit)
-			else
-				vim.lsp.buf.execute_command(r.command)
-			end
-		end
-	end
-end
-
-vim.cmd("autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync()")
-vim.cmd("autocmd BufWritePre *.go lua GoOrgImports(1000)")
+require("go").setup({
+	goimport = "gopls",
+	gofmt = "gopls",
+	dap_debug = true,
+	dap_debug_gui = true,
+	dap_debug_vt = false,
+})
+vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
+vim.fn.sign_define("DapBreakpoint", { text = "•", texthl = "", linehl = "", numhl = "" })
+vim.fn.sign_define("DapStopped", { text = "→", texthl = "", linehl = "Cursor", numhl = "" })

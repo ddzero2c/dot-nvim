@@ -1,8 +1,8 @@
-vim.o.completeopt = "menuone,noselect"
+vim.o.completeopt = "menu,menuone"
 
 require("compe").setup({
 	enabled = true,
-	autocomplete = true,
+	autocomplete = false,
 	debug = false,
 	min_length = 1,
 	preselect = "disable",
@@ -14,7 +14,7 @@ require("compe").setup({
 	max_kind_width = 100,
 	max_menu_width = 100,
 	documentation = {
-		border = { "", "", "", " ", "", "", "", " " }, -- the border option is the same as `|help nvim_open_win|`
+		border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }, -- the border option is the same as `|help nvim_open_win|`
 		winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
 		max_width = 120,
 		min_width = 60,
@@ -23,9 +23,9 @@ require("compe").setup({
 	},
 
 	source = {
-		path = true,
-		buffer = true,
-		calc = true,
+		path = false,
+		buffer = false,
+		calc = false,
 		nvim_lsp = true,
 		nvim_lua = true,
 		vsnip = false,
@@ -35,8 +35,9 @@ require("compe").setup({
 })
 
 vim.cmd([[
+inoremap <expr> <C-x><C-o>        compe#complete()
 inoremap <silent><expr> <C-j>     compe#confirm('<CR>')
 inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-u>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 ]])
