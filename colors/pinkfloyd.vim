@@ -143,6 +143,7 @@ hi! link Tag              Special
 hi! link SpecialComment   Special
 hi! link Debug            Special
 
+call s:h("LspCodeLens",    {"fg": s:bg_subtle, "gui": "underline", "cterm": "underline"})
 call s:h("Underlined",    {"fg": s:norm, "gui": "underline", "cterm": "underline"})
 call s:h("Ignore",        {"fg": s:bg})
 call s:h("Error",         {"fg": s:actual_white, "bg": s:most_red, "cterm": "bold"})
@@ -152,8 +153,8 @@ call s:h("NonText",       {"fg": s:bg_very_subtle})
 call s:h("Directory",     {"fg": s:dark_blue})
 call s:h("ErrorMsg",      {"fg": s:most_red, "gui": "bold"})
 call s:h("WarningMsg",    {"fg": s:yellow, "gui": "bold"})
-call s:h("HintMsg",       {"fg": s:lighter_black})
-call s:h("InfoMsg",       {"fg": s:lighter_black})
+call s:h("HintMsg",       {"fg": s:norm})
+call s:h("InfoMsg",       {"fg": s:norm})
 call s:h("IncSearch",     {"bg": s:bg_subtle, "fg": s:light_black})
 call s:h("Search",        {"bg": s:bg_subtle, "fg": s:light_black})
 call s:h("MoreMsg",       {"fg": s:medium_gray, "cterm": "bold", "gui": "bold"})
@@ -193,6 +194,8 @@ call s:h("Pmenu",         {"fg": s:norm, "bg": s:bg_very_subtle})
 call s:h("PmenuSel",      {"fg": s:subtle_black, "bg": s:pink})
 call s:h("PmenuSbar",     {"fg": s:norm, "bg": s:bg_subtle})
 call s:h("PmenuThumb",    {"fg": s:norm, "bg": s:bg_subtle})
+call s:h("NormalFloat",   {"fg": s:norm, "bg": s:bg})
+call s:h("FloatBorder",   {"fg": s:norm, "bg": s:bg})
 call s:h("TabLine",       {"fg": s:norm, "bg": s:bg_very_subtle})
 call s:h("TabLineSel",    {"fg": s:subtle_black, "bg": s:pink, "gui": "bold", "cterm": "bold"})
 call s:h("TabLineFill",   {"fg": s:norm, "bg": s:bg_very_subtle})
@@ -270,3 +273,6 @@ hi! link DapUIBreakpointsCurrentLine Constant
 hi! link DapUIBreakpointsLine DapUILineNumber
 
 hi! link TSConstructor Function
+
+hi! link LspDiagnosticsDefaultInformation InfoMsg
+hi! link LspDiagnosticsDefaultHint InfoHint

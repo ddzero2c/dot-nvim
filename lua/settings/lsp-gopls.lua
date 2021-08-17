@@ -8,8 +8,21 @@ require("lspconfig").gopls.setup({
 			analyses = {
 				unusedparams = true,
 			},
+			codelenses = {
+				test = true,
+				tidy = true,
+				vendor = true,
+				upgrade_dependency = true,
+				generate = true,
+				gc_details = true,
+			},
+			completeUnimported = true,
 			staticcheck = true,
 			usePlaceholders = true,
+			matcher = "fuzzy",
+			symbolMatcher = "fuzzy",
+			experimentalWatchedFileDelay = "100ms",
+			diagnosticsDelay = "500ms",
 		},
 	},
 })

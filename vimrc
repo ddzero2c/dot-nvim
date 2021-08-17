@@ -83,7 +83,7 @@ set nobackup
 set nowritebackup
 set noswapfile
 set cmdheight=1
-set updatetime=300
+set updatetime=250
 set shortmess+=c
 
 set list

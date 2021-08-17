@@ -1,3 +1,5 @@
+Border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+
 local M = {}
 local lsp_status = require("lsp-status")
 lsp_status.register_progress()
@@ -16,12 +18,34 @@ vim.fn.sign_define(hint_hl, { texthl = hint_hl, text = hint_sign, numhl = hint_h
 vim.fn.sign_define(info_hl, { texthl = info_hl, text = info_sign, numhl = info_hl })
 
 -- diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	virtual_text = true,
-	signs = true,
-	underline = true,
-	update_in_insert = false,
-})
+vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, _, params, client_id, _)
+	local config = { -- your config
+		underline = true,
+		virtual_text = false,
+		signs = true,
+		update_in_insert = false,
+	}
+	local uri = params.uri
+	local bufnr = vim.uri_to_bufnr(uri)
+
+	if not bufnr then
+		return
+	end
+
+	local diagnostics = params.diagnostics
+
+	for i, v in ipairs(diagnostics) do
+		diagnostics[i].message = string.format("%s: %s", v.source, v.message)
+	end
+
+	vim.lsp.diagnostic.save(diagnostics, bufnr, client_id)
+
+	if not vim.api.nvim_buf_is_loaded(bufnr) then
+		return
+	end
+
+	vim.lsp.diagnostic.display(diagnostics, bufnr, client_id, config)
+end
 
 -- symbols highlight
 local function documentHighlight(client)
@@ -71,16 +95,24 @@ M.on_attach = function(client, bufnr)
 	buf_set_keymap("n", "<leader>rn", ":lua vim.lsp.buf.rename()<CR>", opts)
 	buf_set_keymap("n", "<leader>ac", ":lua vim.lsp.buf.code_action()<CR>", opts)
 	buf_set_keymap("n", "<leader>f", ":lua vim.lsp.buf.formatting()<CR>", opts)
-	buf_set_keymap("n", "<C-l>", ":lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
-	buf_set_keymap("n", "<C-p>", ":lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
-	buf_set_keymap("n", "<C-n>", ":lua vim.lsp.diagnostic.goto_next()<CR>", opts)
+	buf_set_keymap("n", "<C-p>", ":lua vim.lsp.diagnostic.goto_prev({focusable=false, border=Border})<CR>", opts)
+	buf_set_keymap("n", "<C-n>", ":lua vim.lsp.diagnostic.goto_next({focusable=false, border=Border})<CR>", opts)
+	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = Border })
+	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = Border })
+	--	vim.api.nvim_command([[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
+	--	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>l", "<Cmd>lua vim.lsp.codelens.run()<CR>", { silent = true })
 
+	vim.cmd(
+		[[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false, border=Border})]]
+	)
 	documentHighlight(client)
 	lsp_status.on_attach(client, bufnr)
 	require("lsp_signature").on_attach({
 		bind = true,
 		hint_enable = false,
 		doc_lines = 0,
+		max_height = 1,
+		max_width = 140,
 	})
 end
 
