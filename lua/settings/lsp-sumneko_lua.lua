@@ -4,10 +4,8 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-require("lspconfig").sumneko_lua.setup({
-	flags = require("settings.lsp").flags,
+require("lspconfig").sumneko_lua.setup(coq.lsp_ensure_capabilities({
 	on_attach = require("settings.lsp").on_attach,
-	capabilities = require("settings.lsp").capabilities,
 	cmd = {
 		sumneko_binary,
 		"-E",
@@ -37,4 +35,4 @@ require("lspconfig").sumneko_lua.setup({
 			},
 		},
 	},
-})
+}))

@@ -3,9 +3,7 @@ local nvim_lsp = require("lspconfig")
 -- enable null-ls integration (optional)
 require("null-ls").setup({})
 
-nvim_lsp.tsserver.setup({
-	flags = require("settings.lsp").flags,
-	capabilities = require("settings.lsp").capabilities,
+nvim_lsp.tsserver.setup(coq.lsp_ensure_capabilities({
 	on_attach = function(client, bufnr)
 		-- disable tsserver formatting if you plan on formatting via null-ls
 		client.resolved_capabilities.document_formatting = false
@@ -53,4 +51,4 @@ nvim_lsp.tsserver.setup({
 		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", {silent = true})
 		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", {silent = true})
 	end,
-})
+}))

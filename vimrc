@@ -24,9 +24,17 @@ Plug 'ryanoasis/vim-devicons'
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp-status.nvim'
-Plug 'hrsh7th/nvim-compe'
+"Plug 'hrsh7th/nvim-compe'
 "Plug 'hrsh7th/nvim-cmp'
 "Plug 'hrsh7th/cmp-nvim-lsp'
+let g:coq_settings = {
+            \ 'auto_start': v:true,
+            \ 'keymap.manual_complete': "<c-x><c-o>",
+            \ 'keymap.bigger_preview': "<c-k>",
+            \ 'keymap.jump_to_mark': "<c-h>",
+            \ }
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'ray-x/go.nvim'
 
@@ -52,9 +60,18 @@ Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 call plug#end()
 
+" coq_nvim
+ino <silent><expr> <Esc>   pumvisible() ? "\<C-e><Esc>" : "\<Esc>"
+ino <silent><expr> <C-c>   pumvisible() ? "\<C-e><C-c>" : "\<C-c>"
+ino <silent><expr> <BS>    pumvisible() ? "\<C-e><BS>"  : "\<BS>"
+ino <silent><expr> <C-j>   pumvisible() ? (complete_info().selected == -1 ? "\<C-e><CR>" : "\<C-y>") : "\<CR>"
+ino <silent><expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+ino <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
+
 "colorscheme bored
 colorscheme pinkfloyd
 set background=light
+set pumblend=10
 
 set nu
 set ic

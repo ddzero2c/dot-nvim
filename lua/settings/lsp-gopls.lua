@@ -1,8 +1,11 @@
-require("lspconfig").gopls.setup({
-	flags = require("settings.lsp").flags,
+require("lspconfig").gopls.setup(coq.lsp_ensure_capabilities({
 	on_attach = require("settings.lsp").on_attach,
-	capabilities = require("settings.lsp").capabilities,
-	cmd = { "gopls", "serve" },
+	cmd = {
+		"gopls", -- share the gopls instance if there is one already
+		"-remote=auto", --[[ debug options ]] --
+		"-remote.debug=:0",
+	},
+	flags = { allow_incremental_sync = true, debounce_text_changes = 500 },
 	settings = {
 		gopls = {
 			analyses = {
@@ -25,7 +28,7 @@ require("lspconfig").gopls.setup({
 			diagnosticsDelay = "500ms",
 		},
 	},
-})
+}))
 
 require("go").setup({
 	goimport = "gopls",
@@ -35,5 +38,3 @@ require("go").setup({
 	dap_debug_vt = false,
 })
 vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
-vim.fn.sign_define("DapBreakpoint", { text = "•", texthl = "", linehl = "", numhl = "" })
-vim.fn.sign_define("DapStopped", { text = "→", texthl = "", linehl = "Cursor", numhl = "" })

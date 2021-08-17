@@ -1,4 +1,5 @@
-Border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+--Border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+coq = require("coq")()
 
 local M = {}
 local lsp_status = require("lsp-status")
@@ -21,7 +22,7 @@ vim.fn.sign_define(info_hl, { texthl = info_hl, text = info_sign, numhl = info_h
 vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, _, params, client_id, _)
 	local config = { -- your config
 		underline = true,
-		virtual_text = false,
+		virtual_text = true,
 		signs = true,
 		update_in_insert = false,
 	}
@@ -64,11 +65,6 @@ local function documentHighlight(client)
 	end
 end
 
--- snippet support
-local snippet_capabilities = {
-	textDocument = { completion = { completionItem = { snippetSupport = true } } },
-}
-
 -- lsp status
 lsp_status.config({
 	status_symbol = "",
@@ -95,30 +91,22 @@ M.on_attach = function(client, bufnr)
 	buf_set_keymap("n", "<leader>rn", ":lua vim.lsp.buf.rename()<CR>", opts)
 	buf_set_keymap("n", "<leader>ac", ":lua vim.lsp.buf.code_action()<CR>", opts)
 	buf_set_keymap("n", "<leader>f", ":lua vim.lsp.buf.formatting()<CR>", opts)
-	buf_set_keymap("n", "<C-p>", ":lua vim.lsp.diagnostic.goto_prev({focusable=false, border=Border})<CR>", opts)
-	buf_set_keymap("n", "<C-n>", ":lua vim.lsp.diagnostic.goto_next({focusable=false, border=Border})<CR>", opts)
-	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = Border })
-	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = Border })
+	buf_set_keymap("n", "<C-p>", ":lua vim.lsp.diagnostic.goto_prev({focusable=false})<CR>", opts)
+	buf_set_keymap("n", "<C-n>", ":lua vim.lsp.diagnostic.goto_next({focusable=false})<CR>", opts)
 	--	vim.api.nvim_command([[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
 	--	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>l", "<Cmd>lua vim.lsp.codelens.run()<CR>", { silent = true })
-
-	vim.cmd(
-		[[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false, border=Border})]]
-	)
 	documentHighlight(client)
 	lsp_status.on_attach(client, bufnr)
 	require("lsp_signature").on_attach({
 		bind = true,
+		handler_opts = {
+			border = "none",
+		},
 		hint_enable = false,
 		doc_lines = 0,
 		max_height = 1,
 		max_width = 140,
 	})
 end
-
-M.capabilities = vim.tbl_deep_extend("keep", lsp_status.capabilities, snippet_capabilities)
-M.flags = {
-	debounce_text_changes = 150,
-}
 
 return M
