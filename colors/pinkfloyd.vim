@@ -26,7 +26,7 @@ let s:light_black     = { "gui": "#262626", "cterm": "235" }
 let s:lighter_black   = { "gui": "#4E4E4E", "cterm": "239" }
 let s:light_gray      = { "gui": "#A8A8A8", "cterm": "248" }
 let s:lighter_gray    = { "gui": "#C6C6C6", "cterm": "251" }
-let s:lightest_gray   = { "gui": "#EEEEEE", "cterm": "255" }
+let s:lightest_gray   = { "gui": "#DEDEDE", "cterm": "255" }
 let s:dark_pink       = { "gui": "#ff5f87", "cterm": "204" }
 let s:light_pink      = { "gui": "#d75f87", "cterm": "168" }
 let s:dark_red        = { "gui": "#C30771", "cterm": "1"   }
@@ -48,6 +48,7 @@ let s:light_purple    = { "gui": "#a790d5", "cterm": "140" }
 let s:yellow          = { "gui": "#F3E430", "cterm": "11"  }
 let s:light_yellow    = { "gui": "#ffff87", "cterm": "228" }
 let s:dark_yellow     = { "gui": "#A89C14", "cterm": "3"   }
+let s:github_bg       = { "gui": "#f4f4f4", "cterm": "15"}
 
 let s:background = &background
 
@@ -67,7 +68,7 @@ if &background == "dark"
   let s:special         = s:light_blue
   let s:type            = s:lighter_gray
 else
-  let s:bg              = s:actual_white
+  let s:bg              = s:github_bg
   let s:bg_subtle       = s:light_gray
   let s:bg_very_subtle  = s:lightest_gray
   let s:norm            = s:black
@@ -194,8 +195,8 @@ call s:h("Pmenu",         {"fg": s:norm, "bg": s:bg_very_subtle})
 call s:h("PmenuSel",      {"fg": s:subtle_black, "bg": s:pink})
 call s:h("PmenuSbar",     {"fg": s:norm, "bg": s:bg_subtle})
 call s:h("PmenuThumb",    {"fg": s:norm, "bg": s:bg_subtle})
-call s:h("NormalFloat",   {"fg": s:norm, "bg": s:bg})
-call s:h("FloatBorder",   {"fg": s:norm, "bg": s:bg})
+"call s:h("NormalFloat",   {"fg": s:norm, "bg": s:bg})
+"call s:h("FloatBorder",   {"fg": s:norm, "bg": s:bg})
 call s:h("TabLine",       {"fg": s:norm, "bg": s:bg_very_subtle})
 call s:h("TabLineSel",    {"fg": s:subtle_black, "bg": s:pink, "gui": "bold", "cterm": "bold"})
 call s:h("TabLineFill",   {"fg": s:norm, "bg": s:bg_very_subtle})

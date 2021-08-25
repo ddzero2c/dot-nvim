@@ -3,7 +3,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'rlue/vim-barbaric'
+"Plug 'rlue/vim-barbaric'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'ntpeters/vim-better-whitespace'
@@ -25,6 +25,9 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp-status.nvim'
 Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+Plug 'rafamadriz/friendly-snippets'
 "Plug 'hrsh7th/nvim-cmp'
 "Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'ray-x/lsp_signature.nvim'
@@ -55,6 +58,7 @@ call plug#end()
 "colorscheme bored
 colorscheme pinkfloyd
 set background=light
+set pumblend=10
 
 set nu
 set ic
@@ -119,3 +123,4 @@ augroup END
 autocmd FileType go nnoremap <leader>b :GoBreakToggle<cr>
 autocmd FileType go nnoremap <leader>d :GoDebug<cr>
 autocmd FileType go nnoremap <leader>D :GoDebug test<cr>
+autocmd FileType go nnoremap <leader>l :GoCodeLenAct<cr>

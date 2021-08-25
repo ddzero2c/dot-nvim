@@ -1,4 +1,4 @@
-Border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+--Border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 
 local M = {}
 local lsp_status = require("lsp-status")
@@ -65,8 +65,14 @@ local function documentHighlight(client)
 end
 
 -- snippet support
-local snippet_capabilities = {
-	textDocument = { completion = { completionItem = { snippetSupport = true } } },
+local snippet_capabilities = vim.lsp.protocol.make_client_capabilities()
+snippet_capabilities.textDocument.completion.completionItem.snippetSupport = true
+snippet_capabilities.textDocument.completion.completionItem.resolveSupport = {
+	properties = {
+		"documentation",
+		"detail",
+		"additionalTextEdits",
+	},
 }
 
 -- lsp status
@@ -95,20 +101,21 @@ M.on_attach = function(client, bufnr)
 	buf_set_keymap("n", "<leader>rn", ":lua vim.lsp.buf.rename()<CR>", opts)
 	buf_set_keymap("n", "<leader>ac", ":lua vim.lsp.buf.code_action()<CR>", opts)
 	buf_set_keymap("n", "<leader>f", ":lua vim.lsp.buf.formatting()<CR>", opts)
-	buf_set_keymap("n", "<C-p>", ":lua vim.lsp.diagnostic.goto_prev({focusable=false, border=Border})<CR>", opts)
-	buf_set_keymap("n", "<C-n>", ":lua vim.lsp.diagnostic.goto_next({focusable=false, border=Border})<CR>", opts)
-	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = Border })
-	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = Border })
+	buf_set_keymap("n", "<C-p>", ":lua vim.lsp.diagnostic.goto_prev({focusable=false})<CR>", opts)
+	buf_set_keymap("n", "<C-n>", ":lua vim.lsp.diagnostic.goto_next({focusable=false})<CR>", opts)
+	--vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = Border })
+	--vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = Border })
 	--	vim.api.nvim_command([[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
 	--	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>l", "<Cmd>lua vim.lsp.codelens.run()<CR>", { silent = true })
 
-	vim.cmd(
-		[[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false, border=Border})]]
-	)
+	--vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]])
 	documentHighlight(client)
 	lsp_status.on_attach(client, bufnr)
 	require("lsp_signature").on_attach({
 		bind = true,
+		handler_opts = {
+			border = "none",
+		},
 		hint_enable = false,
 		doc_lines = 0,
 		max_height = 1,
@@ -116,9 +123,24 @@ M.on_attach = function(client, bufnr)
 	})
 end
 
-M.capabilities = vim.tbl_deep_extend("keep", lsp_status.capabilities, snippet_capabilities)
-M.flags = {
-	debounce_text_changes = 150,
-}
+M.ensure_capabilities = function(cfg)
+	local spec1 = {
+		capabilities = vim.lsp.protocol.make_client_capabilities(),
+	}
+	local spec2 = {
+		capabilities = {
+			textDocument = {
+				completion = {
+					completionItem = {
+						snippetSupport = true,
+					},
+				},
+			},
+		},
+	}
+	local maps = (cfg or {}).capabilities and { spec2 } or { spec1, spec2 }
+	local new = vim.tbl_deep_extend("force", cfg or vim.empty_dict(), unpack(maps))
+	return new
+end
 
 return M

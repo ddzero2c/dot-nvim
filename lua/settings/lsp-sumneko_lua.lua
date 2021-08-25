@@ -1,13 +1,12 @@
+local lsp = require("settings.lsp")
 local sumneko_root_path = vim.fn.stdpath("data") .. "/plugged/lua-language-server"
 local sumneko_binary = sumneko_root_path .. "/bin/macOS/lua-language-server"
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-require("lspconfig").sumneko_lua.setup({
-	flags = require("settings.lsp").flags,
+require("lspconfig").sumneko_lua.setup(lsp.ensure_capabilities({
 	on_attach = require("settings.lsp").on_attach,
-	capabilities = require("settings.lsp").capabilities,
 	cmd = {
 		sumneko_binary,
 		"-E",
@@ -37,4 +36,4 @@ require("lspconfig").sumneko_lua.setup({
 			},
 		},
 	},
-})
+}))

@@ -1,31 +1,38 @@
-require("lspconfig").gopls.setup({
-	flags = require("settings.lsp").flags,
-	on_attach = require("settings.lsp").on_attach,
-	capabilities = require("settings.lsp").capabilities,
-	cmd = { "gopls", "serve" },
+local lsp = require("settings.lsp")
+require("lspconfig").gopls.setup(lsp.ensure_capabilities({
+	on_attach = lsp.on_attach,
+	cmd = {
+		"gopls", -- share the gopls instance if there is one already
+		"-remote.debug=:0",
+	},
+	message_level = vim.lsp.protocol.MessageType.Error,
+	flags = { allow_incremental_sync = true, debounce_text_changes = 500 },
 	settings = {
 		gopls = {
-			analyses = {
-				unusedparams = true,
-			},
+			-- more settings: https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+			-- flags = {allow_incremental_sync = true, debounce_text_changes = 500},
+			-- not supported
+			analyses = { unusedparams = true, unreachable = false },
 			codelenses = {
+				generate = true, -- show the `go generate` lens.
+				gc_details = true, --  // Show a code lens toggling the display of gc's choices.
 				test = true,
 				tidy = true,
-				vendor = true,
-				upgrade_dependency = true,
-				generate = true,
-				gc_details = true,
 			},
+			usePlaceholders = true,
 			completeUnimported = true,
 			staticcheck = true,
-			usePlaceholders = true,
 			matcher = "fuzzy",
-			symbolMatcher = "fuzzy",
-			experimentalWatchedFileDelay = "100ms",
+			-- experimentalDiagnosticsDelay = "500ms",
 			diagnosticsDelay = "500ms",
+			experimentalWatchedFileDelay = "100ms",
+			symbolMatcher = "fuzzy",
+			gofumpt = false, -- true, -- turn on for new repos, gofmpt is good but also create code turmoils
+			buildFlags = { "-tags", "integration" },
+			-- buildFlags = {"-tags", "functional"}
 		},
 	},
-})
+}))
 
 require("go").setup({
 	goimport = "gopls",

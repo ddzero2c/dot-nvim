@@ -2,7 +2,7 @@ vim.o.completeopt = "menu,menuone"
 
 require("compe").setup({
 	enabled = true,
-	autocomplete = false,
+	autocomplete = true,
 	debug = false,
 	min_length = 1,
 	preselect = "disable",
@@ -14,7 +14,7 @@ require("compe").setup({
 	max_kind_width = 100,
 	max_menu_width = 100,
 	documentation = {
-		border = Border,
+		--border = Border,
 		winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
 		max_width = 120,
 		min_width = 60,
@@ -23,21 +23,21 @@ require("compe").setup({
 	},
 
 	source = {
-		path = false,
-		buffer = false,
+		path = true,
+		buffer = true,
 		calc = false,
 		nvim_lsp = true,
 		nvim_lua = true,
-		vsnip = false,
+		vsnip = true,
 		ultisnips = false,
 		luasnip = false,
 	},
 })
 
 vim.cmd([[
-inoremap <expr> <C-x><C-o>        compe#complete()
+inoremap <expr> <C-k>             compe#complete()
 inoremap <silent><expr> <C-j>     compe#confirm('<CR>')
 inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-u>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 ]])
