@@ -21,7 +21,7 @@ vim.fn.sign_define(info_hl, { texthl = info_hl, text = info_sign, numhl = info_h
 vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, _, params, client_id, _)
 	local config = { -- your config
 		underline = true,
-		virtual_text = false,
+		virtual_text = true,
 		signs = true,
 		update_in_insert = false,
 	}
