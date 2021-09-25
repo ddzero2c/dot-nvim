@@ -9,6 +9,7 @@ Plug 'AndrewRadev/tagalong.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'junegunn/vim-easy-align'
 Plug 'easymotion/vim-easymotion'
+Plug 'dhruvasagar/vim-table-mode', { 'ft': ['mardown']}
 
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
@@ -24,12 +25,18 @@ Plug 'ryanoasis/vim-devicons'
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp-status.nvim'
-Plug 'hrsh7th/nvim-compe'
+"Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-nvim-lua'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-emoji'
+Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'rafamadriz/friendly-snippets'
-"Plug 'hrsh7th/nvim-cmp'
-"Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'onsails/lspkind-nvim'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'ray-x/go.nvim'
 
@@ -56,7 +63,7 @@ Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 call plug#end()
 
 "colorscheme bored
-colorscheme pinkfloyd
+colorscheme blueperiod
 set background=light
 set pumblend=10
 
@@ -78,9 +85,6 @@ set diffopt+=algorithm:histogram,indent-heuristic
 
 " system clipboard
 set clipboard^=unnamed,unnamedplus
-
-set dictionary+=/Users/ryder.hsu/.config/nvim/10k.txt
-set dictionary+=/Users/ryder.hsu/.config/nvim/zh.txt
 
 set hidden
 set nobackup

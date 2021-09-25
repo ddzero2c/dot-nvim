@@ -7,7 +7,7 @@ require("settings.nvim-colorizer")
 
 require("settings.lsp")
 --require("settings.nvim-cmp")
-require("settings.compe")
+--require("settings.compe")
 require("settings.lsp-sumneko_lua")
 require("settings.lsp-gopls")
 require("settings.lsp-tsserver")
