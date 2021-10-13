@@ -1,16 +1,45 @@
 vim.cmd("source ~/.config/nvim/vimrc")
+vim.cmd("luafile ~/.config/nvim/statusline.lua")
+vim.cmd("luafile ~/.config/nvim/lsp.lua")
+vim.cmd("luafile ~/.config/nvim/cmp.lua")
+vim.cmd("luafile ~/.config/nvim/dap.lua")
 
---require("settings.telescope")
-require("settings.nvim-treesitter")
-require("settings.gitsign")
-require("settings.nvim-colorizer")
+require("nvim-treesitter.configs").setup({
+	ensure_installed = "maintained",
+	ignore_install = { "haskell" },
+	highlight = { enable = true },
+})
 
-require("settings.lsp")
-require("settings.nvim-cmp")
-require("settings.lsp-sumneko_lua")
-require("settings.lsp-gopls")
-require("settings.lsp-pyright")
-require("settings.lsp-tsserver")
-require("settings.lsp-solargraph")
-require("settings.nvim-dap")
-require("settings.galaxyline")
+require("nvim-treesitter.configs").setup({
+	textobjects = {
+		select = {
+			enable = true,
+			lookahead = true,
+
+			keymaps = {
+				["af"] = "@function.outer",
+				["if"] = "@function.inner",
+				["ia"] = "@parameter.inner",
+				["aa"] = "@parameter.outer",
+			},
+		},
+	},
+})
+
+require("gitsigns").setup({
+	current_line_blame = true,
+	current_line_blame_opts = {
+		delay = 500,
+		virt_text_pos = "eol",
+	},
+})
+
+require("colorizer").setup({ "*" }, {
+	RGB = true, -- #RGB hex codes
+	RRGGBB = true, -- #RRGGBB hex codes
+	RRGGBBAA = true, -- #RRGGBBAA hex codes
+	rgb_fn = true, -- CSS rgb() and rgba() functions
+	hsl_fn = true, -- CSS hsl() and hsla() functions
+	css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+	css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+})

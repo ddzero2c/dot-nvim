@@ -1,7 +1,6 @@
 --Border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 
-local M = {}
-
+local lsp = require("lspconfig")
 local err_sign = ""
 local warn_sign = ""
 local hint_sign = ""
@@ -73,7 +72,7 @@ snippet_capabilities.textDocument.completion.completionItem.resolveSupport = {
 	},
 }
 
-M.on_attach = function(client, bufnr)
+local function on_attach(client, bufnr)
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
 	end
@@ -109,7 +108,7 @@ M.on_attach = function(client, bufnr)
 	})
 end
 
-M.ensure_capabilities = function(cfg)
+local function ensure_capabilities(cfg)
 	local spec1 = {
 		capabilities = vim.lsp.protocol.make_client_capabilities(),
 	}
@@ -129,4 +128,131 @@ M.ensure_capabilities = function(cfg)
 	return new
 end
 
-return M
+-- Lua LSP --
+-- :PlugInstall lua-language-server
+local sumneko_root_path = vim.fn.stdpath("data") .. "/plugged/lua-language-server"
+local sumneko_binary = sumneko_root_path .. "/bin/macOS/lua-language-server"
+local runtime_path = vim.split(package.path, ";")
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+lsp.sumneko_lua.setup(ensure_capabilities({
+	on_attach = on_attach,
+	cmd = {
+		sumneko_binary,
+		"-E",
+		sumneko_root_path .. "/main.lua",
+	},
+	settings = {
+		Lua = {
+			runtime = {
+				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+				version = "LuaJIT",
+				-- Setup your lua path
+				path = runtime_path,
+			},
+			diagnostics = {
+				-- Get the language server to recognize the `vim` global
+				globals = {
+					"vim",
+				},
+			},
+			workspace = {
+				-- Make the server aware of Neovim runtime files
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
+			-- Do not send telemetry data containing a randomized but unique identifier
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
+}))
+
+-- Go LSP --
+lsp.gopls.setup(ensure_capabilities({
+	on_attach = on_attach,
+	cmd = {
+		"gopls", -- share the gopls instance if there is one already
+		"-remote.debug=:0",
+	},
+	settings = {
+		gopls = {
+			-- more settings: https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+			-- flags = {allow_incremental_sync = true, debounce_text_changes = 500},
+			-- not supported
+			analyses = { unusedparams = true },
+			staticcheck = true,
+		},
+	},
+}))
+require("go").setup({
+	goimport = "gopls",
+	gofmt = "gopls",
+	dap_debug = false,
+	dap_debug_gui = false,
+	dap_debug_vt = false,
+})
+vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
+
+-- Typescript & Javascript LSP --
+-- npm install -g typescript typescript-language-server
+-- enable null-ls integration (optional)
+require("null-ls").setup({})
+lsp.tsserver.setup(ensure_capabilities({
+	on_attach = function(client, bufnr)
+		-- disable tsserver formatting if you plan on formatting via null-ls
+		client.resolved_capabilities.document_formatting = false
+
+		-- format on save
+		vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()")
+		local ts_utils = require("nvim-lsp-ts-utils")
+
+		-- defaults
+		ts_utils.setup({
+			debug = false,
+			disable_commands = false,
+			enable_import_on_completion = false,
+			import_all_timeout = 5000, -- ms
+
+			-- eslint
+			eslint_enable_code_actions = true,
+			eslint_enable_disable_comments = true,
+			eslint_bin = "eslint_d",
+			eslint_config_fallback = nil,
+			eslint_enable_diagnostics = true,
+
+			-- formatting
+			enable_formatting = true,
+			formatter = "prettier",
+			formatter_config_fallback = nil,
+
+			-- parentheses completion
+			complete_parens = false,
+			signature_help_in_parens = true,
+
+			-- update imports on file move
+			update_imports_on_move = true,
+			require_confirmation_on_move = true,
+			watch_dir = nil,
+		})
+
+		-- required to fix code action ranges
+		ts_utils.setup_client(client)
+
+		on_attach(client, bufnr)
+		-- no default maps, so you may want to define some here
+		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", {silent = true})
+		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "qq", ":TSLspFixCurrent<CR>", {silent = true})
+		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", {silent = true})
+		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", {silent = true})
+	end,
+}))
+
+-- Python LSP --
+lsp.pyright.setup(ensure_capabilities({
+	on_attach = on_attach,
+}))
+
+lsp.solargraph.setup(ensure_capabilities({
+	on_attach = on_attach,
+}))
