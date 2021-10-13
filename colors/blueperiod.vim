@@ -171,10 +171,10 @@ else
   call s:h("SpellLocal",  {"cterm": "underline", "fg": s:dark_green})
 endif
 
-call s:h("Pmenu",         {"fg": s:norm, "bg": s:bg_very_subtle})
+call s:h("Pmenu",         {"fg": s:norm})
 call s:h("PmenuSel",      {"fg": s:white, "bg": s:main})
-call s:h("PmenuSbar",     {"fg": s:norm, "bg": s:bg_subtle})
-call s:h("PmenuThumb",    {"fg": s:norm, "bg": s:bg_subtle})
+call s:h("PmenuSbar",     {"fg": s:norm, "bg": s:bg_very_subtle})
+call s:h("PmenuThumb",    {"fg": s:norm, "gui": "reverse"})
 "call s:h("NormalFloat",   {"fg": s:norm, "bg": s:bg})
 "call s:h("FloatBorder",   {"fg": s:norm, "bg": s:bg})
 call s:h("TabLine",       {"fg": s:norm, "bg": s:bg_very_subtle})
@@ -250,6 +250,8 @@ hi! link TSConstructor Function
 
 hi! link LspDiagnosticsDefaultInformation InfoMsg
 hi! link LspDiagnosticsDefaultHint InfoHint
+
+hi! link CmpItemAbbrDefault Pmenu
 
 " Highlight characters your input matches
 highlight TelescopeMatching       gui=bold

@@ -1,4 +1,4 @@
---Border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 
 local lsp = require("lspconfig")
 local err_sign = ""
@@ -61,17 +61,6 @@ local function documentHighlight(client)
 	end
 end
 
--- snippet support
-local snippet_capabilities = vim.lsp.protocol.make_client_capabilities()
-snippet_capabilities.textDocument.completion.completionItem.snippetSupport = true
-snippet_capabilities.textDocument.completion.completionItem.resolveSupport = {
-	properties = {
-		"documentation",
-		"detail",
-		"additionalTextEdits",
-	},
-}
-
 local function on_attach(client, bufnr)
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -89,17 +78,17 @@ local function on_attach(client, bufnr)
 	buf_set_keymap("n", "<leader>f", ":lua vim.lsp.buf.formatting()<CR>", opts)
 	buf_set_keymap("n", "<C-p>", ":lua vim.lsp.diagnostic.goto_prev({focusable=false})<CR>", opts)
 	buf_set_keymap("n", "<C-n>", ":lua vim.lsp.diagnostic.goto_next({focusable=false})<CR>", opts)
-	--vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = Border })
-	--vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = Border })
-	--	vim.api.nvim_command([[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
-	--	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>l", "<Cmd>lua vim.lsp.codelens.run()<CR>", { silent = true })
+	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
+	--vim.api.nvim_command([[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
+	--vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>l", "<Cmd>lua vim.lsp.codelens.run()<CR>", { silent = true })
 
 	--vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]])
 	documentHighlight(client)
 	require("lsp_signature").on_attach({
 		bind = true,
 		handler_opts = {
-			border = "none",
+			border = border,
 		},
 		hint_enable = false,
 		doc_lines = 0,
@@ -108,25 +97,7 @@ local function on_attach(client, bufnr)
 	})
 end
 
-local function ensure_capabilities(cfg)
-	local spec1 = {
-		capabilities = vim.lsp.protocol.make_client_capabilities(),
-	}
-	local spec2 = {
-		capabilities = {
-			textDocument = {
-				completion = {
-					completionItem = {
-						snippetSupport = true,
-					},
-				},
-			},
-		},
-	}
-	local maps = (cfg or {}).capabilities and { spec2 } or { spec1, spec2 }
-	local new = vim.tbl_deep_extend("force", cfg or vim.empty_dict(), unpack(maps))
-	return new
-end
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- Lua LSP --
 -- :PlugInstall lua-language-server
@@ -135,7 +106,8 @@ local sumneko_binary = sumneko_root_path .. "/bin/macOS/lua-language-server"
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
-lsp.sumneko_lua.setup(ensure_capabilities({
+lsp.sumneko_lua.setup({
+	capabilities = capabilities,
 	on_attach = on_attach,
 	cmd = {
 		sumneko_binary,
@@ -166,10 +138,11 @@ lsp.sumneko_lua.setup(ensure_capabilities({
 			},
 		},
 	},
-}))
+})
 
 -- Go LSP --
-lsp.gopls.setup(ensure_capabilities({
+lsp.gopls.setup({
+	capabilities = capabilities,
 	on_attach = on_attach,
 	cmd = {
 		"gopls", -- share the gopls instance if there is one already
@@ -184,7 +157,7 @@ lsp.gopls.setup(ensure_capabilities({
 			staticcheck = true,
 		},
 	},
-}))
+})
 require("go").setup({
 	goimport = "gopls",
 	gofmt = "gopls",
@@ -198,7 +171,8 @@ vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').
 -- npm install -g typescript typescript-language-server
 -- enable null-ls integration (optional)
 require("null-ls").setup({})
-lsp.tsserver.setup(ensure_capabilities({
+lsp.tsserver.setup({
+	capabilities = capabilities,
 	on_attach = function(client, bufnr)
 		-- disable tsserver formatting if you plan on formatting via null-ls
 		client.resolved_capabilities.document_formatting = false
@@ -246,13 +220,15 @@ lsp.tsserver.setup(ensure_capabilities({
 		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", {silent = true})
 		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", {silent = true})
 	end,
-}))
+})
 
 -- Python LSP --
-lsp.pyright.setup(ensure_capabilities({
+lsp.pyright.setup({
+	capabilities = capabilities,
 	on_attach = on_attach,
-}))
+})
 
-lsp.solargraph.setup(ensure_capabilities({
+lsp.solargraph.setup({
+	capabilities = capabilities,
 	on_attach = on_attach,
-}))
+})
