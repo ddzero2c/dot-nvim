@@ -12,7 +12,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'dhruvasagar/vim-table-mode', { 'ft': ['mardown']}
 
 Plug 'mfussenegger/nvim-dap'
-Plug 'rcarriga/nvim-dap-ui'
+"Plug 'rcarriga/nvim-dap-ui'
 
 Plug 'towolf/vim-helm'
 Plug 'sbdchd/neoformat', { 'for': ['terraform', 'markdown', 'yaml', 'lua'] }
@@ -22,9 +22,13 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'PhilRunninger/nerdtree-visual-selection'
+Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
 
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/lsp-status.nvim'
+"Plug 'nvim-lua/lsp-status.nvim'
 "Plug 'hrsh7th/nvim-compe'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -126,7 +130,4 @@ augroup LuaHighlight
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
 
-autocmd FileType go nnoremap <leader>b :GoBreakToggle<cr>
-autocmd FileType go nnoremap <leader>d :GoDebug<cr>
-autocmd FileType go nnoremap <leader>D :GoDebug test<cr>
-autocmd FileType go nnoremap <leader>l :GoCodeLenAct<cr>
+nnoremap <C-t> :NERDTreeToggle<CR>

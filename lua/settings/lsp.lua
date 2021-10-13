@@ -1,8 +1,6 @@
 --Border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 
 local M = {}
-local lsp_status = require("lsp-status")
-lsp_status.register_progress()
 
 local err_sign = ""
 local warn_sign = ""
@@ -75,17 +73,6 @@ snippet_capabilities.textDocument.completion.completionItem.resolveSupport = {
 	},
 }
 
--- lsp status
-lsp_status.config({
-	status_symbol = "",
-	indicator_errors = err_sign,
-	indicator_warnings = warn_sign,
-	indicator_hint = hint_sign,
-	indicator_info = info_sign,
-	indicator_ok = "✔️",
-	spinner_frames = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" },
-})
-
 M.on_attach = function(client, bufnr)
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -110,7 +97,6 @@ M.on_attach = function(client, bufnr)
 
 	--vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]])
 	documentHighlight(client)
-	lsp_status.on_attach(client, bufnr)
 	require("lsp_signature").on_attach({
 		bind = true,
 		handler_opts = {

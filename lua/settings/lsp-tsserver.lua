@@ -1,3 +1,4 @@
+-- npm install -g typescript typescript-language-server
 local lsp = require("settings.lsp")
 local nvim_lsp = require("lspconfig")
 
