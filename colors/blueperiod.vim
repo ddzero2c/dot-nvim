@@ -251,6 +251,10 @@ hi! link TSConstructor Function
 hi! link LspDiagnosticsDefaultInformation InfoMsg
 hi! link LspDiagnosticsDefaultHint InfoHint
 
+hi LspReferenceText gui=bold,reverse
+hi LspReferenceRead gui=bold,reverse
+hi LspReferenceWrite gui=bold,reverse
+
 hi! link CmpItemAbbrDefault Pmenu
 
 " Highlight characters your input matches

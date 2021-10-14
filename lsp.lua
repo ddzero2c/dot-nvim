@@ -45,17 +45,20 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, _, params, cli
 end
 
 -- symbols highlight
-local function documentHighlight(client)
+local function lsp_highlight_document(client)
+	if vim.lsp.document_highlight == false then
+		return -- we don't need further
+	end
 	-- Set autocommands conditional on server_capabilities
 	if client.resolved_capabilities.document_highlight then
-		vim.cmd(
+		vim.api.nvim_exec(
 			[[
       augroup lsp_document_highlight
-      autocmd! * <buffer>
-      autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-      autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
       augroup END
-      ]],
+    ]],
 			false
 		)
 	end
@@ -84,18 +87,13 @@ local function on_attach(client, bufnr)
 	--vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>l", "<Cmd>lua vim.lsp.codelens.run()<CR>", { silent = true })
 
 	--vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]])
-	documentHighlight(client)
-	require("lsp_signature").on_attach({
-		bind = true,
-		handler_opts = {
-			border = border,
-		},
-		hint_enable = false,
-		doc_lines = 0,
-		max_height = 1,
-		max_width = 140,
-	})
+	lsp_highlight_document(client)
 end
+
+require("lsp_signature").setup({
+	hint_enable = false,
+	transpancy = 10,
+})
 
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
