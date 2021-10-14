@@ -1,8 +1,8 @@
 vim.cmd("source ~/.config/nvim/vimrc")
 vim.cmd("luafile ~/.config/nvim/statusline.lua")
 vim.cmd("luafile ~/.config/nvim/lsp.lua")
-vim.cmd("luafile ~/.config/nvim/cmp.lua")
-vim.cmd("luafile ~/.config/nvim/dap.lua")
+vim.cmd("luafile ~/.config/nvim/autocomplete.lua")
+vim.cmd("luafile ~/.config/nvim/debugger.lua")
 
 require("nvim-treesitter.configs").setup({
 	ensure_installed = "maintained",
