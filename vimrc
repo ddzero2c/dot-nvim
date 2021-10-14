@@ -22,10 +22,8 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
-Plug 'preservim/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'PhilRunninger/nerdtree-visual-selection'
-Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
+Plug 'kyazdani42/nvim-tree.lua'
+Plug 'NTBBloodbath/galaxyline.nvim'
 
 Plug 'neovim/nvim-lspconfig'
 "Plug 'nvim-lua/lsp-status.nvim'
@@ -130,8 +128,8 @@ augroup LuaHighlight
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
 
-" nerdtree
-nnoremap <C-t> :NERDTreeToggle<CR>
+" luatree
+nnoremap <C-t> :NvimTreeToggle<CR>
 
 " fzf
 let g:fzf_preview_window = []
