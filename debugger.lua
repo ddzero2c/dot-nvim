@@ -1,4 +1,5 @@
 local dap = require("dap")
+local dapui = require("dapui")
 dap.adapters.go = function(callback, config)
 	local stdout = vim.loop.new_pipe(false)
 	local handle
@@ -30,6 +31,7 @@ dap.adapters.go = function(callback, config)
 		callback({ type = "server", host = "127.0.0.1", port = port })
 	end, 100)
 end
+
 -- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
 dap.configurations.go = {
 	{
@@ -55,14 +57,43 @@ dap.configurations.go = {
 	},
 }
 
-vim.fn.sign_define("DapBreakpoint", { text = "•", texthl = "", linehl = "", numhl = "" })
-vim.fn.sign_define("DapStopped", { text = "→", texthl = "", linehl = "", numhl = "Cursor" })
+vim.fn.sign_define("DapBreakpoint", { text = "•", texthl = "ErrorMsg", linehl = "", numhl = "" })
+vim.fn.sign_define("DapStopped", { text = "→", texthl = "ErrorMsg", linehl = "", numhl = "Error" })
+
+dapui.setup({
+	sidebar = { position = "right" },
+})
+
+function debugger_start()
+	vim.cmd([[
+    set mouse=a
+    nnoremap <silent> c :lua require('dap').continue()<CR>
+    nnoremap <silent> b :lua require('dap').toggle_breakpoint()<CR>
+    nnoremap <silent> n :lua require('dap').step_over()<CR>
+    nnoremap <silent> s :lua require('dap').step_into()<CR>
+    nnoremap <silent> S :lua require('dap').step_out()<CR>
+    nnoremap <silent> p :lua require("dapui").eval()<CR>
+    ]])
+	dap.continue()
+	dapui.open()
+end
+
+function debugger_stop()
+	dapui.close()
+	dap.close()
+	vim.cmd([[
+    set mouse=
+    unmap c
+    unmap b
+    unmap n
+    unmap s
+    unmap S
+    unmap p
+    ]])
+end
 
 vim.cmd([[
-nnoremap <silent> <F5> :lua require'dap'.continue()<CR>
-nnoremap <silent> <F1> :lua require'dap'.step_over()<CR>
-nnoremap <silent> <F2> :lua require'dap'.step_into()<CR>
-nnoremap <silent> <F3> :lua require'dap'.step_out()<CR>
-nnoremap <silent> <F4> :lua require'dap'.close()<CR>
+nnoremap <silent> <F5> :lua debugger_start()<CR>
+nnoremap <silent> <F4> :lua debugger_stop()<CR>
 nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
 ]])

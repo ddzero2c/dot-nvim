@@ -96,6 +96,7 @@ call s:h("String",        {"fg": s:norm, "bg": s:string})
 "call s:h("Identifier",    {"fg": s:dark_blue})
 call s:h("Identifier",       {"fg": s:norm})
 hi! link Delimiter        Identifier
+hi! link Function         Identifier
 
 call s:h("Statement",     {"fg": s:norm_subtle, "gui": "bold"})
 hi! link Conditonal       Statement
@@ -115,7 +116,6 @@ call s:h("Type",          {"fg": s:type, "gui": "bold"})
 hi! link StorageClass     Type
 hi! link Structure        Type
 hi! link Typedef          Type
-hi! link Function         Type
 
 call s:h("Special",       {"fg": s:special, "gui": "bold"})
 hi! link Operator         Special

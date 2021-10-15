@@ -1,32 +1,6 @@
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'tanvirtin/vgit.nvim'
-Plug 'rlue/vim-barbaric'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'AndrewRadev/tagalong.vim'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'junegunn/vim-easy-align'
-Plug 'easymotion/vim-easymotion'
-Plug 'dhruvasagar/vim-table-mode', { 'ft': ['mardown']}
-
-Plug 'mfussenegger/nvim-dap'
-"Plug 'rcarriga/nvim-dap-ui'
-
-Plug 'towolf/vim-helm'
-Plug 'sbdchd/neoformat', { 'for': ['terraform', 'markdown', 'yaml', 'lua'] }
-
-Plug 'lewis6991/gitsigns.nvim'
-
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'ryanoasis/vim-devicons'
-Plug 'kyazdani42/nvim-tree.lua'
-Plug 'NTBBloodbath/galaxyline.nvim'
 
 Plug 'neovim/nvim-lspconfig'
-"Plug 'nvim-lua/lsp-status.nvim'
-"Plug 'hrsh7th/nvim-compe'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
@@ -37,21 +11,10 @@ Plug 'hrsh7th/cmp-emoji'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'rafamadriz/friendly-snippets'
+
 Plug 'onsails/lspkind-nvim'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'ray-x/go.nvim'
-
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-Plug 'RRethy/nvim-treesitter-textsubjects'
-Plug 'nvim-treesitter/playground'
-"Plug 'nvim-telescope/telescope.nvim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-Plug 'norcalli/nvim-colorizer.lua'
 
 Plug 'https://github.com/sumneko/lua-language-server', {
             \ 'frozen': 1,
@@ -64,6 +27,45 @@ Plug 'https://github.com/sumneko/lua-language-server', {
 
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+
+Plug 'towolf/vim-helm'
+
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'sbdchd/neoformat', { 'for': ['terraform', 'markdown', 'yaml', 'lua'] }
+
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'rlue/vim-barbaric'
+
+Plug 'editorconfig/editorconfig-vim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'junegunn/vim-easy-align'
+Plug 'easymotion/vim-easymotion'
+Plug 'dhruvasagar/vim-table-mode', { 'ft': ['mardown']}
+
+Plug 'AndrewRadev/tagalong.vim'
+Plug 'windwp/nvim-ts-autotag'
+
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'ryanoasis/vim-devicons'
+Plug 'kyazdani42/nvim-tree.lua'
+Plug 'NTBBloodbath/galaxyline.nvim'
+
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'RRethy/nvim-treesitter-textsubjects'
+Plug 'nvim-treesitter/playground'
+"Plug 'nvim-telescope/telescope.nvim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+Plug 'norcalli/nvim-colorizer.lua'
+Plug 'tanvirtin/vgit.nvim'
+
 call plug#end()
 
 "colorscheme bored

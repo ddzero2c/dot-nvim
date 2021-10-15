@@ -5,6 +5,8 @@ vim.cmd("luafile ~/.config/nvim/autocomplete.lua")
 vim.cmd("luafile ~/.config/nvim/debugger.lua")
 
 require("nvim-tree").setup({ disable_netrw = false })
+require("nvim-ts-autotag").setup()
+
 require("nvim-treesitter.configs").setup({
 	ensure_installed = "maintained",
 	ignore_install = { "haskell" },
@@ -69,7 +71,7 @@ vgit.setup({
 	render = {
 		layout = vgit.layouts.default,
 		sign = {
-			priority = 10,
+			priority = 0,
 			hls = {
 				add = "VGitSignAdd",
 				remove = "VGitSignRemove",
