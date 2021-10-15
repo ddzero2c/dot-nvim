@@ -31,7 +31,7 @@ let s:dark_pink       = { "gui": "#ff5f87", "cterm": "204" }
 let s:light_pink      = { "gui": "#d75f87", "cterm": "168" }
 let s:dark_red        = { "gui": "#C30771", "cterm": "1"   }
 let s:light_red       = { "gui": "#E32791", "cterm": "1"   }
-let s:lightest_red    = { "gui": "#FFDCE0", "cterm": "10"  }
+let s:lightest_red    = { "gui": "#FCD5D2", "cterm": "10"  }
 let s:most_red        = { "gui": "#ec2100", "cterm": "1"   }
 let s:dark_blue       = { "gui": "#008EC4", "cterm": "32"  }
 let s:blue            = { "gui": "#20BBFC", "cterm": "12"  }
@@ -147,7 +147,7 @@ call s:h("StatusLine",    {"bg": s:bg_very_subtle})
 call s:h("StatusLineNC",  {"bg": s:bg_very_subtle, "fg": s:medium_gray})
 call s:h("VertSplit",     {"bg": s:bg_very_subtle, "fg": s:bg_very_subtle})
 call s:h("Title",         {"fg": s:dark_blue})
-call s:h("Visual",        {"fg": s:norm, "bg": s:visual})
+call s:h("Visual",        {"fg": s:white, "bg": s:visual})
 call s:h("VisualNOS",     {"bg": s:bg_subtle})
 call s:h("WildMenu",      {"fg": s:bg, "bg": s:norm})
 call s:h("Folded",        {"fg": s:medium_gray})
@@ -227,6 +227,12 @@ hi! link GitSignsDeleteNr DiffDelete
 hi! link GitSignsDeleteLn DiffDelete
 hi! link GitSignsCurrentLineBlame Comment
 
+hi! link VGitViewSignAdd DiffAdd
+hi! link VGitSignAdd DiffAdd
+hi! link VGitViewSignRemove DiffDelete
+hi! link VGitSignRemove DiffDelete
+hi! link VGitSignChange DiffChange
+
 hi! link DapUIVariable Normal
 hi! link DapUIScope Statement
 hi! link DapUIType Type
@@ -251,9 +257,9 @@ hi! link TSConstructor Function
 hi! link LspDiagnosticsDefaultInformation InfoMsg
 hi! link LspDiagnosticsDefaultHint InfoHint
 
-hi LspReferenceText gui=bold,reverse
-hi LspReferenceRead gui=bold,reverse
-hi LspReferenceWrite gui=bold,reverse
+hi! link LspReferenceText Visual
+hi! link LspReferenceRead Visual
+hi! link LspReferenceWrite Visual
 
 hi! link CmpItemAbbrDefault Pmenu
 

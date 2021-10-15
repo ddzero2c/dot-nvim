@@ -1,9 +1,8 @@
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-"Plug 'rlue/vim-barbaric'
+Plug 'tanvirtin/vgit.nvim'
+Plug 'rlue/vim-barbaric'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'ntpeters/vim-better-whitespace'
@@ -46,6 +45,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'RRethy/nvim-treesitter-textsubjects'
 Plug 'nvim-treesitter/playground'
 "Plug 'nvim-telescope/telescope.nvim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -135,8 +135,6 @@ nnoremap <C-t> :NvimTreeToggle<CR>
 let g:fzf_preview_window = []
 let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.6 } }
 nnoremap <leader>p :Files<cr>
-nnoremap <leader>G :Ag<cr>
-nnoremap <leader>g :Rg<cr>
 
 " neoformat
 let g:neoformat_only_msg_on_error = 1
