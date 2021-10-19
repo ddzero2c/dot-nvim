@@ -230,3 +230,15 @@ lsp.solargraph.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
+
+-- CSS LSP --
+-- npm i -g vscode-langservers-extracted
+lsp.cssls.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+-- npm install -g @tailwindcss/language-server
+lsp.tailwindcss.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
