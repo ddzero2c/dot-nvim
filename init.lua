@@ -3,6 +3,7 @@ vim.cmd("luafile ~/.config/nvim/statusline.lua")
 vim.cmd("luafile ~/.config/nvim/lsp.lua")
 vim.cmd("luafile ~/.config/nvim/autocomplete.lua")
 vim.cmd("luafile ~/.config/nvim/debugger.lua")
+vim.cmd("luafile ~/.config/nvim/formatter.lua")
 
 require("nvim-tree").setup({ disable_netrw = false })
 require("nvim-ts-autotag").setup()
@@ -18,7 +19,6 @@ require("nvim-treesitter.configs").setup({
 		select = {
 			enable = true,
 			lookahead = true,
-
 			keymaps = {
 				["af"] = "@function.outer",
 				["if"] = "@function.inner",

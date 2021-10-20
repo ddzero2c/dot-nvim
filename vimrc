@@ -32,7 +32,7 @@ Plug 'towolf/vim-helm'
 
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
-Plug 'sbdchd/neoformat', { 'for': ['terraform', 'markdown', 'yaml', 'lua'] }
+Plug 'mhartington/formatter.nvim'
 
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -139,13 +139,6 @@ nnoremap <leader>t :NvimTreeToggle<CR>
 let g:fzf_preview_window = []
 let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.6 } }
 nnoremap <leader>p :Files<cr>
-
-" neoformat
-let g:neoformat_only_msg_on_error = 1
-augroup fmt
-    autocmd!
-    autocmd BufWritePre *.lua,*.json,*.yml,*.yaml,*.hcl,*.tf silent! undojoin | Neoformat
-augroup END
 
 " vim-easymotion
 map  <leader>s <Plug>(easymotion-bd-f)
