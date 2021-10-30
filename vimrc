@@ -15,6 +15,8 @@ Plug 'rafamadriz/friendly-snippets'
 Plug 'onsails/lspkind-nvim'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'ray-x/go.nvim'
+"Plug 'simrat39/rust-tools.nvim'
+Plug 'tomlion/vim-solidity'
 
 Plug 'https://github.com/sumneko/lua-language-server', {
             \ 'frozen': 1,

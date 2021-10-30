@@ -176,6 +176,7 @@ require("lspconfig")["null-ls"].setup({})
 lsp.tsserver.setup({
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
+		on_attach(client, bufnr)
 		-- disable tsserver formatting if you plan on formatting via null-ls
 		client.resolved_capabilities.document_formatting = false
 		client.resolved_capabilities.document_range_formatting = false
@@ -257,6 +258,19 @@ lsp.cssls.setup({
 })
 -- npm install -g @tailwindcss/language-server
 lsp.tailwindcss.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+-- Rust LSP --
+-- curl -L https://github.com/rust-analyzer/rust-analyzer/releases/download/2021-10-18/rust-analyzer-aarch64-apple-darwin.gz | gunzip -c - > ~/bin/rust-analyzer && chmod +x ~/bin/rust-analyzer
+lsp.rust_analyzer.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+--require("rust-tools").setup({})
+
+lsp.solang.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
