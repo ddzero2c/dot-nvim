@@ -1,8 +1,20 @@
 require("cmp_nvim_lsp").setup({})
 local cmp = require("cmp")
+local lspkind = require("lspkind")
+
+require("cmp_tabnine.config"):setup({
+	max_lines = 1000,
+	max_num_results = 20,
+	sort = true,
+	run_on_every_keystroke = true,
+	snippet_placeholder = "..",
+})
 
 cmp.setup({
 	--preselect = cmp.PreselectMode.None,
+	completion = {
+		completeopt = "menu,menuone,noinsert",
+	},
 	snippet = {
 		expand = function(args)
 			vim.fn["vsnip#anonymous"](args.body)
@@ -25,13 +37,12 @@ cmp.setup({
 		{ name = "path" },
 		{ name = "buffer" },
 		{ name = "emoji" },
+		{ name = "cmp_tabnine" },
 	},
 	formatting = {
-		format = require("lspkind").cmp_format({
-			with_text = true,
-		}),
+		format = lspkind.cmp_format({ with_text = true, maxwidth = 50 }),
 	},
-	documentation = {
-		border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-	},
+	--documentation = {
+	--	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+	--},
 })

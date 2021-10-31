@@ -1,10 +1,10 @@
-local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+--local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 
 local lsp = require("lspconfig")
-local err_sign = ""
-local warn_sign = ""
-local hint_sign = ""
-local info_sign = ""
+local err_sign = ""
+local warn_sign = ""
+local hint_sign = ""
+local info_sign = ""
 local err_hl = "LspDiagnosticsSignError"
 local warn_hl = "LspDiagnosticsSignWarning"
 local hint_hl = "LspDiagnosticsSignHint"
@@ -84,8 +84,8 @@ local function on_attach(client, bufnr)
 	buf_set_keymap("n", "<space>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
 	buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
 	buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
-	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
-	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
+	--vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+	--vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
 	--vim.api.nvim_command([[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
 	--vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>l", "<Cmd>lua vim.lsp.codelens.run()<CR>", { silent = true })
 
@@ -95,7 +95,7 @@ end
 
 require("lsp_signature").setup({
 	hint_enable = false,
-	transpancy = 10,
+	transpancy = 5,
 })
 
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -165,6 +165,8 @@ require("go").setup({
 	dap_debug = false,
 	dap_debug_gui = false,
 	dap_debug_vt = false,
+	lsp_on_attach = false,
+	lsp_codelens = false,
 })
 vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
 

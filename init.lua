@@ -37,6 +37,10 @@ require("nvim-treesitter.configs").setup({
 	},
 })
 
+require("indent_blankline").setup({
+	show_end_of_line = true,
+})
+
 require("colorizer").setup({ "*" }, {
 	RGB = true, -- #RGB hex codes
 	RRGGBB = true, -- #RRGGBB hex codes
