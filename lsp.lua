@@ -15,26 +15,25 @@ vim.fn.sign_define(hint_hl, { texthl = hint_hl, text = hint_sign, numhl = hint_h
 vim.fn.sign_define(info_hl, { texthl = info_hl, text = info_sign, numhl = info_hl })
 
 -- diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, _, params, client_id, _)
+vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, result, context, _)
 	local config = { -- your config
 		underline = true,
 		virtual_text = true,
 		signs = true,
 		update_in_insert = false,
 	}
-	local uri = params.uri
+	local uri = result.uri
 	local bufnr = vim.uri_to_bufnr(uri)
-
 	if not bufnr then
 		return
 	end
 
-	local diagnostics = params.diagnostics
-
+	local diagnostics = result.diagnostics
 	for i, v in ipairs(diagnostics) do
 		diagnostics[i].message = string.format("%s: %s", v.source, v.message)
 	end
 
+	local client_id = context.client_id
 	vim.lsp.diagnostic.save(diagnostics, bufnr, client_id)
 
 	if not vim.api.nvim_buf_is_loaded(bufnr) then
