@@ -77,13 +77,13 @@ local function on_attach(client, bufnr)
 	buf_set_keymap("n", "gy", ":lua vim.lsp.buf.type_definition()<CR>", opts)
 	buf_set_keymap("n", "gr", ":lua vim.lsp.buf.references()<CR>", opts)
 	buf_set_keymap("n", "K", ":lua vim.lsp.buf.hover()<CR>", opts)
-	buf_set_keymap("n", "<C-k>", ":lua vim.lsp.buf.signature_help()<CR>", opts)
+	--buf_set_keymap("n", "<C-k>", ":lua vim.lsp.buf.signature_help()<CR>", opts)
 	buf_set_keymap("n", "<leader>rn", ":lua vim.lsp.buf.rename()<CR>", opts)
 	buf_set_keymap("n", "<leader>ac", ":lua vim.lsp.buf.code_action()<CR>", opts)
 	buf_set_keymap("n", "<leader>f", ":lua vim.lsp.buf.formatting()<CR>", opts)
 	buf_set_keymap("n", "<space>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
-	buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
-	buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
+	buf_set_keymap("n", "<C-p>", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
+	buf_set_keymap("n", "<C-n>", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
 	--vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
 	--vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
 	--vim.api.nvim_command([[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
@@ -174,7 +174,7 @@ vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').
 -- npm install -g typescript typescript-language-server
 -- enable null-ls integration (optional)
 require("null-ls").config({})
-require("lspconfig")["null-ls"].setup({})
+lsp["null-ls"].setup({})
 lsp.tsserver.setup({
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
@@ -195,7 +195,7 @@ lsp.tsserver.setup({
 		ts_utils.setup({
 			debug = false,
 			disable_commands = false,
-			enable_import_on_completion = false,
+			enable_import_on_completion = true,
 
 			-- import all
 			import_all_timeout = 5000, -- ms
@@ -211,13 +211,13 @@ lsp.tsserver.setup({
 			-- eslint
 			eslint_enable_code_actions = true,
 			eslint_enable_disable_comments = true,
-			eslint_bin = "eslint_d",
+			eslint_bin = "eslint",
 			eslint_enable_diagnostics = true,
 			eslint_opts = {},
 
 			-- formatting
 			enable_formatting = true,
-			formatter = "prettierd",
+			formatter = "prettier",
 			formatter_opts = {},
 
 			-- update imports on file move
@@ -257,6 +257,25 @@ lsp.solargraph.setup({
 lsp.cssls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
+})
+lsp.jsonls.setup({
+	capabilities = capabilities,
+	on_attach = function(client, bufnr)
+		on_attach(client, bufnr)
+		vim.cmd([[autocmd BufWritePre <buffer> lua vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})]])
+	end,
+	settings = {
+		json = {
+			schemas = require("schemastore").json.schemas(),
+		},
+	},
+	commands = {
+		Format = {
+			function()
+				vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line("$"), 0 })
+			end,
+		},
+	},
 })
 -- npm install -g @tailwindcss/language-server
 lsp.tailwindcss.setup({

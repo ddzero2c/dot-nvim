@@ -94,7 +94,7 @@ hi! link Float            Constant
 call s:h("String",        {"fg": s:norm, "bg": s:string})
 
 "call s:h("Identifier",    {"fg": s:dark_blue})
-call s:h("Identifier",       {"fg": s:norm})
+call s:h("Identifier",    {"fg": s:norm})
 hi! link Delimiter        Identifier
 hi! link Function         Identifier
 

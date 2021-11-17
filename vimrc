@@ -7,7 +7,6 @@ Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-emoji'
-Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
 
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
@@ -15,9 +14,11 @@ Plug 'rafamadriz/friendly-snippets'
 
 Plug 'onsails/lspkind-nvim'
 Plug 'ray-x/lsp_signature.nvim'
+Plug 'simrat39/symbols-outline.nvim'
 Plug 'ray-x/go.nvim'
 "Plug 'simrat39/rust-tools.nvim'
 Plug 'tomlion/vim-solidity'
+Plug 'b0o/schemastore.nvim'
 
 Plug 'https://github.com/sumneko/lua-language-server', {
             \ 'frozen': 1,
@@ -41,11 +42,13 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'rlue/vim-barbaric'
+"Plug 'rlue/vim-barbaric'
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'b3nj5m1n/kommentary'
 
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'folke/todo-comments.nvim'
 Plug 'junegunn/vim-easy-align'
 Plug 'easymotion/vim-easymotion'
 "Plug 'dhruvasagar/vim-table-mode', { 'ft': ['mardown']}
@@ -169,12 +172,9 @@ nmap ga <Plug>(EasyAlign)
 "          \ <SID>isAtStartOfLine('__') ?
 "          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
-" vsnip
-imap <expr> <C-l> vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-smap <expr> <C-l> vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-imap <expr> <C-h> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<c-h>'
-smap <expr> <C-h> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<c-h>'
-
 " fugitive
 nnoremap <silent> <leader>gd :Gvdiffsplit<CR>
 nnoremap <silent> <leader>gb :Git blame<CR>
+
+" symbols-outline
+nnoremap <silent> <leader>y :SymbolsOutline<CR>

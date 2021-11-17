@@ -7,6 +7,10 @@ vim.cmd("luafile ~/.config/nvim/formatter.lua")
 
 require("nvim-tree").setup({ disable_netrw = false })
 require("nvim-ts-autotag").setup()
+require("kommentary.config").use_extended_mappings()
+vim.g.symbols_outline = {
+	auto_preview = false,
+}
 
 require("nvim-treesitter.configs").setup({
 	ensure_installed = "maintained",
@@ -39,6 +43,9 @@ require("nvim-treesitter.configs").setup({
 
 require("indent_blankline").setup({
 	show_end_of_line = true,
+})
+require("todo-comments").setup({
+	prefer_single_line_comments = true,
 })
 
 require("colorizer").setup({ "*" }, {

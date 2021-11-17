@@ -2,14 +2,6 @@ require("cmp_nvim_lsp").setup({})
 local cmp = require("cmp")
 local lspkind = require("lspkind")
 
-require("cmp_tabnine.config"):setup({
-	max_lines = 1000,
-	max_num_results = 20,
-	sort = true,
-	run_on_every_keystroke = true,
-	snippet_placeholder = "..",
-})
-
 cmp.setup({
 	--preselect = cmp.PreselectMode.None,
 	completion = {
@@ -22,8 +14,7 @@ cmp.setup({
 	},
 	mapping = {
 		["<C-d>"] = cmp.mapping.scroll_docs(-4),
-		["<C-f>"] = cmp.mapping.scroll_docs(4),
-		--["<C-k>"] = cmp.mapping.complete(),
+		["<C-u>"] = cmp.mapping.scroll_docs(4),
 		["<C-e>"] = cmp.mapping.close(),
 		["<C-j>"] = cmp.mapping.confirm({
 			behavior = cmp.ConfirmBehavior.Replace,
@@ -37,12 +28,28 @@ cmp.setup({
 		{ name = "path" },
 		{ name = "buffer" },
 		{ name = "emoji" },
-		{ name = "cmp_tabnine" },
 	},
 	formatting = {
-		format = lspkind.cmp_format({ with_text = true, maxwidth = 50 }),
+		format = require("lspkind").cmp_format({
+			with_text = false,
+			menu = {
+				nvim_lsp = "[LSP]",
+				nvim_lua = "[Lua]",
+				vsnip = "[VSnip]",
+				path = "[Path]",
+				buffer = "[Buffer]",
+				emoji = "[Emoji]",
+			},
+		}),
 	},
 	--documentation = {
 	--	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
 	--},
 })
+
+vim.cmd([[
+imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
+smap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
+imap <expr> <C-k>   vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
+smap <expr> <C-k>   vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
+]])

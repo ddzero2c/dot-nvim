@@ -1,16 +1,6 @@
 require("formatter").setup({
 	logging = false,
 	filetype = {
-		json = {
-			-- prettierd
-			function()
-				return {
-					exe = "prettierd",
-					args = { vim.api.nvim_buf_get_name(0) },
-					stdin = true,
-				}
-			end,
-		},
 		yaml = {
 			-- prettierd
 			function()
@@ -47,7 +37,7 @@ require("formatter").setup({
 vim.cmd([[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.lua,*.json,*.yaml,*.hcl,*.tf FormatWrite
+  autocmd BufWritePost *.lua,*.yaml,*.hcl,*.tf FormatWrite
 augroup END
 
 ]])
