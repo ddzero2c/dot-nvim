@@ -26,7 +26,11 @@ cmp.setup({
 		{ name = "nvim_lua" },
 		{ name = "vsnip" },
 		{ name = "path" },
-		{ name = "buffer" },
+		{ name = "buffer", opts = {
+			get_bufnrs = function()
+				return vim.api.nvim_list_bufs()
+			end,
+		} },
 		{ name = "emoji" },
 	},
 	formatting = {
