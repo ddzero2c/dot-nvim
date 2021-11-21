@@ -8,6 +8,9 @@ vim.cmd("luafile ~/.config/nvim/formatter.lua")
 require("nvim-tree").setup({ disable_netrw = false })
 require("nvim-ts-autotag").setup()
 require("kommentary.config").use_extended_mappings()
+require("kommentary.config").configure_language("default", {
+	prefer_single_line_comments = true,
+})
 vim.g.symbols_outline = {
 	auto_preview = false,
 }
@@ -44,9 +47,7 @@ require("nvim-treesitter.configs").setup({
 require("indent_blankline").setup({
 	show_end_of_line = true,
 })
-require("todo-comments").setup({
-	prefer_single_line_comments = true,
-})
+require("todo-comments").setup({})
 
 require("colorizer").setup({ "*" }, {
 	RGB = true, -- #RGB hex codes
@@ -65,3 +66,6 @@ require("gitsigns").setup({
 		virt_text_pos = "eol",
 	},
 })
+
+vim.cmd([[set tm=500]])
+require("which-key").setup({})

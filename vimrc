@@ -61,6 +61,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'NTBBloodbath/galaxyline.nvim'
+Plug 'folke/which-key.nvim'
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -84,6 +85,7 @@ set pumblend=10
 
 set nu
 set ic
+set nowrap
 set mouse=
 set undofile
 set showtabline=2

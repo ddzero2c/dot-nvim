@@ -92,11 +92,6 @@ local function on_attach(client, bufnr)
 	lsp_highlight_document(client)
 end
 
-require("lsp_signature").setup({
-	hint_enable = false,
-	transpancy = 5,
-})
-
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- Lua LSP --
