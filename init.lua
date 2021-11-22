@@ -1,9 +1,7 @@
 vim.cmd("source ~/.config/nvim/vimrc")
--- vim.cmd("luafile ~/.config/nvim/statusline.lua")
-vim.cmd("luafile ~/.config/nvim/lsp.lua")
--- vim.cmd("luafile ~/.config/nvim/autocomplete.lua")
-vim.cmd("luafile ~/.config/nvim/debugger.lua")
-vim.cmd("luafile ~/.config/nvim/formatter.lua")
+require("dot-nvim.lsp")
+require("dot-nvim.debugger")
+require("dot-nvim.formatter")
 
 vim.g.symbols_outline = {
 	auto_preview = false,

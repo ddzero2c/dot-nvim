@@ -1,15 +1,13 @@
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
+" lsp & language
 Plug 'neovim/nvim-lspconfig'
 Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
-Plug 'simrat39/symbols-outline.nvim'
 Plug 'ray-x/go.nvim'
 "Plug 'simrat39/rust-tools.nvim'
-
 Plug 'tomlion/vim-solidity'
 Plug 'towolf/vim-helm'
 Plug 'b0o/schemastore.nvim'
-
 Plug 'https://github.com/sumneko/lua-language-server', {
             \ 'frozen': 1,
             \  'do': 'git submodule update --init --recursive &&
@@ -18,19 +16,38 @@ Plug 'https://github.com/sumneko/lua-language-server', {
             \  cd ../.. &&
             \  ./3rd/luamake/luamake rebuild'
             \  }
-
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
+" debugger
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
+
+" formatter
 Plug 'mhartington/formatter.nvim'
 
+" git
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'rlue/vim-barbaric'
 Plug 'lewis6991/gitsigns.nvim'
 
+" treesitter & syntax
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'RRethy/nvim-treesitter-textsubjects'
+Plug 'nvim-treesitter/playground'
+Plug 'simrat39/symbols-outline.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim'
+
+" fuzzy searcher
+"Plug 'nvim-telescope/telescope.nvim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" operation
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'wellle/targets.vim'
@@ -39,25 +56,16 @@ Plug 'easymotion/vim-easymotion'
 "Plug 'dhruvasagar/vim-table-mode', { 'ft': ['mardown']}
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'windwp/nvim-ts-autotag'
-
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-Plug 'RRethy/nvim-treesitter-textsubjects'
-Plug 'nvim-treesitter/playground'
-"Plug 'nvim-telescope/telescope.nvim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'kyazdani42/nvim-tree.lua'
-Plug 'norcalli/nvim-colorizer.lua'
-Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'folke/todo-comments.nvim'
 Plug 'chentau/marks.nvim'
 Plug 'folke/which-key.nvim'
+
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
+
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-tree.lua'
+
+Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
 
