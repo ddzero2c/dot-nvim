@@ -1,23 +1,13 @@
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-nvim-lua'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-emoji'
-
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
-Plug 'rafamadriz/friendly-snippets'
-
-Plug 'onsails/lspkind-nvim'
-Plug 'ray-x/lsp_signature.nvim'
+Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
 Plug 'simrat39/symbols-outline.nvim'
 Plug 'ray-x/go.nvim'
 "Plug 'simrat39/rust-tools.nvim'
+
 Plug 'tomlion/vim-solidity'
+Plug 'towolf/vim-helm'
 Plug 'b0o/schemastore.nvim'
 
 Plug 'https://github.com/sumneko/lua-language-server', {
@@ -32,36 +22,23 @@ Plug 'https://github.com/sumneko/lua-language-server', {
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
-Plug 'towolf/vim-helm'
-
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'mhartington/formatter.nvim'
 
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-"Plug 'rlue/vim-barbaric'
+Plug 'rlue/vim-barbaric'
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'b3nj5m1n/kommentary'
 
-Plug 'editorconfig/editorconfig-vim'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'folke/todo-comments.nvim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'wellle/targets.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'easymotion/vim-easymotion'
 "Plug 'dhruvasagar/vim-table-mode', { 'ft': ['mardown']}
-
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'windwp/nvim-ts-autotag'
-
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'ryanoasis/vim-devicons'
-Plug 'kyazdani42/nvim-tree.lua'
-Plug 'NTBBloodbath/galaxyline.nvim'
-Plug 'folke/which-key.nvim'
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -69,12 +46,18 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'RRethy/nvim-treesitter-textsubjects'
 Plug 'nvim-treesitter/playground'
-Plug 'lukas-reineke/indent-blankline.nvim'
 "Plug 'nvim-telescope/telescope.nvim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-tree.lua'
 Plug 'norcalli/nvim-colorizer.lua'
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'folke/todo-comments.nvim'
+Plug 'chentau/marks.nvim'
+Plug 'folke/which-key.nvim'
 
 call plug#end()
 
@@ -89,7 +72,7 @@ set nowrap
 set mouse=
 set undofile
 set showtabline=2
-set laststatus=2
+set ls=0
 set ts=4
 set sts=4
 set sw=4
@@ -111,12 +94,14 @@ set cmdheight=1
 set updatetime=250
 set shortmess+=c
 
-set list
-set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:↲,precedes:«,extends:»
+" set list
+" set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:↲,precedes:«,extends:»
 
 let g:mapleader = "\<Space>"
 nnoremap <C-c> <Esc>
 inoremap <C-c> <Esc>
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
 
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
@@ -148,10 +133,12 @@ nnoremap <leader>t :NvimTreeToggle<CR>
 let g:fzf_preview_window = []
 let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.6 } }
 nnoremap <leader>p :Files<cr>
+nnoremap <leader>g :Rg<cr>
+nnoremap <leader>G :Ag<cr>
 
 " vim-easymotion
-map  <leader>s <Plug>(easymotion-bd-f)
-nmap <leader>s <Plug>(easymotion-overwin-f)
+map  s <Plug>(easymotion-bd-f)
+nmap s <Plug>(easymotion-overwin-f)
 let g:EasyMotion_smartcase = 1
 
 " EasyAlign
@@ -173,10 +160,6 @@ nmap ga <Plug>(EasyAlign)
 "inoreabbrev <expr> __
 "          \ <SID>isAtStartOfLine('__') ?
 "          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
-
-" fugitive
-nnoremap <silent> <leader>gd :Gvdiffsplit<CR>
-nnoremap <silent> <leader>gb :Git blame<CR>
 
 " symbols-outline
 nnoremap <silent> <leader>y :SymbolsOutline<CR>
