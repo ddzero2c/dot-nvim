@@ -2,7 +2,6 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
 " lsp & language
 Plug 'neovim/nvim-lspconfig'
-Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
 Plug 'ray-x/go.nvim'
 "Plug 'simrat39/rust-tools.nvim'
 Plug 'tomlion/vim-solidity'
@@ -19,12 +18,22 @@ Plug 'https://github.com/sumneko/lua-language-server', {
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-nvim-lua'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-emoji'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'onsails/lspkind-nvim'
+
+" snippets
+Plug 'hrsh7th/vim-vsnip'
+Plug 'rafamadriz/friendly-snippets'
+
 " debugger
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
-
-" formatter
-Plug 'mhartington/formatter.nvim'
 
 " git
 Plug 'tpope/vim-fugitive'
@@ -57,8 +66,10 @@ Plug 'easymotion/vim-easymotion'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'folke/todo-comments.nvim'
+Plug 'ntpeters/vim-better-whitespace'
 Plug 'chentau/marks.nvim'
 Plug 'folke/which-key.nvim'
+Plug 'b3nj5m1n/kommentary'
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
 
@@ -171,3 +182,4 @@ nmap ga <Plug>(EasyAlign)
 
 " symbols-outline
 nnoremap <silent> <leader>y :SymbolsOutline<CR>
+

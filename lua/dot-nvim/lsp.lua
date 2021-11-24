@@ -92,7 +92,7 @@ local function on_attach(client, bufnr)
 	lsp_highlight_document(client)
 end
 
---local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- Lua LSP --
 -- :PlugInstall lua-language-server
@@ -102,7 +102,7 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 lsp.sumneko_lua.setup({
-	-- capabilities = capabilities,
+	capabilities = capabilities,
 	on_attach = on_attach,
 	cmd = {
 		sumneko_binary,
@@ -137,7 +137,7 @@ lsp.sumneko_lua.setup({
 
 -- Go LSP --
 lsp.gopls.setup({
-	-- capabilities = capabilities,
+	capabilities = capabilities,
 	on_attach = on_attach,
 	cmd = {
 		"gopls", -- share the gopls instance if there is one already
@@ -176,10 +176,6 @@ lsp.tsserver.setup({
 		on_attach(client, bufnr)
 		client.resolved_capabilities.document_formatting = false
 		client.resolved_capabilities.document_range_formatting = false
-		vim.cmd("command -buffer Formatting lua vim.lsp.buf.formatting()")
-		vim.cmd("command -buffer FormattingSync lua vim.lsp.buf.formatting_sync()")
-		-- format on save
-		vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
 		local ts_utils = require("nvim-lsp-ts-utils")
 
 		-- defaults
@@ -199,68 +195,67 @@ lsp.tsserver.setup({
 		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", opts)
 	end,
 })
+
 local null_ls = require("null-ls")
 null_ls.config({
 	sources = {
-		null_ls.builtins.diagnostics.eslint, -- eslint or eslint_d
-		null_ls.builtins.code_actions.eslint, -- eslint or eslint_d
+		null_ls.builtins.diagnostics.eslint_d, -- eslint or eslint_d
 		null_ls.builtins.formatting.prettier, -- prettier, eslint, eslint_d, or prettierd
+		null_ls.builtins.formatting.stylua,
+		null_ls.builtins.formatting.terraform_fmt,
 	},
 })
 
-require("lspconfig")["null-ls"].setup({})
+lsp["null-ls"].setup({
+	on_attach = function()
+		vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+	end,
+})
 
 -- Python LSP --
 lsp.pyright.setup({
-	-- capabilities = capabilities,
+	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
 lsp.solargraph.setup({
-	-- capabilities = capabilities,
+	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
 -- CSS LSP --
 -- npm i -g vscode-langservers-extracted
 lsp.cssls.setup({
-	-- capabilities = capabilities,
+	capabilities = capabilities,
 	on_attach = on_attach,
 })
 lsp.jsonls.setup({
-	-- capabilities = capabilities,
-	on_attach = function(client, bufnr)
-		on_attach(client, bufnr)
-		vim.cmd([[autocmd BufWritePre <buffer> lua vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})]])
+	capabilities = capabilities,
+	on_attach = function(client)
+		client.resolved_capabilities.document_formatting = false
+		client.resolved_capabilities.document_range_formatting = false
 	end,
 	settings = {
 		json = {
 			schemas = require("schemastore").json.schemas(),
 		},
 	},
-	commands = {
-		Format = {
-			function()
-				vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line("$"), 0 })
-			end,
-		},
-	},
 })
 -- npm install -g @tailwindcss/language-server
 lsp.tailwindcss.setup({
-	-- capabilities = capabilities,
+	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
 -- Rust LSP --
 -- curl -L https://github.com/rust-analyzer/rust-analyzer/releases/download/2021-10-18/rust-analyzer-aarch64-apple-darwin.gz | gunzip -c - > ~/bin/rust-analyzer && chmod +x ~/bin/rust-analyzer
 lsp.rust_analyzer.setup({
-	-- capabilities = capabilities,
+	capabilities = capabilities,
 	on_attach = on_attach,
 })
 --require("rust-tools").setup({})
 
 lsp.solang.setup({
-	-- capabilities = capabilities,
+	capabilities = capabilities,
 	on_attach = on_attach,
 })

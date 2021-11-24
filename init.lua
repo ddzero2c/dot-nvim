@@ -1,16 +1,17 @@
 vim.cmd("source ~/.config/nvim/vimrc")
 require("dot-nvim.lsp")
+require("dot-nvim.autocomplete")
 require("dot-nvim.debugger")
-require("dot-nvim.formatter")
+--require("dot-nvim.formatter")
 
 vim.g.symbols_outline = {
 	auto_preview = false,
 }
 
-require("mini.comment").setup({})
-require("mini.completion").setup({})
-require("mini.trailspace").setup({})
-require("mini.cursorword").setup({})
+require("kommentary.config").use_extended_mappings()
+require("kommentary.config").configure_language("default", {
+	prefer_single_line_comments = true,
+})
 
 require("nvim-tree").setup({ disable_netrw = false })
 
