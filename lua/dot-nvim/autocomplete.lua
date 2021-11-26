@@ -51,10 +51,10 @@ cmp.setup({
 	--},
 })
 
---[[ require("lsp_signature").setup({
+require("lsp_signature").setup({
 	hint_enable = false,
 	transpancy = 5,
-}) ]]
+})
 
 vim.cmd([[
 imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'

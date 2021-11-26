@@ -26,6 +26,7 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-emoji'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'onsails/lspkind-nvim'
+Plug 'ray-x/lsp_signature.nvim'
 
 " snippets
 Plug 'hrsh7th/vim-vsnip'
@@ -52,9 +53,10 @@ Plug 'simrat39/symbols-outline.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 " fuzzy searcher
-"Plug 'nvim-telescope/telescope.nvim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
 
 " operation
 Plug 'tpope/vim-surround'
@@ -149,11 +151,11 @@ augroup END
 nnoremap <leader>t :NvimTreeToggle<CR>
 
 " fzf
-let g:fzf_preview_window = []
-let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.6 } }
-nnoremap <leader>p :Files<cr>
-nnoremap <leader>g :Rg<cr>
-nnoremap <leader>G :Ag<cr>
+" let g:fzf_preview_window = []
+" let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.6 } }
+" nnoremap <leader>p :Files<cr>
+" nnoremap <leader>g :Rg<cr>
+" nnoremap <leader>G :Ag<cr>
 
 " vim-easymotion
 map  s <Plug>(easymotion-bd-f)

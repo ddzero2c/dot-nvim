@@ -43,26 +43,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, result, contex
 	vim.lsp.diagnostic.display(diagnostics, bufnr, client_id, config)
 end
 
--- symbols highlight
-local function lsp_highlight_document(client)
-	if vim.lsp.document_highlight == false then
-		return -- we don't need further
-	end
-	-- Set autocommands conditional on server_capabilities
-	if client.resolved_capabilities.document_highlight then
-		vim.api.nvim_exec(
-			[[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]],
-			false
-		)
-	end
-end
-
 local function on_attach(client, bufnr)
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -89,10 +69,22 @@ local function on_attach(client, bufnr)
 	--vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>l", "<Cmd>lua vim.lsp.codelens.run()<CR>", { silent = true })
 
 	--vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]])
-	lsp_highlight_document(client)
 end
 
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+	properties = {
+		"documentation",
+		"detail",
+		"additionalTextEdits",
+	},
+}
+
+local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if status_ok then
+	capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+end
 
 -- Lua LSP --
 -- :PlugInstall lua-language-server
@@ -168,6 +160,7 @@ vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').
 -- npm install -g typescript typescript-language-server
 -- enable null-ls integration (optional)
 lsp.tsserver.setup({
+	capabilities = capabilities,
 	-- Needed for inlayHints. Merge this table with your settings or copy
 	-- it from the source if you want to add your own init_options.
 	init_options = require("nvim-lsp-ts-utils").init_options,
@@ -180,6 +173,7 @@ lsp.tsserver.setup({
 
 		-- defaults
 		ts_utils.setup({
+			auto_inlay_hints = false,
 			filter_out_diagnostics_by_severity = { "hint" },
 			update_imports_on_move = true,
 			require_confirmation_on_move = true,

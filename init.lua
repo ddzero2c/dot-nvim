@@ -2,6 +2,7 @@ vim.cmd("source ~/.config/nvim/vimrc")
 require("dot-nvim.lsp")
 require("dot-nvim.autocomplete")
 require("dot-nvim.debugger")
+require("dot-nvim.cursorword").setup()
 --require("dot-nvim.formatter")
 
 vim.g.symbols_outline = {
@@ -36,6 +37,37 @@ require("nvim-treesitter.configs").setup({
 		},
 	},
 })
+
+local telescope_action = require("telescope.actions")
+require("telescope").setup({
+	defaults = {
+		mappings = {
+			i = {
+				["<C-j>"] = telescope_action.move_selection_next,
+				["<C-k>"] = telescope_action.move_selection_previous,
+			},
+		},
+	},
+	pickers = {
+		find_files = {
+			theme = "dropdown",
+		},
+	},
+	extensions = {
+		fzf = {
+			fuzzy = true, -- false will only do exact matching
+			override_generic_sorter = true, -- override the generic sorter
+			override_file_sorter = true, -- override the file sorter
+			case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+			-- the default case_mode is "smart_case"
+		},
+	},
+})
+require("telescope").load_extension("fzf")
+vim.cmd([[
+nnoremap <leader>p <cmd>Telescope find_files find_command=rg,--ignore,--files<cr>
+nnoremap <leader>g <cmd>Telescope live_grep<cr>
+]])
 
 require("indent_blankline").setup({ show_end_of_line = true })
 require("todo-comments").setup({})
