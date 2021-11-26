@@ -2,6 +2,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
 " lsp & language
 Plug 'neovim/nvim-lspconfig'
+Plug 'rcarriga/nvim-notify'
 Plug 'ray-x/go.nvim'
 "Plug 'simrat39/rust-tools.nvim'
 Plug 'tomlion/vim-solidity'
@@ -72,6 +73,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'chentau/marks.nvim'
 Plug 'folke/which-key.nvim'
 Plug 'b3nj5m1n/kommentary'
+Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
 
@@ -83,7 +85,7 @@ Plug 'norcalli/nvim-colorizer.lua'
 call plug#end()
 
 "colorscheme bored
-colorscheme blueperiod
+colorscheme single
 set background=light
 set pumblend=10
 
