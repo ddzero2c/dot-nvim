@@ -95,7 +95,7 @@ set nowrap
 set mouse=
 set undofile
 set showtabline=2
-set ls=0
+set ls=1
 set ts=4
 set sts=4
 set sw=4
