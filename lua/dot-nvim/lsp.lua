@@ -1,62 +1,31 @@
 --local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 
 local lsp = require("lspconfig")
-local notify = require("notify")
-local err_sign = ""
-local warn_sign = ""
-local hint_sign = ""
-local info_sign = ""
-local err_hl = "LspDiagnosticsSignError"
-local warn_hl = "LspDiagnosticsSignWarning"
-local hint_hl = "LspDiagnosticsSignHint"
-local info_hl = "LspDiagnosticsSignInformation"
-vim.fn.sign_define(err_hl, { texthl = err_hl, text = err_sign, numhl = err_hl })
-vim.fn.sign_define(warn_hl, { texthl = warn_hl, text = warn_sign, numhl = warn_hl })
-vim.fn.sign_define(hint_hl, { texthl = hint_hl, text = hint_sign, numhl = hint_hl })
-vim.fn.sign_define(info_hl, { texthl = info_hl, text = info_sign, numhl = info_hl })
-
-notify.setup({
-	stages = "fade",
-	render = "minimal",
-	icons = {
-		ERROR = err_sign,
-		WARN = warn_sign,
-		INFO = info_sign,
-		DEBUG = "",
-		TRACE = hint_sign,
-	},
-})
--- diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, result, context, _)
-	local config = { -- your config
-		underline = true,
-		virtual_text = true,
-		signs = true,
-		update_in_insert = false,
-	}
-	local uri = result.uri
-	local bufnr = vim.uri_to_bufnr(uri)
-	if not bufnr then
-		return
-	end
-
-	local diagnostics = result.diagnostics
-	for i, v in ipairs(diagnostics) do
-		diagnostics[i].message = string.format("%s: %s", v.source, v.message)
-	end
-
-	local client_id = context.client_id
-	vim.lsp.diagnostic.save(diagnostics, bufnr, client_id)
-
-	if not vim.api.nvim_buf_is_loaded(bufnr) then
-		return
-	end
-
-	vim.lsp.diagnostic.display(diagnostics, bufnr, client_id, config)
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+	local hl = "DiagnosticSign" .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
+vim.diagnostic.config({
+	virtual_text = {
+		source = "always", -- Or "if_many"
+	},
+	float = {
+		source = "always", -- Or "if_many"
+	},
+	signs = true,
+	underline = true,
+	update_in_insert = false,
+	severity_sort = false,
+})
+
+-- You will likely want to reduce updatetime which affects CursorHold
+-- note: this setting is global and should be set only once
+vim.o.updatetime = 250
+vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]])
+
 local function on_attach_general(client, bufnr)
-	notify("LSP attached: " .. client.name)
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
 	end
@@ -72,10 +41,11 @@ local function on_attach_general(client, bufnr)
 	--buf_set_keymap("n", "<C-k>", ":lua vim.lsp.buf.signature_help()<CR>", opts)
 	buf_set_keymap("n", "<leader>rn", ":lua vim.lsp.buf.rename()<CR>", opts)
 	buf_set_keymap("n", "<leader>ac", ":lua vim.lsp.buf.code_action()<CR>", opts)
+	buf_set_keymap("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 	buf_set_keymap("n", "<leader>f", ":lua vim.lsp.buf.formatting()<CR>", opts)
-	buf_set_keymap("n", "<leader>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
-	buf_set_keymap("n", "<C-p>", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
-	buf_set_keymap("n", "<C-n>", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
+	buf_set_keymap("n", "<leader>q", "<cmd>lua vim.diagnostic.set_loclist()<CR>", opts)
+	buf_set_keymap("n", "<C-p>", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+	buf_set_keymap("n", "<C-n>", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 	--vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
 	--vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
 	--vim.api.nvim_command([[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
@@ -85,19 +55,7 @@ local function on_attach_general(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-	properties = {
-		"documentation",
-		"detail",
-		"additionalTextEdits",
-	},
-}
-
-local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if status_ok then
-	capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
-end
+capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 -- Lua LSP --
 -- :PlugInstall lua-language-server
@@ -203,17 +161,13 @@ lsp.tsserver.setup({
 	end,
 })
 
-local null_ls = require("null-ls")
-null_ls.config({
+require("null-ls").setup({
 	sources = {
-		null_ls.builtins.diagnostics.eslint_d, -- eslint or eslint_d
-		null_ls.builtins.formatting.prettier, -- prettier, eslint, eslint_d, or prettierd
-		null_ls.builtins.formatting.stylua,
-		null_ls.builtins.formatting.terraform_fmt,
+		require("null-ls").builtins.formatting.stylua,
+		require("null-ls").builtins.formatting.prettier,
+		require("null-ls").builtins.diagnostics.eslint_d,
+		require("null-ls").builtins.completion.spell,
 	},
-})
-
-lsp["null-ls"].setup({
 	on_attach = function(client, bufnr)
 		on_attach_general(client, bufnr)
 		vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")

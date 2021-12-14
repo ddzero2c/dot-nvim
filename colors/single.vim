@@ -234,8 +234,8 @@ hi! link DapUIBreakpointsCurrentLine      Constant
 hi! link DapUIBreakpointsLine             DapUILineNumber
 hi! link TSConstructor                    Function
 
-hi! link LspDiagnosticsDefaultInformation InfoMsg
-hi! link LspDiagnosticsDefaultHint        InfoHint
+hi! link DiagnosticInformation InfoMsg
+hi! link DiagnosticHint        InfoHint
 
 hi! link LspReferenceText                 Visual
 hi! link LspReferenceRead                 Visual

@@ -2,7 +2,6 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
 " lsp & language
 Plug 'neovim/nvim-lspconfig'
-Plug 'rcarriga/nvim-notify'
 Plug 'ray-x/go.nvim'
 "Plug 'simrat39/rust-tools.nvim'
 Plug 'tomlion/vim-solidity'
@@ -26,6 +25,7 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-emoji'
 Plug 'hrsh7th/cmp-vsnip'
+" Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 Plug 'onsails/lspkind-nvim'
 Plug 'ray-x/lsp_signature.nvim'
 
@@ -94,7 +94,7 @@ set ic
 set nowrap
 set mouse=
 set undofile
-set showtabline=2
+set stal=2
 set ls=1
 set ts=4
 set sts=4
@@ -114,7 +114,7 @@ set nobackup
 set nowritebackup
 set noswapfile
 set cmdheight=1
-set updatetime=250
+" set updatetime=250
 set shortmess+=c
 
 " set list
