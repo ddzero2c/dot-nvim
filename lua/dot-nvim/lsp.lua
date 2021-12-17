@@ -23,7 +23,7 @@ vim.diagnostic.config({
 -- You will likely want to reduce updatetime which affects CursorHold
 -- note: this setting is global and should be set only once
 vim.o.updatetime = 250
-vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]])
+-- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]])
 
 local function on_attach_general(client, bufnr)
 	local function buf_set_keymap(...)
@@ -161,12 +161,14 @@ lsp.tsserver.setup({
 	end,
 })
 
-require("null-ls").setup({
+local null_ls = require("null-ls")
+null_ls.setup({
 	sources = {
-		require("null-ls").builtins.formatting.stylua,
-		require("null-ls").builtins.formatting.prettier,
-		require("null-ls").builtins.diagnostics.eslint_d,
-		require("null-ls").builtins.completion.spell,
+		null_ls.builtins.formatting.stylua,
+		null_ls.builtins.formatting.prettier,
+		null_ls.builtins.diagnostics.eslint,
+		null_ls.builtins.code_actions.eslint,
+		null_ls.builtins.completion.spell,
 	},
 	on_attach = function(client, bufnr)
 		on_attach_general(client, bufnr)

@@ -3,16 +3,6 @@ require("dot-nvim.lsp")
 require("dot-nvim.autocomplete")
 require("dot-nvim.debugger")
 require("dot-nvim.cursorword").setup()
---require("dot-nvim.formatter")
-
-vim.g.symbols_outline = {
-	auto_preview = false,
-}
-
-require("kommentary.config").use_extended_mappings()
-require("kommentary.config").configure_language("default", {
-	prefer_single_line_comments = true,
-})
 
 require("nvim-tree").setup({ disable_netrw = false })
 
@@ -35,6 +25,10 @@ require("nvim-treesitter.configs").setup({
 				["aa"] = "@parameter.outer",
 			},
 		},
+	},
+	context_commentstring = {
+		enable = true,
+		enable_autocmd = false,
 	},
 })
 
@@ -89,3 +83,15 @@ require("gitsigns").setup({
 	},
 })
 require("which-key").setup({})
+
+require("kommentary.config").use_extended_mappings()
+require("kommentary.config").configure_language("default", {
+	prefer_single_line_comments = true,
+})
+require("kommentary.config").configure_language({ "javascriptreact", "typescriptreact" }, {
+	single_line_comment_string = "auto",
+	multi_line_comment_strings = "auto",
+	hook_function = function()
+		require("ts_context_commentstring.internal").update_commentstring()
+	end,
+})

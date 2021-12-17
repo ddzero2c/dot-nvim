@@ -25,12 +25,14 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-emoji'
 Plug 'hrsh7th/cmp-vsnip'
-" Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 Plug 'onsails/lspkind-nvim'
-Plug 'ray-x/lsp_signature.nvim'
+
+" Plug 'github/copilot.vim'
 
 " snippets
 Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'rafamadriz/friendly-snippets'
 
 " debugger
@@ -50,7 +52,6 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'RRethy/nvim-treesitter-textsubjects'
 Plug 'nvim-treesitter/playground'
-Plug 'simrat39/symbols-outline.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 " fuzzy searcher
@@ -73,6 +74,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'chentau/marks.nvim'
 Plug 'folke/which-key.nvim'
 Plug 'b3nj5m1n/kommentary'
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
@@ -114,7 +116,7 @@ set nobackup
 set nowritebackup
 set noswapfile
 set cmdheight=1
-" set updatetime=250
+set updatetime=250
 set shortmess+=c
 
 " set list
@@ -160,8 +162,8 @@ nnoremap <leader>t :NvimTreeToggle<CR>
 " nnoremap <leader>G :Ag<cr>
 
 " vim-easymotion
-map  s <Plug>(easymotion-bd-f)
-nmap s <Plug>(easymotion-overwin-f)
+map  <leader>s <Plug>(easymotion-bd-f)
+nmap <leader>s <Plug>(easymotion-overwin-f)
 let g:EasyMotion_smartcase = 1
 
 " EasyAlign
@@ -185,5 +187,3 @@ nmap ga <Plug>(EasyAlign)
 "          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
 " symbols-outline
-nnoremap <silent> <leader>y :SymbolsOutline<CR>
-

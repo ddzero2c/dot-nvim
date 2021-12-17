@@ -1,18 +1,15 @@
-require("cmp_nvim_lsp").setup({})
+require("cmp_nvim_lsp").setup()
 local cmp = require("cmp")
 local lspkind = require("lspkind")
 
-local has_words_before = function()
-	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
-local feedkey = function(key, mode)
-	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
+vim.cmd([[
+let g:vsnip_filetypes = {}
+let g:vsnip_filetypes.javascriptreact = ['javascript']
+let g:vsnip_filetypes.typescriptreact = ['typescript']
+]])
 
 cmp.setup({
-	--preselect = cmp.PreselectMode.None,
+	-- preselect = cmp.PreselectMode.None,
 	completion = {
 		completeopt = "menu,menuone,noinsert",
 	},
@@ -22,44 +19,19 @@ cmp.setup({
 		end,
 	},
 	mapping = {
-		["<C-p>"] = cmp.mapping.select_prev_item(),
-		["<C-n>"] = cmp.mapping.select_next_item(),
-		["<C-d>"] = cmp.mapping.scroll_docs(-4),
-		["<C-u>"] = cmp.mapping.scroll_docs(4),
-		["<C-e>"] = cmp.mapping.close(),
-		["<C-j>"] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.Replace,
-			select = true,
+		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+		["<C-y>"] = cmp.config.disable,
+		["<C-e>"] = cmp.mapping({
+			i = cmp.mapping.abort(),
+			c = cmp.mapping.close(),
 		}),
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			elseif vim.fn["vsnip#available"](1) == 1 then
-				feedkey("<Plug>(vsnip-expand-or-jump)", "")
-			elseif has_words_before() then
-				cmp.complete()
-			else
-				fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-			end
-		end, {
-			"i",
-			"s",
-		}),
-
-		["<S-Tab>"] = cmp.mapping(function()
-			if cmp.visible() then
-				cmp.select_prev_item()
-			elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-				feedkey("<Plug>(vsnip-jump-prev)", "")
-			end
-		end, {
-			"i",
-			"s",
-		}),
+		["<C-j>"] = cmp.mapping.confirm({ select = true }),
 	},
 	sources = {
 		{ name = "vsnip" },
 		{ name = "nvim_lsp" },
+		{ name = "nvim_lsp_signature_help" },
 		{ name = "nvim_lua" },
 		{ name = "path" },
 		{ name = "buffer", option = {
@@ -71,9 +43,9 @@ cmp.setup({
 	},
 	formatting = {
 		format = lspkind.cmp_format({
-			with_text = false,
+			-- with_text = false,
 			menu = {
-				vsnip = "[VSnip]",
+				-- vsnip = "[VSnip]",
 				nvim_lsp = "[LSP]",
 				nvim_lua = "[Lua]",
 				path = "[Path]",
@@ -87,7 +59,13 @@ cmp.setup({
 	--},
 })
 
-require("lsp_signature").setup({
-	hint_enable = false,
-	transpancy = 5,
-})
+-- require("lsp_signature").setup({
+-- 	hint_enable = false,
+-- 	transpancy = 5,
+-- })
+vim.cmd([[
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+]])
