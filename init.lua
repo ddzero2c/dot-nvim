@@ -2,7 +2,6 @@ vim.cmd("source ~/.config/nvim/vimrc")
 require("dot-nvim.lsp")
 require("dot-nvim.autocomplete")
 require("dot-nvim.debugger")
-require("dot-nvim.cursorword").setup()
 
 require("nvim-tree").setup({ disable_netrw = false })
 

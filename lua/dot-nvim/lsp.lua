@@ -2,6 +2,9 @@
 
 local lsp = require("lspconfig")
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local flag = { debounce_text_changes = 150 }
+
 for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
@@ -19,11 +22,6 @@ vim.diagnostic.config({
 	update_in_insert = false,
 	severity_sort = false,
 })
-
--- You will likely want to reduce updatetime which affects CursorHold
--- note: this setting is global and should be set only once
-vim.o.updatetime = 250
--- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]])
 
 local function on_attach_general(client, bufnr)
 	local function buf_set_keymap(...)
@@ -46,16 +44,19 @@ local function on_attach_general(client, bufnr)
 	buf_set_keymap("n", "<leader>q", "<cmd>lua vim.diagnostic.set_loclist()<CR>", opts)
 	buf_set_keymap("n", "<C-p>", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 	buf_set_keymap("n", "<C-n>", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-	--vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
-	--vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
-	--vim.api.nvim_command([[autocmd CursorHold,CursorHoldI,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]])
-	--vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>l", "<Cmd>lua vim.lsp.codelens.run()<CR>", { silent = true })
 
-	--vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]])
+	vim.cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])
+	vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]])
+	if client.resolved_capabilities.document_highlight then
+		vim.cmd([[
+        augroup lsp_document_highlight
+            autocmd! * <buffer>
+            autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+            autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+        augroup END
+        ]])
+	end
 end
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 -- Lua LSP --
 -- :PlugInstall lua-language-server
@@ -65,6 +66,7 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 lsp.sumneko_lua.setup({
+	flag = flag,
 	capabilities = capabilities,
 	on_attach = on_attach_general,
 	cmd = {
@@ -100,6 +102,7 @@ lsp.sumneko_lua.setup({
 
 -- Go LSP --
 lsp.gopls.setup({
+	flag = flag,
 	capabilities = capabilities,
 	on_attach = on_attach_general,
 	cmd = {
@@ -108,9 +111,6 @@ lsp.gopls.setup({
 	},
 	settings = {
 		gopls = {
-			-- more settings: https://github.com/golang/tools/blob/master/gopls/doc/settings.md
-			-- flags = {allow_incremental_sync = true, debounce_text_changes = 500},
-			-- not supported
 			analyses = { unusedparams = true },
 			staticcheck = true,
 		},
@@ -131,6 +131,7 @@ vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').
 -- npm install -g typescript typescript-language-server
 -- enable null-ls integration (optional)
 lsp.tsserver.setup({
+	flag = flag,
 	capabilities = capabilities,
 	-- Needed for inlayHints. Merge this table with your settings or copy
 	-- it from the source if you want to add your own init_options.
@@ -163,12 +164,12 @@ lsp.tsserver.setup({
 
 local null_ls = require("null-ls")
 null_ls.setup({
+	flag = flag,
 	sources = {
 		null_ls.builtins.formatting.stylua,
 		null_ls.builtins.formatting.prettier,
 		null_ls.builtins.diagnostics.eslint,
 		null_ls.builtins.code_actions.eslint,
-		null_ls.builtins.completion.spell,
 	},
 	on_attach = function(client, bufnr)
 		on_attach_general(client, bufnr)
@@ -178,11 +179,13 @@ null_ls.setup({
 
 -- Python LSP --
 lsp.pyright.setup({
+	flag = flag,
 	capabilities = capabilities,
 	on_attach = on_attach_general,
 })
 
 lsp.solargraph.setup({
+	flag = flag,
 	capabilities = capabilities,
 	on_attach = on_attach_general,
 })
@@ -190,10 +193,12 @@ lsp.solargraph.setup({
 -- CSS LSP --
 -- npm i -g vscode-langservers-extracted
 lsp.cssls.setup({
+	flag = flag,
 	capabilities = capabilities,
 	on_attach = on_attach_general,
 })
 lsp.jsonls.setup({
+	flag = flag,
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
 		on_attach_general(client, bufnr)
@@ -208,6 +213,7 @@ lsp.jsonls.setup({
 })
 -- npm install -g @tailwindcss/language-server
 lsp.tailwindcss.setup({
+	flag = flag,
 	capabilities = capabilities,
 	on_attach = on_attach_general,
 })
@@ -215,12 +221,14 @@ lsp.tailwindcss.setup({
 -- Rust LSP --
 -- curl -L https://github.com/rust-analyzer/rust-analyzer/releases/download/2021-10-18/rust-analyzer-aarch64-apple-darwin.gz | gunzip -c - > ~/bin/rust-analyzer && chmod +x ~/bin/rust-analyzer
 lsp.rust_analyzer.setup({
+	flag = flag,
 	capabilities = capabilities,
 	on_attach = on_attach_general,
 })
 --require("rust-tools").setup({})
 
 lsp.solang.setup({
+	flag = flag,
 	capabilities = capabilities,
 	on_attach = on_attach_general,
 })

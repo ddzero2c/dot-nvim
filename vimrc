@@ -18,6 +18,9 @@ Plug 'https://github.com/sumneko/lua-language-server', {
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
+Plug 'antoinemadec/FixCursorHold.nvim'
+Plug 'kosayoda/nvim-lightbulb'
+
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
@@ -89,7 +92,7 @@ call plug#end()
 "colorscheme bored
 colorscheme single
 set background=light
-set pumblend=10
+" set pumblend=10
 
 set nu
 set ic
@@ -169,21 +172,3 @@ let g:EasyMotion_smartcase = 1
 " EasyAlign
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-
-" vim-table-mode
-"let g:table_mode_corner='|'
-"function! s:isAtStartOfLine(mapping)
-"  let text_before_cursor = getline('.')[0 : col('.')-1]
-"  let mapping_pattern = '\V' . escape(a:mapping, '\')
-"  let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
-"  return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
-"endfunction
-"
-"inoreabbrev <expr> <bar><bar>
-"          \ <SID>isAtStartOfLine('\|\|') ?
-"          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
-"inoreabbrev <expr> __
-"          \ <SID>isAtStartOfLine('__') ?
-"          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
-
-" symbols-outline

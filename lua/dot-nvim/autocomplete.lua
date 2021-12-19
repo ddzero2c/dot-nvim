@@ -3,6 +3,7 @@ local cmp = require("cmp")
 local lspkind = require("lspkind")
 
 vim.cmd([[
+set completeopt=menu,menuone,noselect
 let g:vsnip_filetypes = {}
 let g:vsnip_filetypes.javascriptreact = ['javascript']
 let g:vsnip_filetypes.typescriptreact = ['typescript']
@@ -27,12 +28,19 @@ cmp.setup({
 			c = cmp.mapping.close(),
 		}),
 		["<C-j>"] = cmp.mapping.confirm({ select = true }),
+		["<C-x><C-s>"] = cmp.mapping.complete({
+			config = {
+				sources = {
+					{ name = "vsnip" },
+				},
+			},
+		}),
 	},
 	sources = {
-		{ name = "vsnip" },
 		{ name = "nvim_lsp" },
 		{ name = "nvim_lsp_signature_help" },
 		{ name = "nvim_lua" },
+		{ name = "vsnip" },
 		{ name = "path" },
 		{ name = "buffer", option = {
 			get_bufnrs = function()
@@ -44,14 +52,14 @@ cmp.setup({
 	formatting = {
 		format = lspkind.cmp_format({
 			-- with_text = false,
-			menu = {
-				-- vsnip = "[VSnip]",
-				nvim_lsp = "[LSP]",
-				nvim_lua = "[Lua]",
-				path = "[Path]",
-				buffer = "[Buffer]",
-				emoji = "[Emoji]",
-			},
+			-- menu = {
+			-- 	vsnip = "[vsnip]",
+			-- 	nvim_lsp = "[lsp]",
+			-- 	nvim_lua = "[lua]",
+			-- 	path = "[path]",
+			-- 	buffer = "[buf]",
+			-- 	emoji = "[emoji]",
+			-- },
 		}),
 	},
 	--documentation = {
@@ -64,8 +72,8 @@ cmp.setup({
 -- 	transpancy = 5,
 -- })
 vim.cmd([[
-imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
+smap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
+imap <expr> <C-k>   vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
+smap <expr> <C-k>   vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
 ]])
