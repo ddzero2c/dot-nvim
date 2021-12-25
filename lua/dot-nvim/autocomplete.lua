@@ -10,9 +10,9 @@ let g:vsnip_filetypes.typescriptreact = ['typescript']
 ]]
 
 cmp.setup {
-	completion = {
-		autocomplete = false,
-	},
+	-- completion = {
+	-- 	autocomplete = true,
+	-- },
 	snippet = {
 		expand = function(args)
 			vim.fn['vsnip#anonymous'](args.body)
@@ -66,55 +66,59 @@ cmp.setup {
 	--},
 }
 
-_G.vimrc = _G.vimrc or {}
-_G.vimrc.cmp = _G.vimrc.cmp or {}
-_G.vimrc.cmp.lsp = function()
-	cmp.complete {
-		config = {
-			sources = {
-				{ name = 'nvim_lsp' },
-				{ name = 'nvim_lsp_signature_help' },
-				{ name = 'nvim_lua' },
-			},
-		},
-	}
-end
-_G.vimrc.cmp.snippet = function()
-	cmp.complete {
-		config = {
-			sources = {
-				{ name = 'vsnip' },
-				{
-					name = 'buffer',
-					option = {
-						get_bufnrs = function()
-							return vim.api.nvim_list_bufs()
-						end,
-					},
-				},
-				{ name = 'emoji' },
-			},
-		},
-	}
-end
-_G.vimrc.cmp.path = function()
-	cmp.complete {
-		config = {
-			sources = {
-				{ name = 'path' },
-			},
-		},
-	}
-end
+-- _G.vimrc = _G.vimrc or {}
+-- _G.vimrc.cmp = _G.vimrc.cmp or {}
+-- _G.vimrc.cmp.lsp = function()
+-- 	cmp.complete {
+-- 		config = {
+-- 			sources = {
+-- 				{ name = 'nvim_lsp' },
+-- 				{ name = 'nvim_lsp_signature_help' },
+-- 				{ name = 'nvim_lua' },
+-- 			},
+-- 		},
+-- 	}
+-- end
+-- _G.vimrc.cmp.snippet = function()
+-- 	cmp.complete {
+-- 		config = {
+-- 			sources = {
+-- 				{ name = 'vsnip' },
+-- 				{
+-- 					name = 'buffer',
+-- 					option = {
+-- 						get_bufnrs = function()
+-- 							return vim.api.nvim_list_bufs()
+-- 						end,
+-- 					},
+-- 				},
+-- 				{ name = 'emoji' },
+-- 			},
+-- 		},
+-- 	}
+-- end
+-- _G.vimrc.cmp.path = function()
+-- 	cmp.complete {
+-- 		config = {
+-- 			sources = {
+-- 				{ name = 'path' },
+-- 			},
+-- 		},
+-- 	}
+-- end
+
+-- vim.cmd [[
+--   inoremap <C-x><C-o> <Cmd>lua vimrc.cmp.lsp()<CR>
+--   inoremap <C-x><C-s> <Cmd>lua vimrc.cmp.snippet()<CR>
+--   inoremap <C-x><C-f> <Cmd>lua vimrc.cmp.path()<CR>
+-- ]]
 
 vim.cmd [[
-  inoremap <C-x><C-o> <Cmd>lua vimrc.cmp.lsp()<CR>
-  inoremap <C-x><C-s> <Cmd>lua vimrc.cmp.snippet()<CR>
-  inoremap <C-x><C-f> <Cmd>lua vimrc.cmp.path()<CR>
-]]
-vim.cmd [[
-imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
-smap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
-imap <expr> <C-k>   vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
-smap <expr> <C-k>   vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-k>'
+imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+
 ]]

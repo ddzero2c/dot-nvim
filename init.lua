@@ -2,6 +2,7 @@ vim.cmd 'source ~/.config/nvim/vimrc'
 require 'dot-nvim.lsp'
 require 'dot-nvim.autocomplete'
 require 'dot-nvim.debugger'
+require 'dot-nvim.statusline'
 
 require('nvim-tree').setup { disable_netrw = false }
 
@@ -94,3 +95,5 @@ require('kommentary.config').configure_language({ 'javascriptreact', 'typescript
 		require('ts_context_commentstring.internal').update_commentstring()
 	end,
 })
+
+require('nvim-ts-autotag').setup()

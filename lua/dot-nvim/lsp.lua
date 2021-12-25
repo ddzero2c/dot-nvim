@@ -157,56 +157,56 @@ lsp.tsserver.setup {
 		local opts = { silent = true }
 		vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gs', ':TSLspOrganize<CR>', opts)
 		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", opts)
-		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", opts)
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gS', ':TSLspImportAll<CR>', opts)
 	end,
 }
 
--- local null_ls = require("null-ls")
--- null_ls.setup({
--- 	flag = flag,
--- 	sources = {
--- 		null_ls.builtins.formatting.stylua,
--- 		null_ls.builtins.formatting.prettier.with({
--- 			prefer_local = "node_modules/.bin",
--- 			filetypes = {
--- 				"javascript",
--- 				"javascriptreact",
--- 				"typescript",
--- 				"typescriptreact",
--- 				"vue",
--- 				"css",
--- 				"scss",
--- 				"less",
--- 				"html",
--- 				"json",
--- 				"yaml",
--- 				"markdown",
--- 				"graphql",
--- 				"solidity",
--- 			},
--- 		}),
--- 		null_ls.builtins.diagnostics.eslint,
--- 		null_ls.builtins.code_actions.eslint,
--- 	},
--- 	on_attach = function(client, bufnr)
--- 		on_attach_general(client, bufnr)
--- 		vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
--- 	end,
--- })
-lsp.eslint.setup {
+local null_ls = require 'null-ls'
+null_ls.setup {
 	flag = flag,
-	capabilities = capabilities,
+	sources = {
+		null_ls.builtins.formatting.stylua,
+		null_ls.builtins.formatting.prettier.with {
+			prefer_local = 'node_modules/.bin',
+			filetypes = {
+				'javascript',
+				'javascriptreact',
+				'typescript',
+				'typescriptreact',
+				'vue',
+				'css',
+				'scss',
+				'less',
+				'html',
+				'json',
+				'yaml',
+				'markdown',
+				'graphql',
+				'solidity',
+			},
+		},
+		null_ls.builtins.diagnostics.eslint,
+		null_ls.builtins.code_actions.eslint,
+	},
 	on_attach = function(client, bufnr)
 		on_attach_general(client, bufnr)
-		vim.cmd [[autocmd BufWritePre <buffer> EslintFixAll]]
+		vim.cmd 'autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()'
 	end,
-	settings = {
-		codeActionOnSave = {
-			enable = true,
-			mode = 'all',
-		},
-	},
 }
+-- lsp.eslint.setup {
+-- 	flag = flag,
+-- 	capabilities = capabilities,
+-- 	on_attach = function(client, bufnr)
+-- 		on_attach_general(client, bufnr)
+-- 		vim.cmd [[autocmd BufWritePre <buffer> EslintFixAll]]
+-- 	end,
+-- 	settings = {
+-- 		codeActionOnSave = {
+-- 			enable = true,
+-- 			mode = 'all',
+-- 		},
+-- 	},
+-- }
 
 -- Python LSP --
 lsp.pyright.setup {
@@ -277,13 +277,13 @@ lsp.solidity_ls.setup {
 	on_attach = on_attach_general,
 }
 
-vim.cmd(
-	[[
-let g:neoformat_try_node_exe = 1
-augroup fmt
-  autocmd!
-  autocmd BufWritePre *.sol,*.lua undojoin | Neoformat
-augroup END
-]],
-	true
-)
+-- vim.cmd(
+-- 	[[
+-- let g:neoformat_try_node_exe = 1
+-- augroup fmt
+--   autocmd!
+--   autocmd BufWritePre *.sol,*.lua,*.css,*.scss undojoin | Neoformat
+-- augroup END
+-- ]],
+-- 	true
+-- )

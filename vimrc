@@ -16,7 +16,8 @@ Plug 'https://github.com/sumneko/lua-language-server', {
             \  ./3rd/luamake/luamake rebuild'
             \  }
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
-Plug 'sbdchd/neoformat'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+" Plug 'sbdchd/neoformat'
 
 Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'kosayoda/nvim-lightbulb'
@@ -70,7 +71,7 @@ Plug 'wellle/targets.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'easymotion/vim-easymotion'
 "Plug 'dhruvasagar/vim-table-mode', { 'ft': ['mardown']}
-Plug 'AndrewRadev/tagalong.vim'
+" Plug 'AndrewRadev/tagalong.vim'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'folke/todo-comments.nvim'
 Plug 'ntpeters/vim-better-whitespace'
@@ -85,6 +86,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['m
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 
+Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
 Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
@@ -97,10 +99,10 @@ set background=light
 set nu
 set ic
 set nowrap
-set mouse=
+set mouse=n
 set undofile
 set stal=2
-set ls=1
+set ls=2
 set ts=4
 set sts=4
 set sw=4
