@@ -47,15 +47,15 @@ local function on_attach_general(client, bufnr)
 
 	vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
 	-- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]])
-	if client.resolved_capabilities.document_highlight then
-		vim.cmd [[
-        augroup lsp_document_highlight
-            autocmd! * <buffer>
-            autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-            autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-        augroup END
-        ]]
-	end
+	-- if client.resolved_capabilities.document_highlight then
+	-- 	vim.cmd [[
+	--        augroup lsp_document_highlight
+	--            autocmd! * <buffer>
+	--            autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+	--            autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+	--        augroup END
+	--        ]]
+	-- end
 end
 
 -- Lua LSP --
@@ -161,52 +161,43 @@ lsp.tsserver.setup {
 	end,
 }
 
-local null_ls = require 'null-ls'
-null_ls.setup {
-	flag = flag,
-	sources = {
-		null_ls.builtins.formatting.stylua,
-		null_ls.builtins.formatting.prettier.with {
-			prefer_local = 'node_modules/.bin',
-			filetypes = {
-				'javascript',
-				'javascriptreact',
-				'typescript',
-				'typescriptreact',
-				'vue',
-				'css',
-				'scss',
-				'less',
-				'html',
-				'json',
-				'yaml',
-				'markdown',
-				'graphql',
-				'solidity',
-			},
-		},
-		null_ls.builtins.diagnostics.eslint,
-		null_ls.builtins.code_actions.eslint,
-	},
-	on_attach = function(client, bufnr)
-		on_attach_general(client, bufnr)
-		vim.cmd 'autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()'
-	end,
-}
--- lsp.eslint.setup {
+-- local null_ls = require 'null-ls'
+-- null_ls.setup {
 -- 	flag = flag,
--- 	capabilities = capabilities,
+-- 	sources = {
+-- 		null_ls.builtins.formatting.stylua,
+-- 		null_ls.builtins.formatting.prettier.with {
+-- 			prefer_local = 'node_modules/.bin',
+-- 			filetypes = {
+-- 				'javascript',
+-- 				'javascriptreact',
+-- 				'typescript',
+-- 				'typescriptreact',
+-- 				'vue',
+-- 				'css',
+-- 				'scss',
+-- 				'less',
+-- 				'html',
+-- 				'json',
+-- 				'yaml',
+-- 				'markdown',
+-- 				'graphql',
+-- 				'solidity',
+-- 			},
+-- 		},
+-- 		null_ls.builtins.diagnostics.eslint,
+-- 		null_ls.builtins.code_actions.eslint,
+-- 	},
 -- 	on_attach = function(client, bufnr)
 -- 		on_attach_general(client, bufnr)
--- 		vim.cmd [[autocmd BufWritePre <buffer> EslintFixAll]]
+-- 		vim.cmd 'autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()'
 -- 	end,
--- 	settings = {
--- 		codeActionOnSave = {
--- 			enable = true,
--- 			mode = 'all',
--- 		},
--- 	},
 -- }
+lsp.eslint.setup {
+	flag = flag,
+	capabilities = capabilities,
+	on_attach = on_attach_general,
+}
 
 -- Python LSP --
 lsp.pyright.setup {
@@ -277,13 +268,13 @@ lsp.solidity_ls.setup {
 	on_attach = on_attach_general,
 }
 
--- vim.cmd(
--- 	[[
--- let g:neoformat_try_node_exe = 1
--- augroup fmt
---   autocmd!
---   autocmd BufWritePre *.sol,*.lua,*.css,*.scss undojoin | Neoformat
--- augroup END
--- ]],
--- 	true
--- )
+vim.cmd(
+	[[
+let g:neoformat_try_node_exe = 1
+augroup fmt
+  autocmd!
+  autocmd BufWritePre *.sol,*.lua,*.css,*.scss,*.js,*.jsx,*.ts,*.tsx undojoin | Neoformat
+augroup END
+]],
+	true
+)

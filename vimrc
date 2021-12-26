@@ -16,11 +16,13 @@ Plug 'https://github.com/sumneko/lua-language-server', {
             \  ./3rd/luamake/luamake rebuild'
             \  }
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
-Plug 'jose-elias-alvarez/null-ls.nvim'
-" Plug 'sbdchd/neoformat'
+" Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'sbdchd/neoformat'
 
 Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'kosayoda/nvim-lightbulb'
+Plug 'RRethy/vim-illuminate'
+
 
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
