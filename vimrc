@@ -7,39 +7,28 @@ Plug 'ray-x/go.nvim'
 Plug 'tomlion/vim-solidity'
 Plug 'towolf/vim-helm'
 Plug 'b0o/schemastore.nvim'
-Plug 'https://github.com/sumneko/lua-language-server', {
-            \ 'frozen': 1,
-            \  'do': 'git submodule update --init --recursive &&
-            \  cd 3rd/luamake &&
-            \  compile/install.sh &&
-            \  cd ../.. &&
-            \  ./3rd/luamake/luamake rebuild'
-            \  }
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 " Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'sbdchd/neoformat'
+Plug 'mfussenegger/nvim-lint'
 
 Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'kosayoda/nvim-lightbulb'
 Plug 'RRethy/vim-illuminate'
 
 
-Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-emoji'
-Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/vim-vsnip'
 Plug 'onsails/lspkind-nvim'
 
 " Plug 'github/copilot.vim'
-
-" snippets
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
-Plug 'rafamadriz/friendly-snippets'
 
 " debugger
 Plug 'mfussenegger/nvim-dap'
@@ -57,7 +46,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'RRethy/nvim-treesitter-textsubjects'
-Plug 'nvim-treesitter/playground'
+" Plug 'nvim-treesitter/playground'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 " fuzzy searcher
@@ -73,8 +62,9 @@ Plug 'wellle/targets.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'easymotion/vim-easymotion'
 "Plug 'dhruvasagar/vim-table-mode', { 'ft': ['mardown']}
-" Plug 'AndrewRadev/tagalong.vim'
 Plug 'windwp/nvim-ts-autotag'
+Plug 'windwp/nvim-autopairs'
+
 Plug 'folke/todo-comments.nvim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'chentau/marks.nvim'
@@ -88,7 +78,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['m
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 
-Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
+Plug 'NTBBloodbath/galaxyline.nvim'
 Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
@@ -130,10 +120,13 @@ set shortmess+=c
 " set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:↲,precedes:«,extends:»
 
 let g:mapleader = "\<Space>"
+nmap H gT
+nmap L gT
 nnoremap <C-c> <Esc>
 inoremap <C-c> <Esc>
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
+nnoremap <leader>s :w<cr>
 
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
@@ -169,8 +162,8 @@ nnoremap <leader>t :NvimTreeToggle<CR>
 " nnoremap <leader>G :Ag<cr>
 
 " vim-easymotion
-map  <leader>s <Plug>(easymotion-bd-f)
-nmap <leader>s <Plug>(easymotion-overwin-f)
+map  F <Plug>(easymotion-bd-f)
+nmap F <Plug>(easymotion-overwin-f)
 let g:EasyMotion_smartcase = 1
 
 " EasyAlign

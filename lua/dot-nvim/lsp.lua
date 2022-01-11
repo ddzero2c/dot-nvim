@@ -41,7 +41,7 @@ local function on_attach_general(client, bufnr)
 	buf_set_keymap('n', '<leader>ac', ':lua vim.lsp.buf.code_action()<CR>', opts)
 	buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 	buf_set_keymap('n', '<leader>f', ':lua vim.lsp.buf.formatting()<CR>', opts)
-	buf_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
+	buf_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 	buf_set_keymap('n', '<C-p>', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 	buf_set_keymap('n', '<C-n>', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 
@@ -59,21 +59,13 @@ local function on_attach_general(client, bufnr)
 end
 
 -- Lua LSP --
+-- brew install lua-language-server
 -- :PlugInstall lua-language-server
-local sumneko_root_path = vim.fn.stdpath 'data' .. '/plugged/lua-language-server'
-local sumneko_binary = sumneko_root_path .. '/bin/macOS/lua-language-server'
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
-lsp.sumneko_lua.setup {
-	flag = flag,
-	capabilities = capabilities,
-	on_attach = on_attach_general,
-	cmd = {
-		sumneko_binary,
-		'-E',
-		sumneko_root_path .. '/main.lua',
-	},
+
+require('lspconfig').sumneko_lua.setup {
 	settings = {
 		Lua = {
 			runtime = {
@@ -84,9 +76,7 @@ lsp.sumneko_lua.setup {
 			},
 			diagnostics = {
 				-- Get the language server to recognize the `vim` global
-				globals = {
-					'vim',
-				},
+				globals = { 'vim' },
 			},
 			workspace = {
 				-- Make the server aware of Neovim runtime files
@@ -118,7 +108,8 @@ lsp.gopls.setup {
 }
 require('go').setup {
 	goimport = 'gopls',
-	gofmt = 'gopls',
+	-- gofmt = 'gopls',
+	max_line_len = 120,
 	dap_debug = false,
 	dap_debug_gui = false,
 	dap_debug_vt = false,
@@ -250,17 +241,17 @@ lsp.rust_analyzer.setup {
 --require("rust-tools").setup({})
 
 -- Solidity --
-lsp.solang.setup {
-	-- cmd = {
-	-- 	"solang",
-	-- 	"--language-server",
-	-- 	"--target",
-	-- 	"ewasm",
-	-- },
-	flag = flag,
-	capabilities = capabilities,
-	on_attach = on_attach_general,
-}
+-- lsp.solang.setup {
+-- 	-- cmd = {
+-- 	-- 	"solang",
+-- 	-- 	"--language-server",
+-- 	-- 	"--target",
+-- 	-- 	"ewasm",
+-- 	-- },
+-- 	flag = flag,
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach_general,
+-- }
 
 lsp.solidity_ls.setup {
 	flag = flag,
@@ -273,7 +264,7 @@ vim.cmd(
 let g:neoformat_try_node_exe = 1
 augroup fmt
   autocmd!
-  autocmd BufWritePre *.sol,*.lua,*.css,*.scss,*.js,*.jsx,*.ts,*.tsx undojoin | Neoformat
+  autocmd BufWritePre *.sol,*.lua,*.css,*.scss,*.js,*.jsx,*.ts,*.tsx,*.yaml,*.yml undojoin | Neoformat
 augroup END
 ]],
 	true

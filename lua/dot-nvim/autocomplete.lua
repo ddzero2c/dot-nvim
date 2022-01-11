@@ -3,7 +3,7 @@ local cmp = require 'cmp'
 local lspkind = require 'lspkind'
 
 vim.cmd [[
-set completeopt=menu,menuone,noselect
+set completeopt=menu,menuone
 let g:vsnip_filetypes = {}
 let g:vsnip_filetypes.javascriptreact = ['javascript']
 let g:vsnip_filetypes.typescriptreact = ['typescript']
@@ -11,7 +11,7 @@ let g:vsnip_filetypes.typescriptreact = ['typescript']
 
 cmp.setup {
 	-- completion = {
-	-- 	autocomplete = true,
+	-- 	autocomplete = false,
 	-- },
 	snippet = {
 		expand = function(args)
@@ -22,24 +22,19 @@ cmp.setup {
 		['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
 		['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
 		['<C-y>'] = cmp.config.disable,
+		-- ['<Tab>'] = cmp.config.disable,
+		-- ['<S-Tab>'] = cmp.config.disable,
 		['<C-e>'] = cmp.mapping {
 			i = cmp.mapping.abort(),
 			c = cmp.mapping.close(),
 		},
 		['<C-j>'] = cmp.mapping.confirm { select = true },
-		['<C-x><C-s>'] = cmp.mapping.complete {
-			config = {
-				sources = {
-					{ name = 'vsnip' },
-				},
-			},
-		},
 	},
 	sources = {
 		{ name = 'nvim_lsp' },
 		{ name = 'nvim_lsp_signature_help' },
 		{ name = 'nvim_lua' },
-		{ name = 'vsnip' },
+		-- { name = 'vsnip' },
 		{ name = 'path' },
 		{ name = 'buffer', option = {
 			get_bufnrs = function()
@@ -66,59 +61,45 @@ cmp.setup {
 	--},
 }
 
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+-- cmp.setup.cmdline('/', {
+-- 	sources = {
+-- 		{ name = 'buffer' },
+-- 	},
+-- })
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+	sources = cmp.config.sources({
+		{ name = 'path' },
+	}, {
+		{ name = 'cmdline' },
+	}),
+})
+
 -- _G.vimrc = _G.vimrc or {}
 -- _G.vimrc.cmp = _G.vimrc.cmp or {}
--- _G.vimrc.cmp.lsp = function()
--- 	cmp.complete {
--- 		config = {
--- 			sources = {
--- 				{ name = 'nvim_lsp' },
--- 				{ name = 'nvim_lsp_signature_help' },
--- 				{ name = 'nvim_lua' },
--- 			},
--- 		},
--- 	}
+-- _G.vimrc.cmp.on_text_changed = function()
+-- 	local cursor = vim.api.nvim_win_get_cursor(0)
+-- 	local line = vim.api.nvim_get_current_line()
+-- 	local before = string.sub(line, 1, cursor[2] + 1)
+-- 	if before:match '%s*$' then
+-- 		cmp.complete() -- Trigger completion only if the cursor is placed at the end of line.
+-- 	end
 -- end
--- _G.vimrc.cmp.snippet = function()
--- 	cmp.complete {
--- 		config = {
--- 			sources = {
--- 				{ name = 'vsnip' },
--- 				{
--- 					name = 'buffer',
--- 					option = {
--- 						get_bufnrs = function()
--- 							return vim.api.nvim_list_bufs()
--- 						end,
--- 					},
--- 				},
--- 				{ name = 'emoji' },
--- 			},
--- 		},
--- 	}
--- end
--- _G.vimrc.cmp.path = function()
--- 	cmp.complete {
--- 		config = {
--- 			sources = {
--- 				{ name = 'path' },
--- 			},
--- 		},
--- 	}
--- end
-
 -- vim.cmd [[
---   inoremap <C-x><C-o> <Cmd>lua vimrc.cmp.lsp()<CR>
---   inoremap <C-x><C-s> <Cmd>lua vimrc.cmp.snippet()<CR>
---   inoremap <C-x><C-f> <Cmd>lua vimrc.cmp.path()<CR>
+--   augroup vimrc
+--     autocmd
+--     autocmd TextChanged,TextChangedI,TextChangedP * call luaeval('vimrc.cmp.on_text_changed()')
+--   augroup END
 -- ]]
 
-vim.cmd [[
-imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
-smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
-imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+-- vim.cmd [[
+-- imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+-- smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+-- imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+-- smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+-- imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+-- smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
-]]
+-- ]]

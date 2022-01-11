@@ -3,7 +3,6 @@ require 'dot-nvim.lsp'
 require 'dot-nvim.autocomplete'
 require 'dot-nvim.debugger'
 require 'dot-nvim.statusline'
-
 require('nvim-tree').setup { disable_netrw = false }
 
 require('nvim-treesitter.configs').setup {
@@ -97,3 +96,46 @@ require('kommentary.config').configure_language({ 'javascriptreact', 'typescript
 })
 
 require('nvim-ts-autotag').setup()
+require('nvim-autopairs').setup {}
+
+require('lint').linters.solhint = {
+	cmd = 'yarn',
+	stdin = false, -- or false if it doesn't support content input via stdin. In that case the filename is automatically added to the arguments.
+	args = { 'solhint' }, -- list of arguments. Can contain functions with zero arguments that will be evaluated once the linter is used.
+	stream = 'stdout', -- ('stdout' | 'stderr' | 'both') configure the stream to which the linter outputs the linting result.
+	ignore_exitcode = true, -- set this to true if the linter exits with a code != 0 and that's considered normal.
+	env = nil, -- custom environment table to use with the external process. Note that this replaces the *entire* environment, it is not additive.
+	parser = require('lint.parser').from_pattern(
+		[[%s*(%d+):(%d+)%s+(%w+)%s+(.+%S)%s+(%S+)]],
+		{ 'lnum', 'col', 'severity', 'message', 'code' },
+		{
+			['error'] = vim.diagnostic.severity.ERROR,
+			['warn'] = vim.diagnostic.severity.WARN,
+			['warning'] = vim.diagnostic.severity.WARN,
+		},
+		{
+			source = 'solhint',
+		}
+	),
+}
+require('lint').linters_by_ft = {
+	solidity = { 'solhint' },
+}
+vim.cmd [[au BufWritePost *.sol lua require('lint').try_lint()]]
+
+-- local pattern = [[%s*(%d+):(%d+)%s+(%w+)%s+(.+%S)%s+(%S+)]]
+-- local groups = { 'lnum', 'col', 'severity', 'message', 'code' }
+-- local severity_map = {
+--   ['error'] = vim.diagnostic.severity.ERROR,
+--   ['warn'] = vim.diagnostic.severity.WARN,
+--   ['warning'] = vim.diagnostic.severity.WARN,
+-- }
+
+-- return {
+--   cmd = 'eslint',
+--   args = {},
+--   stdin = false,
+--   stream = 'stdout',
+--   ignore_exitcode = true,
+--   parser = require('lint.parser').from_pattern(pattern, groups, severity_map, { ['source'] = 'eslint' }),
+-- }
