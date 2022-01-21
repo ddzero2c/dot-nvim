@@ -2,7 +2,8 @@
 
 local lsp = require 'lspconfig'
 local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 local flag = { debounce_text_changes = 150 }
 
 for type, icon in pairs(signs) do
@@ -23,7 +24,7 @@ vim.diagnostic.config {
 	severity_sort = false,
 }
 
-local function on_attach_general(client, bufnr)
+local function on_attach(client, bufnr)
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
 	end
@@ -94,7 +95,7 @@ require('lspconfig').sumneko_lua.setup {
 lsp.gopls.setup {
 	flag = flag,
 	capabilities = capabilities,
-	on_attach = on_attach_general,
+	on_attach = on_attach,
 	cmd = {
 		'gopls', -- share the gopls instance if there is one already
 		'-remote.debug=:0',
@@ -128,7 +129,7 @@ lsp.tsserver.setup {
 	init_options = require('nvim-lsp-ts-utils').init_options,
 	--
 	on_attach = function(client, bufnr)
-		on_attach_general(client, bufnr)
+		on_attach(client, bufnr)
 		client.resolved_capabilities.document_formatting = false
 		client.resolved_capabilities.document_range_formatting = false
 		local ts_utils = require 'nvim-lsp-ts-utils'
@@ -152,55 +153,54 @@ lsp.tsserver.setup {
 	end,
 }
 
--- local null_ls = require 'null-ls'
--- null_ls.setup {
--- 	flag = flag,
--- 	sources = {
--- 		null_ls.builtins.formatting.stylua,
--- 		null_ls.builtins.formatting.prettier.with {
--- 			prefer_local = 'node_modules/.bin',
--- 			filetypes = {
--- 				'javascript',
--- 				'javascriptreact',
--- 				'typescript',
--- 				'typescriptreact',
--- 				'vue',
--- 				'css',
--- 				'scss',
--- 				'less',
--- 				'html',
--- 				'json',
--- 				'yaml',
--- 				'markdown',
--- 				'graphql',
--- 				'solidity',
--- 			},
--- 		},
--- 		null_ls.builtins.diagnostics.eslint,
--- 		null_ls.builtins.code_actions.eslint,
--- 	},
--- 	on_attach = function(client, bufnr)
--- 		on_attach_general(client, bufnr)
--- 		vim.cmd 'autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()'
--- 	end,
--- }
-lsp.eslint.setup {
+local null_ls = require 'null-ls'
+null_ls.setup {
 	flag = flag,
-	capabilities = capabilities,
-	on_attach = on_attach_general,
+	sources = {
+		null_ls.builtins.formatting.stylua,
+		null_ls.builtins.formatting.prettier.with {
+			prefer_local = 'node_modules/.bin',
+			filetypes = {
+				'javascript',
+				'javascriptreact',
+				'typescript',
+				'typescriptreact',
+				'vue',
+				'css',
+				'scss',
+				'less',
+				'html',
+				'json',
+				'yaml',
+				'markdown',
+				'graphql',
+				'solidity',
+			},
+		},
+		null_ls.builtins.diagnostics.eslint_d,
+		null_ls.builtins.code_actions.eslint_d,
+	},
+	on_attach = function()
+		vim.cmd 'autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()'
+	end,
 }
+
+-- lsp.eslint.setup {
+-- 	flag = flag,
+-- 	capabilities = capabilities,
+-- }
 
 -- Python LSP --
 lsp.pyright.setup {
 	flag = flag,
 	capabilities = capabilities,
-	on_attach = on_attach_general,
+	on_attach = on_attach,
 }
 
 lsp.solargraph.setup {
 	flag = flag,
 	capabilities = capabilities,
-	on_attach = on_attach_general,
+	on_attach = on_attach,
 }
 
 -- CSS LSP --
@@ -208,13 +208,13 @@ lsp.solargraph.setup {
 lsp.cssls.setup {
 	flag = flag,
 	capabilities = capabilities,
-	on_attach = on_attach_general,
+	on_attach = on_attach,
 }
 lsp.jsonls.setup {
 	flag = flag,
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
-		on_attach_general(client, bufnr)
+		on_attach(client, bufnr)
 		client.resolved_capabilities.document_formatting = false
 		client.resolved_capabilities.document_range_formatting = false
 	end,
@@ -228,7 +228,7 @@ lsp.jsonls.setup {
 lsp.tailwindcss.setup {
 	flag = flag,
 	capabilities = capabilities,
-	on_attach = on_attach_general,
+	on_attach = on_attach,
 }
 
 -- Rust LSP --
@@ -236,7 +236,7 @@ lsp.tailwindcss.setup {
 lsp.rust_analyzer.setup {
 	flag = flag,
 	capabilities = capabilities,
-	on_attach = on_attach_general,
+	on_attach = on_attach,
 }
 --require("rust-tools").setup({})
 
@@ -250,22 +250,22 @@ lsp.rust_analyzer.setup {
 -- 	-- },
 -- 	flag = flag,
 -- 	capabilities = capabilities,
--- 	on_attach = on_attach_general,
+-- 	on_attach = on_attach,
 -- }
 
 lsp.solidity_ls.setup {
 	flag = flag,
 	capabilities = capabilities,
-	on_attach = on_attach_general,
+	on_attach = on_attach,
 }
 
-vim.cmd(
-	[[
-let g:neoformat_try_node_exe = 1
-augroup fmt
-  autocmd!
-  autocmd BufWritePre *.sol,*.lua,*.css,*.scss,*.js,*.jsx,*.ts,*.tsx,*.yaml,*.yml undojoin | Neoformat
-augroup END
-]],
-	true
-)
+-- vim.cmd(
+-- 	[[
+-- let g:neoformat_try_node_exe = 1
+-- augroup fmt
+--   autocmd!
+--   autocmd BufWritePre *.sol,*.lua,*.css,*.scss,*.js,*.jsx,*.ts,*.tsx,*.yaml,*.yml undojoin | Neoformat
+-- augroup END
+-- ]],
+-- 	true
+-- )

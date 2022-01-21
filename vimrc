@@ -8,15 +8,13 @@ Plug 'tomlion/vim-solidity'
 Plug 'towolf/vim-helm'
 Plug 'b0o/schemastore.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
-" Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'sbdchd/neoformat'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+" Plug 'sbdchd/neoformat'
 Plug 'mfussenegger/nvim-lint'
 
 Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'kosayoda/nvim-lightbulb'
 Plug 'RRethy/vim-illuminate'
-
-
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-buffer'
@@ -37,7 +35,7 @@ Plug 'rcarriga/nvim-dap-ui'
 " git
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'rlue/vim-barbaric'
+" Plug 'rlue/vim-barbaric'
 Plug 'lewis6991/gitsigns.nvim'
 
 " treesitter & syntax
