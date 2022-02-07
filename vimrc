@@ -57,6 +57,8 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'wellle/targets.vim'
+" Plug 'AndrewRadev/sideways.vim'
+
 Plug 'junegunn/vim-easy-align'
 Plug 'easymotion/vim-easymotion'
 "Plug 'dhruvasagar/vim-table-mode', { 'ft': ['mardown']}
@@ -76,7 +78,9 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['m
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 
-Plug 'NTBBloodbath/galaxyline.nvim'
+" Plug 'NTBBloodbath/galaxyline.nvim'
+Plug 'j-hui/fidget.nvim'
+Plug 'yfiua/tabline.vim'
 Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
@@ -92,7 +96,7 @@ set nowrap
 set mouse=n
 set undofile
 set stal=2
-set ls=2
+set ls=1
 set ts=4
 set sts=4
 set sw=4
@@ -118,13 +122,21 @@ set shortmess+=c
 " set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:↲,precedes:«,extends:»
 
 let g:mapleader = "\<Space>"
-nmap H gT
-nmap L gT
 nnoremap <C-c> <Esc>
 inoremap <C-c> <Esc>
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
 nnoremap <leader>s :w<cr>
+nnoremap <leader>S :wa<cr>
+nnoremap <leader>1 1gt
+nnoremap <leader>2 2gt
+nnoremap <leader>3 3gt
+nnoremap <leader>4 4gt
+nnoremap <leader>5 5gt
+nnoremap <leader>6 6gt
+nnoremap <leader>7 7gt
+nnoremap <leader>8 8gt
+nnoremap <leader>9 9gt
 
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
@@ -167,3 +179,6 @@ let g:EasyMotion_smartcase = 1
 " EasyAlign
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+
+" nnoremap <c-h> :SidewaysJumpLeft<cr>
+" nnoremap <c-l> :SidewaysJumpRight<cr>

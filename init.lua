@@ -2,29 +2,30 @@ vim.cmd 'source ~/.config/nvim/vimrc'
 require 'dot-nvim.lsp'
 require 'dot-nvim.autocomplete'
 require 'dot-nvim.debugger'
-require 'dot-nvim.statusline'
+-- require 'dot-nvim.statusline'
 require('nvim-tree').setup { disable_netrw = false }
+require('fidget').setup {}
 
 require('nvim-treesitter.configs').setup {
 	ensure_installed = 'maintained',
-	ignore_install = { 'haskell' },
+	ignore_install = { 'haskell', 'norg' },
 	highlight = { enable = true },
-	textobjects = {
-		enable = true,
-		keymaps = {
-			[';'] = 'textsubjects-smart',
-		},
-		select = {
-			enable = true,
-			lookahead = true,
-			keymaps = {
-				['af'] = '@function.outer',
-				['if'] = '@function.inner',
-				['ia'] = '@parameter.inner',
-				['aa'] = '@parameter.outer',
-			},
-		},
-	},
+	-- textobjects = {
+	-- 	enable = true,
+	-- 	keymaps = {
+	-- 		[';'] = 'textsubjects-smart',
+	-- 	},
+	-- 	select = {
+	-- 		enable = true,
+	-- 		lookahead = true,
+	-- 		keymaps = {
+	-- 			['af'] = '@function.outer',
+	-- 			['if'] = '@function.inner',
+	-- 			['ia'] = '@parameter.inner',
+	-- 			['aa'] = '@parameter.outer',
+	-- 		},
+	-- 	},
+	-- },
 	context_commentstring = {
 		enable = true,
 		enable_autocmd = false,

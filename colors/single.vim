@@ -113,7 +113,7 @@ call s:h("CursorLineNr",                  {"fg": s:main, "bg": s:bg_very_subtle}
 call s:h("Question",                      {"fg": s:red})
 call s:h("StatusLine",                    {"fg": s:white, "bg": s:bg_ui})
 call s:h("StatusLineNC",                  {"fg": s:white, "bg": s:bg_subtle })
-call s:h("VertSplit",                     {"fg": s:white, "bg": s:bg_ui })
+call s:h("VertSplit",                     {"fg": s:bg_ui, })
 call s:h("Title",                         {"fg": s:dark_blue})
 call s:h("Visual",                        {"fg": s:white, "bg": s:bg_ui})
 call s:h("VisualNOS",                     {"bg": s:bg_subtle})

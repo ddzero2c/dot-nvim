@@ -98,7 +98,7 @@ lsp.gopls.setup {
 	on_attach = on_attach,
 	cmd = {
 		'gopls', -- share the gopls instance if there is one already
-		'-remote.debug=:0',
+		'-remote=auto',
 	},
 	settings = {
 		gopls = {
@@ -242,12 +242,14 @@ lsp.rust_analyzer.setup {
 
 -- Solidity --
 -- lsp.solang.setup {
--- 	-- cmd = {
--- 	-- 	"solang",
--- 	-- 	"--language-server",
--- 	-- 	"--target",
--- 	-- 	"ewasm",
--- 	-- },
+-- 	cmd = {
+-- 		'solang',
+-- 		'--language-server',
+-- 		'--importmap',
+-- 		'@openzeppelin=/Users/ryder.hsu/dev/otterclam/private-contract/node_modules/@openzeppelin',
+-- 		'--target',
+-- 		'ewasm',
+-- 	},
 -- 	flag = flag,
 -- 	capabilities = capabilities,
 -- 	on_attach = on_attach,
@@ -258,6 +260,13 @@ lsp.solidity_ls.setup {
 	capabilities = capabilities,
 	on_attach = on_attach,
 }
+
+-- lsp.solc.setup {
+-- 	cmd = { '/opt/homebrew/bin/solc', '--lsp' },
+-- 	flag = flag,
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach,
+-- }
 
 -- vim.cmd(
 -- 	[[
