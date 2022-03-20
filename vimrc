@@ -26,7 +26,7 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'onsails/lspkind-nvim'
 
-" Plug 'github/copilot.vim'
+Plug 'github/copilot.vim'
 
 " debugger
 Plug 'mfussenegger/nvim-dap'
@@ -86,7 +86,7 @@ Plug 'norcalli/nvim-colorizer.lua'
 call plug#end()
 
 "colorscheme bored
-colorscheme single
+colorscheme white
 set background=light
 " set pumblend=10
 
@@ -126,6 +126,7 @@ nnoremap <C-c> <Esc>
 inoremap <C-c> <Esc>
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
+nnoremap <C-s>s :w<cr>
 nnoremap <leader>s :w<cr>
 nnoremap <leader>S :wa<cr>
 nnoremap <leader>1 1gt

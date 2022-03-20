@@ -242,17 +242,16 @@ lsp.rust_analyzer.setup {
 
 -- Solidity --
 -- lsp.solang.setup {
--- 	cmd = {
--- 		'solang',
--- 		'--language-server',
--- 		'--importmap',
--- 		'@openzeppelin=/Users/ryder.hsu/dev/otterclam/private-contract/node_modules/@openzeppelin',
--- 		'--target',
--- 		'ewasm',
--- 	},
--- 	flag = flag,
--- 	capabilities = capabilities,
--- 	on_attach = on_attach,
+-- cmd = {
+-- 	'solang',
+-- 	'--language-server',
+-- 	'--target',
+-- 	'ewasm',
+-- 	'--importpath=/Users/ryder.hsu/dev/otterclam/otter-contracts/node_modules',
+-- },
+-- flag = flag,
+-- capabilities = capabilities,
+-- on_attach = on_attach,
 -- }
 
 lsp.solidity_ls.setup {
