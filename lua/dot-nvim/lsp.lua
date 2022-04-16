@@ -4,7 +4,6 @@ local lsp = require 'lspconfig'
 local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-local flag = { debounce_text_changes = 150 }
 
 for type, icon in pairs(signs) do
     local hl = 'DiagnosticSign' .. type
@@ -12,9 +11,10 @@ for type, icon in pairs(signs) do
 end
 
 vim.diagnostic.config {
-    virtual_text = {
-        source = 'always', -- Or "if_many"
-    },
+    -- virtual_text = {
+    --     source = 'always', -- Or "if_many"
+    -- },
+    virtual_text = false,
     float = {
         source = 'always', -- Or "if_many"
     },
@@ -98,7 +98,6 @@ require('lspconfig').sumneko_lua.setup {
 
 -- Go LSP --
 lsp.gopls.setup {
-    flag = flag,
     capabilities = capabilities,
     on_attach = on_attach,
     cmd = {
@@ -127,7 +126,6 @@ vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').
 -- Typescript & Javascript LSP --
 -- npm install -g typescript typescript-language-server
 lsp.tsserver.setup {
-    flag = flag,
     capabilities = capabilities,
     -- Needed for inlayHints. Merge this table with your settings or copy
     -- it from the source if you want to add your own init_options.
@@ -160,7 +158,6 @@ lsp.tsserver.setup {
 
 local null_ls = require 'null-ls'
 null_ls.setup {
-    flag = flag,
     sources = {
         -- null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.prettier.with {
@@ -183,6 +180,7 @@ null_ls.setup {
             },
         },
         null_ls.builtins.diagnostics.eslint,
+        -- null_ls.builtins.diagnostics.solhint,
         null_ls.builtins.code_actions.eslint,
     },
     on_attach = function()
@@ -191,19 +189,16 @@ null_ls.setup {
 }
 
 -- lsp.eslint.setup {
--- 	flag = flag,
 -- 	capabilities = capabilities,
 -- }
 
 -- Python LSP --
 lsp.pyright.setup {
-    flag = flag,
     capabilities = capabilities,
     on_attach = on_attach,
 }
 
 lsp.solargraph.setup {
-    flag = flag,
     capabilities = capabilities,
     on_attach = on_attach,
 }
@@ -211,12 +206,10 @@ lsp.solargraph.setup {
 -- CSS LSP --
 -- npm i -g vscode-langservers-extracted
 lsp.cssls.setup {
-    flag = flag,
     capabilities = capabilities,
     on_attach = on_attach,
 }
 lsp.jsonls.setup {
-    flag = flag,
     capabilities = capabilities,
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
@@ -231,7 +224,6 @@ lsp.jsonls.setup {
 }
 -- npm install -g @tailwindcss/language-server
 lsp.tailwindcss.setup {
-    flag = flag,
     capabilities = capabilities,
     on_attach = on_attach,
 }
@@ -239,35 +231,37 @@ lsp.tailwindcss.setup {
 -- Rust LSP --
 -- curl -L https://github.com/rust-analyzer/rust-analyzer/releases/download/2021-10-18/rust-analyzer-aarch64-apple-darwin.gz | gunzip -c - > ~/bin/rust-analyzer && chmod +x ~/bin/rust-analyzer
 lsp.rust_analyzer.setup {
-    flag = flag,
     capabilities = capabilities,
     on_attach = on_attach,
 }
 --require("rust-tools").setup({})
 
 -- Solidity --
+lsp.solc.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+}
 -- lsp.solang.setup {
--- cmd = {
--- 	'solang',
--- 	'--language-server',
--- 	'--target',
--- 	'ewasm',
--- 	'--importpath=/Users/ryder.hsu/dev/otterclam/otter-contracts/node_modules',
--- },
--- flag = flag,
--- capabilities = capabilities,
--- on_attach = on_attach,
+--     cmd = { "solang", "--language-server", "--target", "ewasm", "--importmap=@openzeppelin=node_modules/@openzeppelin" },
+--     capabilities = capabilities,
+--     on_attach = on_attach,
 -- }
 
--- lsp.solidity_ls.setup {
--- 	flag = flag,
--- 	capabilities = capabilities,
--- 	on_attach = on_attach,
--- }
+lsp.solidity_ls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    settings = {
+        solidity = {
+            linter = 'solhint',
+            editor = {
+                formatOnSave = true,
+            },
+        }
+    }
+}
 
 -- lsp.solc.setup {
 -- 	cmd = { '/opt/homebrew/bin/solc', '--lsp' },
--- 	flag = flag,
 -- 	capabilities = capabilities,
 -- 	on_attach = on_attach,
 -- }
