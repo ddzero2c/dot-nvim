@@ -10,55 +10,55 @@ let g:vsnip_filetypes.typescriptreact = ['typescript']
 ]]
 
 cmp.setup {
-	-- completion = {
-	-- 	autocomplete = false,
-	-- },
-	snippet = {
-		expand = function(args)
-			vim.fn['vsnip#anonymous'](args.body)
-		end,
-	},
-	mapping = {
-		['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-		['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-		['<C-y>'] = cmp.config.disable,
-		-- ['<Tab>'] = cmp.config.disable,
-		-- ['<S-Tab>'] = cmp.config.disable,
-		['<C-e>'] = cmp.mapping {
-			i = cmp.mapping.abort(),
-			c = cmp.mapping.close(),
-		},
-		['<C-j>'] = cmp.mapping.confirm { select = true },
-	},
-	sources = {
-		{ name = 'nvim_lsp' },
-		{ name = 'nvim_lsp_signature_help' },
-		{ name = 'nvim_lua' },
-		-- { name = 'vsnip' },
-		{ name = 'path' },
-		{ name = 'buffer', option = {
-			get_bufnrs = function()
-				return vim.api.nvim_list_bufs()
-			end,
-		} },
-		{ name = 'emoji' },
-	},
-	formatting = {
-		format = lspkind.cmp_format {
-			-- with_text = false,
-			-- menu = {
-			-- 	vsnip = "[vsnip]",
-			-- 	nvim_lsp = "[lsp]",
-			-- 	nvim_lua = "[lua]",
-			-- 	path = "[path]",
-			-- 	buffer = "[buf]",
-			-- 	emoji = "[emoji]",
-			-- },
-		},
-	},
-	--documentation = {
-	--	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-	--},
+    -- completion = {
+    -- 	autocomplete = false,
+    -- },
+    snippet = {
+        expand = function(args)
+            vim.fn['vsnip#anonymous'](args.body)
+        end,
+    },
+    mapping = {
+        ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+        ['<C-y>'] = cmp.config.disable,
+        -- ['<Tab>'] = cmp.config.disable,
+        -- ['<S-Tab>'] = cmp.config.disable,
+        ['<C-e>'] = cmp.mapping {
+            i = cmp.mapping.abort(),
+            c = cmp.mapping.close(),
+        },
+        ['<C-j>'] = cmp.mapping.confirm { select = true },
+    },
+    sources = {
+        { name = 'nvim_lsp' },
+        { name = 'nvim_lsp_signature_help' },
+        { name = 'nvim_lua' },
+        -- { name = 'vsnip' },
+        { name = 'path' },
+        { name = 'buffer', option = {
+            get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+            end,
+        } },
+        { name = 'emoji' },
+    },
+    formatting = {
+        format = lspkind.cmp_format {
+            -- with_text = false,
+            -- menu = {
+            -- 	vsnip = "[vsnip]",
+            -- 	nvim_lsp = "[lsp]",
+            -- 	nvim_lua = "[lua]",
+            -- 	path = "[path]",
+            -- 	buffer = "[buf]",
+            -- 	emoji = "[emoji]",
+            -- },
+        },
+    },
+    --documentation = {
+    --	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    --},
 }
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
@@ -70,11 +70,11 @@ cmp.setup {
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
-	sources = cmp.config.sources({
-		{ name = 'path' },
-	}, {
-		{ name = 'cmdline' },
-	}),
+    sources = cmp.config.sources({
+        { name = 'path' },
+    }, {
+        { name = 'cmdline' },
+    }),
 })
 
 -- _G.vimrc = _G.vimrc or {}
