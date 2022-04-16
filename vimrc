@@ -96,7 +96,7 @@ set nowrap
 set mouse=n
 set undofile
 set stal=2
-set ls=1
+set ls=3
 set ts=4
 set sts=4
 set sw=4

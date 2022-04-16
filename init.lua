@@ -7,7 +7,6 @@ require('nvim-tree').setup { disable_netrw = false }
 require('fidget').setup {}
 
 require('nvim-treesitter.configs').setup {
-	ensure_installed = 'maintained',
 	ignore_install = { 'haskell', 'norg' },
 	highlight = { enable = true },
 	-- textobjects = {
