@@ -139,4 +139,3 @@ require('nvim-autopairs').setup {}
 --   ignore_exitcode = true,
 --   parser = require('lint.parser').from_pattern(pattern, groups, severity_map, { ['source'] = 'eslint' }),
 -- }
-

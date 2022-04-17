@@ -11,10 +11,9 @@ for type, icon in pairs(signs) do
 end
 
 vim.diagnostic.config {
-    -- virtual_text = {
-    --     source = 'always', -- Or "if_many"
-    -- },
-    virtual_text = false,
+    virtual_text = {
+        source = 'always', -- Or "if_many"
+    },
     float = {
         source = 'always', -- Or "if_many"
     },
