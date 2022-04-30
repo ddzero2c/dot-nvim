@@ -26,7 +26,9 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'onsails/lspkind-nvim'
 
+let g:copilot_no_tab_map = v:true
 Plug 'github/copilot.vim'
+imap <silent><script><expr> <C-Y> copilot#Accept("\<CR>")
 
 " debugger
 Plug 'mfussenegger/nvim-dap'
@@ -79,7 +81,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 
 " Plug 'NTBBloodbath/galaxyline.nvim'
-Plug 'j-hui/fidget.nvim'
+" Plug 'j-hui/fidget.nvim'
 Plug 'yfiua/tabline.vim'
 Plug 'norcalli/nvim-colorizer.lua'
 

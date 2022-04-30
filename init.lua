@@ -4,7 +4,7 @@ require 'dot-nvim.autocomplete'
 require 'dot-nvim.debugger'
 -- require 'dot-nvim.statusline'
 require('nvim-tree').setup { disable_netrw = false }
-require('fidget').setup {}
+-- require('fidget').setup {}
 
 require('nvim-treesitter.configs').setup {
     ignore_install = { 'haskell', 'norg' },

@@ -236,10 +236,10 @@ lsp.rust_analyzer.setup {
 --require("rust-tools").setup({})
 
 -- Solidity --
-lsp.solc.setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-}
+-- lsp.solc.setup {
+--     capabilities = capabilities,
+--     on_attach = on_attach,
+-- }
 -- lsp.solang.setup {
 --     cmd = { "solang", "--language-server", "--target", "ewasm", "--importmap=@openzeppelin=node_modules/@openzeppelin" },
 --     capabilities = capabilities,
