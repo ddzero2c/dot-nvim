@@ -2,9 +2,9 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
 " lsp & language
 Plug 'neovim/nvim-lspconfig'
-Plug 'ray-x/go.nvim'
+" Plug 'ray-x/go.nvim'
 "Plug 'simrat39/rust-tools.nvim'
-Plug 'tomlion/vim-solidity'
+" Plug 'tomlion/vim-solidity'
 Plug 'towolf/vim-helm'
 Plug 'b0o/schemastore.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
@@ -47,7 +47,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'RRethy/nvim-treesitter-textsubjects'
-" Plug 'nvim-treesitter/playground'
+Plug 'nvim-treesitter/playground'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 " fuzzy searcher
