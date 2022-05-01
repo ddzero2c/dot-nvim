@@ -6,28 +6,61 @@ require 'dot-nvim.debugger'
 require('nvim-tree').setup { disable_netrw = false }
 -- require('fidget').setup {}
 
-require('nvim-treesitter.configs').setup {
-    ignore_install = { 'haskell', 'norg' },
-    highlight = { enable = true },
-    -- textobjects = {
-    -- 	enable = true,
-    -- 	keymaps = {
-    -- 		[';'] = 'textsubjects-smart',
-    -- 	},
-    -- 	select = {
-    -- 		enable = true,
-    -- 		lookahead = true,
-    -- 		keymaps = {
-    -- 			['af'] = '@function.outer',
-    -- 			['if'] = '@function.inner',
-    -- 			['ia'] = '@parameter.inner',
-    -- 			['aa'] = '@parameter.outer',
-    -- 		},
-    -- 	},
-    -- },
-    context_commentstring = {
-        enable = true,
-        enable_autocmd = false,
+require 'nvim-treesitter.configs'.setup {
+    textobjects = {
+        select = {
+            enable = true,
+
+            -- Automatically jump forward to textobj, similar to targets.vim
+            lookahead = true,
+
+            keymaps = {
+                -- You can use the capture groups defined in textobjects.scm
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+                ['ia'] = '@parameter.inner',
+                ['aa'] = '@parameter.outer',
+            },
+        },
+        swap = {
+            enable = true,
+            swap_next = {
+                ["<leader>a"] = "@parameter.inner",
+            },
+            swap_previous = {
+                ["<leader>A"] = "@parameter.inner",
+            },
+        },
+        move = {
+            enable = true,
+            set_jumps = true, -- whether to set jumps in the jumplist
+            goto_next_start = {
+                ["]m"] = "@function.outer",
+                ["]]"] = "@class.outer",
+            },
+            goto_next_end = {
+                ["]M"] = "@function.outer",
+                ["]["] = "@class.outer",
+            },
+            goto_previous_start = {
+                ["[m"] = "@function.outer",
+                ["[["] = "@class.outer",
+            },
+            goto_previous_end = {
+                ["[M"] = "@function.outer",
+                ["[]"] = "@class.outer",
+            },
+        },
+        lsp_interop = {
+            enable = true,
+            border = 'none',
+            peek_definition_code = {
+                ["<leader>df"] = "@function.outer",
+                ["<leader>dF"] = "@class.outer",
+            },
+        },
     },
 }
 
@@ -139,3 +172,18 @@ require('nvim-autopairs').setup {}
 --   ignore_exitcode = true,
 --   parser = require('lint.parser').from_pattern(pattern, groups, severity_map, { ['source'] = 'eslint' }),
 -- }
+require('formatter').setup({
+    filetype = {
+        solidity = {
+            -- prettier
+            function()
+                return {
+                    exe = "node_modules/.bin/prettier",
+                    args = { "--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)) },
+                    stdin = true
+                }
+            end
+        },
+    }
+})
+vim.cmd 'autocmd BufWritePost *.sol FormatWrite'

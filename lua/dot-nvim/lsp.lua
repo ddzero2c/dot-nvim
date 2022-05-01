@@ -2,18 +2,19 @@
 
 local lsp = require 'lspconfig'
 local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
 for type, icon in pairs(signs) do
     local hl = 'DiagnosticSign' .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
 vim.diagnostic.config {
-    virtual_text = {
-        source = 'always', -- Or "if_many"
-    },
+    virtual_text = false,
+    -- virtual_text = {
+    --     source = 'always', -- Or "if_many"
+    -- },
     float = {
         source = 'always', -- Or "if_many"
     },
@@ -23,40 +24,65 @@ vim.diagnostic.config {
     severity_sort = false,
 }
 
-local function on_attach(client, bufnr)
-    local function buf_set_keymap(...)
-        vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
+local function lsp_format_autocmd(bufnr)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer = bufnr,
+        callback = function()
+            vim.lsp.buf.formatting_sync()
+        end
+    })
+end
 
+local function lsp_diagnostic_floating_autocmd(bufnr)
+    vim.api.nvim_create_autocmd("CursorHold", {
+        buffer = bufnr,
+        callback = function()
+            local opts = {
+                focusable = false,
+                close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+                source = 'always',
+                scope = 'cursor',
+            }
+            vim.diagnostic.open_float(nil, opts)
+        end
+    })
+end
+
+local function lsp_lightbulb_autocmd(bufnr)
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+        buffer = bufnr,
+        callback = function()
+            require 'nvim-lightbulb'.update_lightbulb()
+        end
+    })
+end
+
+local function lsp_set_keymaps(bufnr)
     local opts = { noremap = true, silent = true }
+    vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+    vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+    vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+    vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+end
 
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    buf_set_keymap('n', 'gD', ':lua vim.lsp.buf.declaration()<CR>', opts)
-    buf_set_keymap('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_set_keymap('n', 'gy', ':lua vim.lsp.buf.type_definition()<CR>', opts)
-    buf_set_keymap('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts)
-    buf_set_keymap('n', 'K', ':lua vim.lsp.buf.hover()<CR>', opts)
-    --buf_set_keymap("n", "<C-k>", ":lua vim.lsp.buf.signature_help()<CR>", opts)
-    buf_set_keymap('n', '<leader>rn', ':lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', '<leader>ac', ':lua vim.lsp.buf.code_action()<CR>', opts)
-    buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-    buf_set_keymap('n', '<leader>f', ':lua vim.lsp.buf.formatting()<CR>', opts)
-    buf_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-    buf_set_keymap('n', '<C-p>', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', '<C-n>', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+local function on_attach(client, bufnr)
+    lsp_set_keymaps(bufnr)
+    lsp_diagnostic_floating_autocmd(bufnr)
+    lsp_lightbulb_autocmd(bufnr)
 
-    vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
-    -- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]])
-    -- if client.resolved_capabilities.document_highlight then
-    -- 	vim.cmd [[
-    --        augroup lsp_document_highlight
-    --            autocmd! * <buffer>
-    --            autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-    --            autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-    --        augroup END
-    --        ]]
-    -- end
 end
 
 -- Lua LSP --
@@ -69,36 +95,45 @@ table.insert(runtime_path, 'lua/?/init.lua')
 require('lspconfig').sumneko_lua.setup {
     settings = {
         Lua = {
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = 'LuaJIT',
-                -- Setup your lua path
-                path = runtime_path,
-            },
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = { 'vim' },
-            },
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file('', true),
-            },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = {
-                enable = false,
-            },
+            runtime = { version = 'LuaJIT', path = runtime_path },
+            diagnostics = { globals = { 'vim' } },
+            workspace = { library = vim.api.nvim_get_runtime_file('', true) },
+            telemetry = { enable = false },
         },
     },
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
-        vim.cmd 'autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()'
+        lsp_format_autocmd(bufnr)
     end,
 }
 
 -- Go LSP --
+local function goimport(wait_ms)
+    local params = vim.lsp.util.make_range_params()
+    params.context = { only = { "source.organizeImports" } }
+    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
+    for _, res in pairs(result or {}) do
+        for _, r in pairs(res.result or {}) do
+            if r.edit then
+                vim.lsp.util.apply_workspace_edit(r.edit, "UTF-8")
+            else
+                vim.lsp.buf.execute_command(r.command)
+            end
+        end
+    end
+end
+
 lsp.gopls.setup {
     capabilities = capabilities,
-    on_attach = on_attach,
+    on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            callback = function()
+                goimport(1000)
+            end
+        })
+    end,
     cmd = {
         'gopls', -- share the gopls instance if there is one already
         '-remote=auto',
@@ -110,17 +145,16 @@ lsp.gopls.setup {
         },
     },
 }
-require('go').setup {
-    goimport = 'gopls',
-    -- gofmt = 'gopls',
-    max_line_len = 120,
-    dap_debug = false,
-    dap_debug_gui = false,
-    dap_debug_vt = false,
-    lsp_on_attach = false,
-    lsp_codelens = false,
-}
-vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
+-- require('go').setup {
+--     goimport = 'gopls',
+--     -- gofmt = 'gopls',
+--     max_line_len = 120,
+--     dap_debug = false,
+--     dap_debug_gui = false,
+--     dap_debug_vt = false,
+--     lsp_on_attach = false,
+--     lsp_codelens = false,
+-- }
 
 -- Typescript & Javascript LSP --
 -- npm install -g typescript typescript-language-server
@@ -155,41 +189,47 @@ lsp.tsserver.setup {
     end,
 }
 
-local null_ls = require 'null-ls'
-null_ls.setup {
-    sources = {
-        -- null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.prettier.with {
-            prefer_local = 'node_modules/.bin',
-            filetypes = {
-                'javascript',
-                'javascriptreact',
-                'typescript',
-                'typescriptreact',
-                'vue',
-                'css',
-                'scss',
-                'less',
-                'html',
-                'json',
-                'yaml',
-                'markdown',
-                'graphql',
-                'solidity',
-            },
-        },
-        null_ls.builtins.diagnostics.eslint,
-        -- null_ls.builtins.diagnostics.solhint,
-        null_ls.builtins.code_actions.eslint,
-    },
-    on_attach = function()
-        vim.cmd 'autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()'
-    end,
-}
-
--- lsp.eslint.setup {
--- 	capabilities = capabilities,
+-- local null_ls = require 'null-ls'
+-- null_ls.setup {
+--     sources = {
+--         -- null_ls.builtins.formatting.stylua,
+--         null_ls.builtins.formatting.prettier.with {
+--             prefer_local = 'node_modules/.bin',
+--             filetypes = {
+--                 'vue',
+--                 'css',
+--                 'scss',
+--                 'less',
+--                 'html',
+--                 -- 'json',
+--                 'yaml',
+--                 'markdown',
+--                 'graphql',
+--                 'solidity',
+--             },
+--         },
+--         -- null_ls.builtins.diagnostics.eslint,
+--         -- null_ls.builtins.diagnostics.solhint,
+--         -- null_ls.builtins.code_actions.eslint,
+--     },
+--     on_attach = function()
+--         vim.cmd 'autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()'
+--     end,
 -- }
+
+lsp.eslint.setup {
+    capabilities = capabilities,
+    on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+        vim.cmd [[autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll]]
+    end,
+    settings = {
+        codeActionOnSave = {
+            enable = true,
+            mode = 'all',
+        },
+    }
+}
 
 -- Python LSP --
 lsp.pyright.setup {
@@ -212,11 +252,24 @@ lsp.jsonls.setup {
     capabilities = capabilities,
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
+        lsp_format_autocmd(bufnr)
     end,
     settings = {
         json = {
+            schemas = require('schemastore').json.schemas(),
+        },
+    },
+}
+
+lsp.yamlls.setup {
+    capabilities = capabilities,
+    on_attach = function(client, bufnr)
+        client.resolved_capabilities.document_formatting = true
+        on_attach(client, bufnr)
+        lsp_format_autocmd(bufnr)
+    end,
+    settings = {
+        yaml = {
             schemas = require('schemastore').json.schemas(),
         },
     },
@@ -258,20 +311,3 @@ lsp.solidity_ls.setup {
         }
     }
 }
-
--- lsp.solc.setup {
--- 	cmd = { '/opt/homebrew/bin/solc', '--lsp' },
--- 	capabilities = capabilities,
--- 	on_attach = on_attach,
--- }
-
--- vim.cmd(
--- 	[[
--- let g:neoformat_try_node_exe = 1
--- augroup fmt
---   autocmd!
---   autocmd BufWritePre *.sol,*.lua,*.css,*.scss,*.js,*.jsx,*.ts,*.tsx,*.yaml,*.yml undojoin | Neoformat
--- augroup END
--- ]],
--- 	true
--- )

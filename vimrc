@@ -4,13 +4,14 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 Plug 'neovim/nvim-lspconfig'
 Plug 'ray-x/go.nvim'
 "Plug 'simrat39/rust-tools.nvim'
-" Plug 'tomlion/vim-solidity'
+Plug 'tomlion/vim-solidity'
 Plug 'towolf/vim-helm'
 Plug 'b0o/schemastore.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
-Plug 'jose-elias-alvarez/null-ls.nvim'
+" Plug 'jose-elias-alvarez/null-ls.nvim'
 " Plug 'sbdchd/neoformat'
 " Plug 'mfussenegger/nvim-lint'
+Plug 'mhartington/formatter.nvim'
 
 Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'kosayoda/nvim-lightbulb'
@@ -19,9 +20,9 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-emoji'
+" Plug 'hrsh7th/cmp-emoji'
 Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
-Plug 'hrsh7th/cmp-cmdline'
+" Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'onsails/lspkind-nvim'
@@ -57,8 +58,8 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " operation
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'wellle/targets.vim'
+" Plug 'tpope/vim-repeat'
+" Plug 'wellle/targets.vim'
 " Plug 'AndrewRadev/sideways.vim'
 
 Plug 'junegunn/vim-easy-align'
@@ -87,7 +88,6 @@ Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
 
-"colorscheme bored
 colorscheme white
 set background=light
 " set pumblend=10

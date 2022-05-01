@@ -9,10 +9,10 @@ dap.adapters.go = function(callback, config)
     local port = 38697
     local opts = {
         stdio = { nil, stdout },
-        args = { 'dap', '-l', '127.0.0.1:' .. port },
-        detached = true,
+        args = { "dap", "-l", "127.0.0.1:" .. port },
+        detached = true
     }
-    handle, pid_or_err = vim.loop.spawn('dlv', opts, function(code)
+    handle, pid_or_err = vim.loop.spawn("dlv", opts, function(code)
         stdout:close()
         handle:close()
         if code ~= 0 then
@@ -29,34 +29,27 @@ dap.adapters.go = function(callback, config)
         end
     end)
     -- Wait for delve to start
-    vim.defer_fn(function()
-        callback { type = 'server', host = '127.0.0.1', port = port }
-    end, 100)
+    vim.defer_fn(
+        function()
+            callback({ type = "server", host = "127.0.0.1", port = port })
+        end,
+        100)
 end
-
 -- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
 dap.configurations.go = {
     {
-        type = 'go',
-        name = 'Debug',
-        request = 'launch',
-        program = '${file}',
+        type = "go",
+        name = "debug",
+        request = "launch",
+        program = "${file}",
     },
     {
-        type = 'go',
-        name = 'Debug test', -- configuration for debugging test files
-        request = 'launch',
-        mode = 'test',
-        program = '${file}',
-    },
-    -- works with go.mod packages and sub packages
-    {
-        type = 'go',
-        name = 'Debug test (go.mod)',
-        request = 'launch',
-        mode = 'test',
-        program = './${relativeFileDirname}',
-    },
+        type = "go",
+        name = "debug test",
+        request = "launch",
+        mode = "test",
+        program = "./${relativeFileDirname}"
+    }
 }
 -- GO --
 
@@ -108,8 +101,8 @@ function debugger_start()
     nnoremap <silent> c :lua require('dap').continue()<CR>
     nnoremap <silent> b :lua require('dap').toggle_breakpoint()<CR>
     nnoremap <silent> n :lua require('dap').step_over()<CR>
-    nnoremap <silent> s :lua require('dap').step_into()<CR>
-    nnoremap <silent> S :lua require('dap').step_out()<CR>
+    nnoremap <silent> i :lua require('dap').step_into()<CR>
+    nnoremap <silent> o :lua require('dap').step_out()<CR>
     nnoremap <silent> p :lua require("dapui").eval()<CR>
     ]]
     dap.continue()
@@ -124,8 +117,8 @@ function debugger_stop()
     unmap c
     unmap b
     unmap n
-    unmap s
-    unmap S
+    unmap i
+    unmap o
     unmap p
     ]]
 end
@@ -135,3 +128,5 @@ nnoremap <silent> <F5> :lua debugger_start()<CR>
 nnoremap <silent> <F4> :lua debugger_stop()<CR>
 nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
 ]]
+
+require('dap.ext.vscode').load_launchjs(nil, { go = { 'go' } })
