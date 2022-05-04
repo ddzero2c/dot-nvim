@@ -46,7 +46,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-Plug 'RRethy/nvim-treesitter-textsubjects'
+" Plug 'RRethy/nvim-treesitter-textsubjects'
 Plug 'nvim-treesitter/playground'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
@@ -66,24 +66,24 @@ Plug 'junegunn/vim-easy-align'
 Plug 'easymotion/vim-easymotion'
 "Plug 'dhruvasagar/vim-table-mode', { 'ft': ['mardown']}
 Plug 'windwp/nvim-ts-autotag'
-Plug 'windwp/nvim-autopairs'
+" Plug 'windwp/nvim-autopairs'
 
 Plug 'folke/todo-comments.nvim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'chentau/marks.nvim'
-Plug 'folke/which-key.nvim'
+" Plug 'folke/which-key.nvim'
 Plug 'b3nj5m1n/kommentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
 
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
+" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
 
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 
 " Plug 'NTBBloodbath/galaxyline.nvim'
 " Plug 'j-hui/fidget.nvim'
-Plug 'yfiua/tabline.vim'
+" Plug 'yfiua/tabline.vim'
 Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
@@ -175,8 +175,8 @@ nnoremap <leader>t :NvimTreeToggle<CR>
 " nnoremap <leader>G :Ag<cr>
 
 " vim-easymotion
-map  F <Plug>(easymotion-bd-f)
-nmap F <Plug>(easymotion-overwin-f)
+map  L <Plug>(easymotion-bd-f)
+nmap L <Plug>(easymotion-overwin-f)
 let g:EasyMotion_smartcase = 1
 
 " EasyAlign

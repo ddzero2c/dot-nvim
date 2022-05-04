@@ -13,10 +13,10 @@ end
 
 local function lsp_setup_diagnositc()
     vim.diagnostic.config {
-        virtual_text = false,
-        -- virtual_text = {
-        --     source = 'always', -- Or "if_many"
-        -- },
+        -- virtual_text = false,
+        virtual_text = {
+            source = 'always', -- Or "if_many"
+        },
         float = {
             source = 'always', -- Or "if_many"
         },
@@ -62,6 +62,7 @@ end
 
 local function lsp_setup_keymaps(bufnr)
     local opts = { noremap = true, silent = true }
+    -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
@@ -79,7 +80,7 @@ end
 
 local function on_attach(client, bufnr)
     lsp_setup_keymaps(bufnr)
-    lsp_diagnostic_floating_autocmd(bufnr)
+    -- lsp_diagnostic_floating_autocmd(bufnr)
     lsp_lightbulb_autocmd(bufnr)
 end
 
