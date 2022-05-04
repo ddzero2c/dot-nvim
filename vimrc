@@ -2,7 +2,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
 " lsp & language
 Plug 'neovim/nvim-lspconfig'
-" Plug 'ray-x/go.nvim'
+Plug 'ray-x/go.nvim'
 "Plug 'simrat39/rust-tools.nvim'
 " Plug 'tomlion/vim-solidity'
 Plug 'towolf/vim-helm'

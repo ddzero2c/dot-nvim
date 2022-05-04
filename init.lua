@@ -1,5 +1,5 @@
 vim.cmd 'source ~/.config/nvim/vimrc'
-require 'dot-nvim.lsp'
+require 'dot-nvim.lsp'.setup()
 require 'dot-nvim.autocomplete'
 require 'dot-nvim.debugger'
 -- require 'dot-nvim.statusline'

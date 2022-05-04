@@ -1,28 +1,31 @@
 --local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 
+local M = {}
 local lsp = require 'lspconfig'
-local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
-for type, icon in pairs(signs) do
-    local hl = 'DiagnosticSign' .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+
+local function lsp_setup_signs()
+    local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
+    for type, icon in pairs(signs) do
+        local hl = 'DiagnosticSign' .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+    end
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
-vim.diagnostic.config {
-    virtual_text = false,
-    -- virtual_text = {
-    --     source = 'always', -- Or "if_many"
-    -- },
-    float = {
-        source = 'always', -- Or "if_many"
-    },
-    signs = true,
-    underline = true,
-    update_in_insert = false,
-    severity_sort = false,
-}
+local function lsp_setup_diagnositc()
+    vim.diagnostic.config {
+        virtual_text = false,
+        -- virtual_text = {
+        --     source = 'always', -- Or "if_many"
+        -- },
+        float = {
+            source = 'always', -- Or "if_many"
+        },
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = false,
+    }
+end
 
 local function lsp_format_autocmd(bufnr)
     vim.api.nvim_create_autocmd("BufWritePre", {
@@ -57,12 +60,8 @@ local function lsp_lightbulb_autocmd(bufnr)
     })
 end
 
-local function lsp_set_keymaps(bufnr)
+local function lsp_setup_keymaps(bufnr)
     local opts = { noremap = true, silent = true }
-    vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-    vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-    vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-    vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
@@ -79,12 +78,13 @@ local function lsp_set_keymaps(bufnr)
 end
 
 local function on_attach(client, bufnr)
-    lsp_set_keymaps(bufnr)
+    lsp_setup_keymaps(bufnr)
     lsp_diagnostic_floating_autocmd(bufnr)
     lsp_lightbulb_autocmd(bufnr)
-
 end
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- Lua LSP --
 -- brew install lua-language-server
 -- :PlugInstall lua-language-server
@@ -92,7 +92,7 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
-require('lspconfig').sumneko_lua.setup {
+lsp.sumneko_lua.setup {
     settings = {
         Lua = {
             runtime = { version = 'LuaJIT', path = runtime_path },
@@ -108,21 +108,6 @@ require('lspconfig').sumneko_lua.setup {
 }
 
 -- Go LSP --
-local function goimport(wait_ms)
-    local params = vim.lsp.util.make_range_params()
-    params.context = { only = { "source.organizeImports" } }
-    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
-    for _, res in pairs(result or {}) do
-        for _, r in pairs(res.result or {}) do
-            if r.edit then
-                vim.lsp.util.apply_workspace_edit(r.edit, "UTF-8")
-            else
-                vim.lsp.buf.execute_command(r.command)
-            end
-        end
-    end
-end
-
 lsp.gopls.setup {
     capabilities = capabilities,
     on_attach = function(client, bufnr)
@@ -130,7 +115,7 @@ lsp.gopls.setup {
         vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = bufnr,
             callback = function()
-                goimport(1000)
+                require("go.format").goimport()
             end
         })
     end,
@@ -145,16 +130,16 @@ lsp.gopls.setup {
         },
     },
 }
--- require('go').setup {
---     goimport = 'gopls',
---     -- gofmt = 'gopls',
---     max_line_len = 120,
---     dap_debug = false,
---     dap_debug_gui = false,
---     dap_debug_vt = false,
---     lsp_on_attach = false,
---     lsp_codelens = false,
--- }
+require('go').setup {
+    goimport = 'gopls',
+    -- gofmt = 'gopls',
+    max_line_len = 120,
+    dap_debug = false,
+    dap_debug_gui = false,
+    dap_debug_vt = false,
+    lsp_on_attach = false,
+    lsp_codelens = false,
+}
 
 -- Typescript & Javascript LSP --
 -- npm install -g typescript typescript-language-server
@@ -188,34 +173,6 @@ lsp.tsserver.setup {
         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gS', ':TSLspImportAll<CR>', opts)
     end,
 }
-
--- local null_ls = require 'null-ls'
--- null_ls.setup {
---     sources = {
---         -- null_ls.builtins.formatting.stylua,
---         null_ls.builtins.formatting.prettier.with {
---             prefer_local = 'node_modules/.bin',
---             filetypes = {
---                 'vue',
---                 'css',
---                 'scss',
---                 'less',
---                 'html',
---                 -- 'json',
---                 'yaml',
---                 'markdown',
---                 'graphql',
---                 'solidity',
---             },
---         },
---         -- null_ls.builtins.diagnostics.eslint,
---         -- null_ls.builtins.diagnostics.solhint,
---         -- null_ls.builtins.code_actions.eslint,
---     },
---     on_attach = function()
---         vim.cmd 'autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()'
---     end,
--- }
 
 lsp.eslint.setup {
     capabilities = capabilities,
@@ -311,3 +268,15 @@ lsp.solidity_ls.setup {
         }
     }
 }
+
+M.setup = function()
+    local opts = { noremap = true, silent = true }
+    vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+    vim.api.nvim_set_keymap('n', '<C-p>', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+    vim.api.nvim_set_keymap('n', '<C-n>', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+    vim.api.nvim_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+    lsp_setup_signs()
+    lsp_setup_diagnositc()
+end
+
+return M
