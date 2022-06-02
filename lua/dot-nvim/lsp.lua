@@ -270,6 +270,12 @@ lsp.solidity_ls.setup {
     }
 }
 
+-- lsp.sqls.setup {
+--     on_attach = function(client, bufnr)
+--         require('sqls').on_attach(client, bufnr)
+--     end
+-- }
+
 M.setup = function()
     local opts = { noremap = true, silent = true }
     vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
