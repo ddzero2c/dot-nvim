@@ -36,6 +36,12 @@ imap <silent><script><expr> <C-Y> copilot#Accept("\<CR>")
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
+" sql
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
+Plug 'kristijanhusak/vim-dadbod-completion'
+autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
+
 " git
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'

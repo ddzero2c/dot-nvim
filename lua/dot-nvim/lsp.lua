@@ -134,7 +134,6 @@ lsp.gopls.setup {
 require('go').setup {
     goimport = 'gopls',
     -- gofmt = 'gopls',
-    max_line_len = 120,
     dap_debug = false,
     dap_debug_gui = false,
     dap_debug_vt = false,
