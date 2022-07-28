@@ -8,9 +8,6 @@ Plug 'ray-x/go.nvim'
 Plug 'towolf/vim-helm'
 Plug 'b0o/schemastore.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
-" Plug 'nanotee/sqls.nvim'
-" Plug 'jose-elias-alvarez/null-ls.nvim'
-" Plug 'sbdchd/neoformat'
 Plug 'mfussenegger/nvim-lint'
 Plug 'mhartington/formatter.nvim'
 
@@ -38,14 +35,10 @@ Plug 'rcarriga/nvim-dap-ui'
 
 " sql
 Plug 'tpope/vim-dadbod'
-Plug 'kristijanhusak/vim-dadbod-ui'
-Plug 'kristijanhusak/vim-dadbod-completion'
-autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
 
 " git
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-" Plug 'rlue/vim-barbaric'
 Plug 'lewis6991/gitsigns.nvim'
 
 " treesitter & syntax
@@ -65,32 +58,22 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " operation
 Plug 'tpope/vim-surround'
-" Plug 'tpope/vim-repeat'
-" Plug 'wellle/targets.vim'
-" Plug 'AndrewRadev/sideways.vim'
 
 Plug 'junegunn/vim-easy-align'
 Plug 'easymotion/vim-easymotion'
-"Plug 'dhruvasagar/vim-table-mode', { 'ft': ['mardown']}
 Plug 'windwp/nvim-ts-autotag'
-" Plug 'windwp/nvim-autopairs'
 
 Plug 'folke/todo-comments.nvim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'chentoast/marks.nvim'
-" Plug 'folke/which-key.nvim'
 Plug 'b3nj5m1n/kommentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
-
-" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown', 'vimwiki'] }
 
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 
 " Plug 'NTBBloodbath/galaxyline.nvim'
-" Plug 'j-hui/fidget.nvim'
-" Plug 'yfiua/tabline.vim'
 Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
