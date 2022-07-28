@@ -126,10 +126,6 @@ lsp.gopls.setup {
         })
 
     end,
-    cmd = {
-        'gopls', -- share the gopls instance if there is one already
-        '-remote=auto',
-    },
     settings = {
         gopls = {
             analyses = { unusedparams = true },

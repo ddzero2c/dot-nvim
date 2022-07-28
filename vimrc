@@ -3,8 +3,6 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 " lsp & language
 Plug 'neovim/nvim-lspconfig'
 Plug 'ray-x/go.nvim'
-"Plug 'simrat39/rust-tools.nvim'
-" Plug 'tomlion/vim-solidity'
 Plug 'towolf/vim-helm'
 Plug 'b0o/schemastore.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
@@ -18,9 +16,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
-" Plug 'hrsh7th/cmp-emoji'
 Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
-" Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'onsails/lspkind-nvim'
@@ -33,47 +29,30 @@ imap <silent><script><expr> <C-Y> copilot#Accept("\<CR>")
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
-" sql
-Plug 'tpope/vim-dadbod'
-
 " git
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-surround'
+
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 " treesitter & syntax
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-" Plug 'RRethy/nvim-treesitter-textsubjects'
 Plug 'nvim-treesitter/playground'
-Plug 'lukas-reineke/indent-blankline.nvim'
 
 " fuzzy searcher
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-" Plug 'junegunn/fzf.vim'
 
-" operation
-Plug 'tpope/vim-surround'
-
-Plug 'junegunn/vim-easy-align'
-Plug 'easymotion/vim-easymotion'
 Plug 'windwp/nvim-ts-autotag'
-
 Plug 'folke/todo-comments.nvim'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'chentoast/marks.nvim'
 Plug 'b3nj5m1n/kommentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
-
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'kyazdani42/nvim-tree.lua'
-
-" Plug 'NTBBloodbath/galaxyline.nvim'
 Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
@@ -83,6 +62,7 @@ set background=light
 " set pumblend=10
 
 set nu
+set rnu
 set ic
 set nowrap
 set mouse=n
@@ -119,17 +99,6 @@ inoremap <C-c> <Esc>
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
 nnoremap <C-s>s :w<cr>
-nnoremap <leader>s :w<cr>
-nnoremap <leader>S :wa<cr>
-nnoremap <leader>1 1gt
-nnoremap <leader>2 2gt
-nnoremap <leader>3 3gt
-nnoremap <leader>4 4gt
-nnoremap <leader>5 5gt
-nnoremap <leader>6 6gt
-nnoremap <leader>7 7gt
-nnoremap <leader>8 8gt
-nnoremap <leader>9 9gt
 
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
@@ -154,24 +123,3 @@ augroup LuaHighlight
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
 
-" luatree
-nnoremap <leader>t :NvimTreeToggle<CR>
-
-" fzf
-" let g:fzf_preview_window = []
-" let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.6 } }
-" nnoremap <leader>p :Files<cr>
-" nnoremap <leader>g :Rg<cr>
-" nnoremap <leader>G :Ag<cr>
-
-" vim-easymotion
-map  L <Plug>(easymotion-bd-f)
-nmap L <Plug>(easymotion-overwin-f)
-let g:EasyMotion_smartcase = 1
-
-" EasyAlign
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-
-" nnoremap <c-h> :SidewaysJumpLeft<cr>
-" nnoremap <c-l> :SidewaysJumpRight<cr>
