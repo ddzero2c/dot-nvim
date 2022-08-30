@@ -21,9 +21,9 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'onsails/lspkind-nvim'
 
-let g:copilot_no_tab_map = v:true
-Plug 'github/copilot.vim'
-imap <silent><script><expr> <C-Y> copilot#Accept("\<CR>")
+" let g:copilot_no_tab_map = v:true
+" Plug 'github/copilot.vim'
+" imap <silent><script><expr> <C-Y> copilot#Accept("\<CR>")
 
 " debugger
 Plug 'mfussenegger/nvim-dap'
@@ -67,7 +67,7 @@ set ic
 set nowrap
 set mouse=n
 set undofile
-set stal=2
+set stal=1
 set ls=3
 set ts=4
 set sts=4
@@ -96,9 +96,7 @@ set shortmess+=c
 let g:mapleader = "\<Space>"
 nnoremap <C-c> <Esc>
 inoremap <C-c> <Esc>
-inoremap <C-f> <Right>
-inoremap <C-b> <Left>
-nnoremap <C-s>s :w<cr>
+nnoremap <leader>t <C-w>v:Ex<CR>
 
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab

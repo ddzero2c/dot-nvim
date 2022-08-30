@@ -17,4 +17,6 @@ M.vnoremap = bind("v")
 M.xnoremap = bind("x")
 M.inoremap = bind("i")
 
+M.nnoremap("<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+
 return M

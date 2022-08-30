@@ -115,6 +115,10 @@ lsp.sumneko_lua.setup {
 
 -- Go LSP --
 lsp.gopls.setup {
+    cmd = {
+        'gopls',
+        '-remote=auto',
+    },
     capabilities = capabilities,
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)

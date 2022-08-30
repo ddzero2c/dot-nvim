@@ -5,10 +5,6 @@ local nnoremap = require("ddzero2c.keymap").nnoremap
 vim.fn.sign_define('DapBreakpoint', { text = '•', texthl = 'ErrorMsg', linehl = '', numhl = '' })
 vim.fn.sign_define('DapStopped', { text = '→', texthl = 'ErrorMsg', linehl = '', numhl = 'Error' })
 
-dap.listeners.after.event_initialized["dapui_config"] = function()
-    dapui.open()
-end
-
 dapui.setup {
     layouts = {
         {
@@ -30,25 +26,36 @@ dapui.setup {
     },
 }
 
-require('dap.ext.vscode').load_launchjs(nil, { go = { 'go' } })
 require("ddzero2c.debugger.go");
+require('dap.ext.vscode').load_launchjs(nil, { go = { 'go' } })
 
-nnoremap("<leader><leader>", function()
+dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+    vim.cmd [[
+        nnoremap <silent> c :lua require('dap').continue()<CR>
+        nnoremap <silent> b :lua require('dap').toggle_breakpoint()<CR>
+        nnoremap <silent> n :lua require('dap').step_over()<CR>
+        nnoremap <silent> i :lua require('dap').step_into()<CR>
+        nnoremap <silent> o :lua require('dap').step_out()<CR>
+        nnoremap <silent> p :lua require("dapui").eval()<CR>
+    ]]
+end
+
+nnoremap("<F5>", function()
+    dap.continue('')
+end)
+nnoremap("<F4>", function()
+    vim.cmd [[
+        unmap c
+        unmap b
+        unmap n
+        unmap i
+        unmap o
+        unmap p
+    ]]
     dapui.close()
     dap.disconnect()
     dap.close()
-end)
-nnoremap("<Up>", function()
-    dap.continue()
-end)
-nnoremap("<Down>", function()
-    dap.step_over()
-end)
-nnoremap("<Right>", function()
-    dap.step_into()
-end)
-nnoremap("<Left>", function()
-    dap.step_out()
 end)
 nnoremap("<Leader>b", function()
     dap.toggle_breakpoint()
