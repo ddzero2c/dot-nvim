@@ -2,12 +2,12 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
 " lsp & language
 Plug 'neovim/nvim-lspconfig'
-Plug 'ray-x/go.nvim'
 Plug 'towolf/vim-helm'
 Plug 'b0o/schemastore.nvim'
-Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+Plug 'jose-elias-alvarez/typescript.nvim'
 Plug 'mfussenegger/nvim-lint'
 Plug 'mhartington/formatter.nvim'
+Plug 'olexsmir/gopher.nvim'
 
 Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'kosayoda/nvim-lightbulb'
@@ -21,9 +21,9 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'onsails/lspkind-nvim'
 
-" let g:copilot_no_tab_map = v:true
-" Plug 'github/copilot.vim'
-" imap <silent><script><expr> <C-Y> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
+Plug 'github/copilot.vim'
+imap <silent><script><expr> <C-Y> copilot#Accept("\<CR>")
 
 " debugger
 Plug 'mfussenegger/nvim-dap'
@@ -36,6 +36,11 @@ Plug 'tpope/vim-surround'
 
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
+
+" UI
+" Plug 'rcarriga/nvim-notify'
+" Plug 'MunifTanjim/nui.nvim'
+" Plug 'folke/noice.nvim'
 
 " treesitter & syntax
 Plug 'nvim-lua/popup.nvim'
@@ -67,11 +72,12 @@ set ic
 set nowrap
 set mouse=n
 set undofile
-set stal=1
-set ls=3
-set ts=4
-set sts=4
-set sw=4
+" set winbar=%f
+set showtabline=2
+set laststatus=0
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 set expandtab
 set signcolumn=yes
 set termguicolors
@@ -81,12 +87,13 @@ set diffopt+=algorithm:histogram,indent-heuristic
 
 " system clipboard
 set clipboard^=unnamed,unnamedplus
+set spell
 
 set hidden
 set nobackup
 set nowritebackup
 set noswapfile
-set cmdheight=1
+set cmdheight=0
 set updatetime=250
 set shortmess+=c
 

@@ -141,7 +141,7 @@ hi! link FloatBorder Pmenu
 
 call s:h("TabLine",                       {"fg": s:fg,  "bg": s:bg_very_subtle})
 call s:h("TabLineSel",                    {"fg": s:white, "bg": s:bg_ui, "gui": "bold"})
-call s:h("TabLineFill",                   {"fg": s:fg,  "bg": s:bg_very_subtle})
+call s:h("TabLineFill",                   {"fg": s:fg,  "bg": s:bg})
 call s:h("CursorColumn",                  {"bg": s:bg_very_subtle})
 call s:h("CursorLine",                    {"gui": "underline"})
 call s:h("ColorColumn",                   {"bg": s:bg_subtle})

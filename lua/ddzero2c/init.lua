@@ -3,6 +3,9 @@ require('ddzero2c.autocomplete')
 require('ddzero2c.debugger')
 require('ddzero2c.formatter')
 
+require('gopher').setup({})
+-- require("noice").setup()
+
 require('nvim-treesitter.configs').setup {
     highlight = {
         enable = true,

@@ -27,6 +27,7 @@ require('formatter').setup({
         solidity = { prettier_local_formatter },
         markdown = { prettier_formatter },
         sql = { sqlfluff_formatter },
+        graphql = { prettier_formatter },
     }
 })
-vim.cmd 'autocmd BufWritePost *.sol,*.md,*.sql FormatWrite'
+vim.cmd 'autocmd BufWritePost *.sol,*.md,*.sql,*.graphql FormatWrite'

@@ -31,7 +31,7 @@ local function lsp_format_autocmd(bufnr)
     vim.api.nvim_create_autocmd("BufWritePre", {
         buffer = bufnr,
         callback = function()
-            vim.lsp.buf.formatting_sync()
+            vim.lsp.buf.format()
         end
     })
 end
@@ -113,6 +113,26 @@ lsp.sumneko_lua.setup {
     end,
 }
 
+M.go_import = function()
+    local clients = vim.lsp.buf_get_clients()
+    for _, client in pairs(clients) do
+
+        local params = vim.lsp.util.make_range_params(nil, client.offset_encoding)
+        params.context = { only = { "source.organizeImports" } }
+
+        local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 5000)
+        for _, res in pairs(result or {}) do
+            for _, r in pairs(res.result or {}) do
+                if r.edit then
+                    vim.lsp.util.apply_workspace_edit(r.edit, client.offset_encoding)
+                else
+                    vim.lsp.buf.execute_command(r.command)
+                end
+            end
+        end
+    end
+end
+
 -- Go LSP --
 lsp.gopls.setup {
     cmd = {
@@ -123,12 +143,12 @@ lsp.gopls.setup {
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
         vim.api.nvim_create_autocmd("BufWritePre", {
-            buffer = bufnr,
+            pattern = { "*.go" },
             callback = function()
-                require("go.format").goimport()
+                M.go_import()
+                vim.lsp.buf.formatting_sync()
             end
         })
-
     end,
     settings = {
         gopls = {
@@ -137,48 +157,8 @@ lsp.gopls.setup {
         },
     },
 }
-require('go').setup {
-    goimport = 'gopls',
-    gofmt = 'gofumpt',
-    dap_debug = false,
-    dap_debug_gui = false,
-    dap_debug_vt = false,
-    lsp_on_attach = false,
-    lsp_codelens = false,
-}
 
--- Typescript & Javascript LSP --
--- npm install -g typescript typescript-language-server
-lsp.tsserver.setup {
-    capabilities = capabilities,
-    -- Needed for inlayHints. Merge this table with your settings or copy
-    -- it from the source if you want to add your own init_options.
-    init_options = require('nvim-lsp-ts-utils').init_options,
-    --
-    on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
-        local ts_utils = require 'nvim-lsp-ts-utils'
-
-        -- defaults
-        ts_utils.setup {
-            auto_inlay_hints = false,
-            filter_out_diagnostics_by_severity = { 'hint' },
-            update_imports_on_move = true,
-            require_confirmation_on_move = true,
-        }
-
-        -- required to fix code action ranges and filter diagnostics
-        ts_utils.setup_client(client)
-
-        -- no default maps, so you may want to define some here
-        local opts = { silent = true }
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gs', ':TSLspOrganize<CR>', opts)
-        -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gS', ':TSLspImportAll<CR>', opts)
-    end,
-}
+require("typescript").setup({})
 
 lsp.eslint.setup {
     capabilities = capabilities,
@@ -281,6 +261,13 @@ lsp.solidity_ls.setup {
 --     end
 -- }
 
+lsp.graphql.setup {
+    capabilities = capabilities,
+    on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+        lsp_format_autocmd(bufnr)
+    end,
+}
 M.setup = function()
     local opts = { noremap = true, silent = true }
     vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
