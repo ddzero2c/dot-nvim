@@ -31,7 +31,7 @@ local function lsp_format_autocmd(bufnr)
     vim.api.nvim_create_autocmd("BufWritePre", {
         buffer = bufnr,
         callback = function()
-            vim.lsp.buf.format()
+            vim.lsp.buf.format({ timeout_ms = 3000 })
         end
     })
 end
@@ -85,8 +85,7 @@ local function on_attach(client, bufnr)
     lsp_lightbulb_autocmd(bufnr)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true
