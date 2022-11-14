@@ -66,7 +66,7 @@ cmp.setup {
             end,
         } },
         { name = 'emoji' },
-        { name = 'vim-dadbod-completion' }
+        -- { name = 'vim-dadbod-completion' },
     },
     formatting = {
         format = lspkind.cmp_format {

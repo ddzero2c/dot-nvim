@@ -153,11 +153,21 @@ lsp.gopls.setup {
         gopls = {
             analyses = { unusedparams = true },
             staticcheck = true,
+            env = {
+                GOFLAGS = "-tags=wireinject",
+            }
         },
     },
 }
 
-require("typescript").setup({})
+require("typescript").setup({
+    server = {
+        on_attach = function(client)
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+        end
+    }
+})
 
 lsp.eslint.setup {
     capabilities = capabilities,
@@ -206,7 +216,8 @@ lsp.jsonls.setup {
 lsp.yamlls.setup {
     capabilities = capabilities,
     on_attach = function(client, bufnr)
-        client.resolved_capabilities.document_formatting = true
+        client.server_capabilities.documentFormattingProvider = true
+        client.server_capabilities.documentRangeFormattingProvider = true
         on_attach(client, bufnr)
         lsp_format_autocmd(bufnr)
     end,

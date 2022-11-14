@@ -36,6 +36,8 @@ Plug 'tpope/vim-surround'
 
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'editorconfig/editorconfig-vim'
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 " UI
 " Plug 'rcarriga/nvim-notify'
@@ -87,13 +89,12 @@ set diffopt+=algorithm:histogram,indent-heuristic
 
 " system clipboard
 set clipboard^=unnamed,unnamedplus
-set spell
 
 set hidden
 set nobackup
 set nowritebackup
 set noswapfile
-set cmdheight=0
+set cmdheight=1
 set updatetime=250
 set shortmess+=c
 
