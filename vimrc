@@ -1,12 +1,16 @@
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
 " lsp & language
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'towolf/vim-helm'
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+
 Plug 'b0o/schemastore.nvim'
 Plug 'jose-elias-alvarez/typescript.nvim'
 Plug 'mfussenegger/nvim-lint'
-Plug 'mhartington/formatter.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'olexsmir/gopher.nvim'
 
 Plug 'antoinemadec/FixCursorHold.nvim'
@@ -17,17 +21,15 @@ Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+Plug 'uga-rosa/cmp-dictionary'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'onsails/lspkind-nvim'
+Plug 'simrat39/symbols-outline.nvim'
 
 let g:copilot_no_tab_map = v:true
 Plug 'github/copilot.vim'
 imap <silent><script><expr> <C-Y> copilot#Accept("\<CR>")
-
-" debugger
-Plug 'mfussenegger/nvim-dap'
-Plug 'rcarriga/nvim-dap-ui'
 
 " git
 Plug 'tpope/vim-fugitive'
@@ -43,6 +45,8 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 " Plug 'rcarriga/nvim-notify'
 " Plug 'MunifTanjim/nui.nvim'
 " Plug 'folke/noice.nvim'
+Plug 'kevinhwang91/nvim-ufo'
+Plug 'kevinhwang91/promise-async'
 
 " treesitter & syntax
 Plug 'nvim-lua/popup.nvim'
@@ -66,7 +70,7 @@ call plug#end()
 
 colorscheme white
 set background=light
-" set pumblend=10
+set pumblend=10
 
 set nu
 set rnu
@@ -97,17 +101,20 @@ set noswapfile
 set cmdheight=1
 set updatetime=250
 set shortmess+=c
+set encoding=utf-8
 
 " set list
 " set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:↲,precedes:«,extends:»
+set fillchars=eob:\ ,foldopen:▼,foldclose:⏵
 
 let g:mapleader = "\<Space>"
 nnoremap <C-c> <Esc>
 inoremap <C-c> <Esc>
 nnoremap <leader>t <C-w>v:Ex<CR>
 
+
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
-autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
+autocmd FileType java,go,api setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType vim,lua setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal ts=2 sts=2 sw=2 expandtab
@@ -115,7 +122,8 @@ autocmd FileType yaml,json setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType helm,dockerfile,terraform,hcl setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType css,sass,scss,html setlocal ts=2 sts=2 sw=2 expandtab
 
-autocmd BufRead,BufNewFile *.hcl set filetype=terraform
+" autocmd BufRead,BufNewFile *.hcl set filetype=terraform
+" autocmd BufRead,BufNewFile *.api set filetype=api
 
 " json comment
 autocmd FileType json syntax match Comment +\/\/.\+$+
@@ -129,3 +137,4 @@ augroup LuaHighlight
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
 
+let g:omni_sql_no_default_maps = 1

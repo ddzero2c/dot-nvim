@@ -66,6 +66,7 @@ cmp.setup {
             end,
         } },
         { name = 'emoji' },
+        { name = "dictionary", keyword_length = 2 },
         -- { name = 'vim-dadbod-completion' },
     },
     formatting = {
@@ -100,6 +101,12 @@ cmp.setup.cmdline(':', {
     }, {
         { name = 'cmdline' },
     }),
+})
+
+require("cmp_dictionary").setup({
+    dic = {
+        ["*"] = { "/Users/ryder.hsu/.config/nvim/10k.txt" },
+    }
 })
 
 -- _G.vimrc = _G.vimrc or {}

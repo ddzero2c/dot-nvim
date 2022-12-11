@@ -1,0 +1,5 @@
+{
+  "language": "postgresql",
+  "expressionWidth": 120,
+  "keywordCase": "upper"
+}

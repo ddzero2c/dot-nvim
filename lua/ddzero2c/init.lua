@@ -1,10 +1,12 @@
 require('ddzero2c.lsp').setup()
 require('ddzero2c.autocomplete')
 require('ddzero2c.debugger')
-require('ddzero2c.formatter')
+--require('ddzero2c.formatter')
+require('ddzero2c.fold')
 
 require('gopher').setup({})
 -- require("noice").setup()
+require("symbols-outline").setup()
 
 require('nvim-treesitter.configs').setup {
     highlight = {
@@ -65,11 +67,11 @@ require('telescope').setup {
         },
     },
 }
-require('telescope').load_extension 'fzf'
-vim.cmd [[
-nnoremap <leader>p <cmd>Telescope find_files find_command=rg,--ignore,--files<cr>
-nnoremap <leader>g <cmd>Telescope live_grep<cr>
-]]
+require('telescope').load_extension('fzf')
+-- require("telescope").load_extension('noice')
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>p', builtin.find_files, {})
+vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
 
 require('indent_blankline').setup { show_end_of_line = true }
 require('todo-comments').setup {}

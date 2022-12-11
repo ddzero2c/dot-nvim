@@ -297,3 +297,13 @@ call s:h("markdownUrlTitle",              { "fg": s:fg                          
 call s:h("markdownUrlTitleDelimiter",     { "fg": s:gray4                        })
 call s:h("markdownCode",                  { "fg": s:fg,          "bg": s:string        })
 call s:h("markdownCodeDelimiter",         { "fg": s:fg,          "bg": s:string        })
+
+call s:h("NoiceCmdlinePopupBorder",         { "fg": s:fg,          "bg": s:bg        })
+call s:h("NoiceCmdlinePopupBorderSearch",   { "fg": s:fg,          "bg": s:bg        })
+" hi default UfoFoldedFg guifg=Normal.foreground
+" hi default UfoFoldedBg guibg=Folded.background
+hi! link UfoPreviewSbar PmenuSbar
+hi! link UfoPreviewThumb PmenuThumb
+hi! link UfoPreviewWinBar UfoFoldedBg
+hi! link UfoPreviewCursorLine Visual
+hi! link UfoFoldedEllipsis Comment
