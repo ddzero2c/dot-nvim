@@ -101,7 +101,6 @@ set noswapfile
 set cmdheight=1
 set updatetime=250
 set shortmess+=c
-set encoding=utf-8
 
 " set list
 " set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:↲,precedes:«,extends:»
@@ -114,16 +113,13 @@ nnoremap <leader>t <C-w>v:Ex<CR>
 
 
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
-autocmd FileType java,go,api setlocal ts=4 sts=4 sw=4 noexpandtab
+autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType vim,lua setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType yaml,json setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType helm,dockerfile,terraform,hcl setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType css,sass,scss,html setlocal ts=2 sts=2 sw=2 expandtab
-
-" autocmd BufRead,BufNewFile *.hcl set filetype=terraform
-" autocmd BufRead,BufNewFile *.api set filetype=api
 
 " json comment
 autocmd FileType json syntax match Comment +\/\/.\+$+

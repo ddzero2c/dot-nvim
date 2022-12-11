@@ -1,9 +1,15 @@
---local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
-
 local M = {}
 require("mason").setup()
 require("mason-lspconfig").setup()
 local lsp = require("lspconfig")
+
+local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+	opts = opts or {}
+	opts.border = opts.border or border
+	return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
 
 local function lsp_setup_signs()
 	local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }

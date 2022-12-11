@@ -133,10 +133,10 @@ call s:h("SpellCap",                      {"gui": "underline", "sp": s:light_gre
 call s:h("SpellRare",                     {"gui": "underline", "sp": s:light_purple})
 call s:h("SpellLocal",                    {"gui": "underline", "sp": s:green})
 
-call s:h("Pmenu",                         {"fg": s:fg, "bg": s:bg_very_subtle})
+call s:h("Pmenu",                         {"fg": s:fg, "bg": s:bg})
 call s:h("PmenuSel",                      {"fg": s:fg, "bg": s:bg_subtle, "gui": "bold"})
 call s:h("PmenuSbar",                     {"fg": s:fg, "bg": s:bg_very_subtle})
-call s:h("PmenuThumb",                    {"fg": s:fg, "bg": s:bg_ui})
+call s:h("PmenuThumb",                    {"fg": s:bg, "bg": s:fg})
 hi! link FloatBorder Pmenu
 
 call s:h("TabLine",                       {"fg": s:fg,  "bg": s:bg_very_subtle})
