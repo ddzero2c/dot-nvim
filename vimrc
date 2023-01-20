@@ -69,8 +69,8 @@ Plug 'norcalli/nvim-colorizer.lua'
 call plug#end()
 
 colorscheme white
-set background=light
-set pumblend=10
+set background=dark
+set pumblend=5
 
 set nu
 set rnu

@@ -1,5 +1,10 @@
 {
   "language": "postgresql",
   "expressionWidth": 120,
-  "keywordCase": "upper"
+  "keywordCase": "upper",
+  "paramTypes": {
+    "named": ["@"],
+    "numbered": ["$"],
+    "positional": true
+  }
 }

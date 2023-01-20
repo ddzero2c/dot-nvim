@@ -8,19 +8,18 @@ vim.fn.sign_define("DapStopped", { text = "→", texthl = "ErrorMsg", linehl = "
 dapui.setup({
 	icons = { expanded = "▼", collapsed = "⏵", circular = "" },
 	layouts = {
-		-- {
-		-- 	elements = {
-		-- 		"console",
-		-- 	},
-		-- 	size = 7,
-		-- 	position = "bottom",
-		-- },
+		{
+			elements = {
+				"stacks",
+			},
+			size = 40,
+			position = "right",
+		},
 		{
 			elements = {
 				-- Elements can be strings or table with id and size keys.
 				-- { id = "scopes", size = 0.25 },
 				"scopes",
-				-- "watches",
 			},
 			size = 12,
 			position = "bottom",

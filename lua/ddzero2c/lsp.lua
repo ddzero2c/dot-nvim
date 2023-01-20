@@ -3,11 +3,10 @@ require("mason").setup()
 require("mason-lspconfig").setup()
 local lsp = require("lspconfig")
 
-local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 	opts = opts or {}
-	opts.border = opts.border or border
+	opts.border = "single"
 	return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
@@ -166,7 +165,7 @@ lsp.gopls.setup({
 			analyses = { unusedparams = true },
 			staticcheck = true,
 			env = {
-				GOFLAGS = "-tags=wireinject",
+				GOFLAGS = "-tags=wireinject,e2e",
 			},
 			gofumpt = true,
 		},
@@ -289,6 +288,7 @@ lsp.rust_analyzer.setup({
 lsp.solc.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
+	root_dir = require("lspconfig.util").root_pattern(".git"),
 })
 -- lsp.sqls.setup {
 --     on_attach = function(client, bufnr)
