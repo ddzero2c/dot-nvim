@@ -1,6 +1,7 @@
 local M = {}
 require("mason").setup()
 require("mason-lspconfig").setup()
+require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
 local lsp = require("lspconfig")
 
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
@@ -43,30 +44,6 @@ local function lsp_format_autocmd(bufnr)
 	})
 end
 
-local function lsp_diagnostic_floating_autocmd(bufnr)
-	vim.api.nvim_create_autocmd("CursorHold", {
-		buffer = bufnr,
-		callback = function()
-			local opts = {
-				focusable = false,
-				close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-				source = "always",
-				scope = "cursor",
-			}
-			vim.diagnostic.open_float(nil, opts)
-		end,
-	})
-end
-
-local function lsp_lightbulb_autocmd(bufnr)
-	vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-		buffer = bufnr,
-		callback = function()
-			require("nvim-lightbulb").update_lightbulb()
-		end,
-	})
-end
-
 local function lsp_setup_keymaps(bufnr)
 	local opts = { noremap = true, silent = true }
 	-- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -93,8 +70,6 @@ end
 
 local function on_attach(client, bufnr)
 	lsp_setup_keymaps(bufnr)
-	-- lsp_diagnostic_floating_autocmd(bufnr)
-	lsp_lightbulb_autocmd(bufnr)
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -109,7 +84,7 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-lsp.sumneko_lua.setup({
+lsp.lua_ls.setup({
 	settings = {
 		Lua = {
 			runtime = { version = "LuaJIT", path = runtime_path },
@@ -190,7 +165,7 @@ lsp.eslint.setup({
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
 		on_attach(client, bufnr)
-		vim.cmd([[autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js,*.sol EslintFixAll]])
+		vim.cmd([[autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll]])
 	end,
 	filetypes = {
 		"javascript",
@@ -307,12 +282,14 @@ lsp.graphql.setup({
 local null_ls = require("null-ls")
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
+	debug = true,
 	sources = {
 		null_ls.builtins.formatting.stylua,
 		null_ls.builtins.formatting.sql_formatter.with({
 			args = { "--config=/Users/ryder.hsu/.config/nvim/.sql-formatter.json" },
 		}),
 		null_ls.builtins.formatting.prettier.with({
+			extra_args = { "--plugin=prettier-plugin-solidity" },
 			filetypes = {
 				"json",
 				"jsonc",

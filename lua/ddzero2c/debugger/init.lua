@@ -43,7 +43,7 @@ dap.listeners.after.event_initialized["dapui_config"] = function()
 end
 
 nnoremap("<F5>", function()
-	dap.continue("")
+	dap.continue({})
 end)
 nnoremap("<F4>", function()
 	vim.cmd([[

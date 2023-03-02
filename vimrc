@@ -4,18 +4,6 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'mfussenegger/nvim-dap'
-Plug 'rcarriga/nvim-dap-ui'
-
-Plug 'b0o/schemastore.nvim'
-Plug 'jose-elias-alvarez/typescript.nvim'
-Plug 'mfussenegger/nvim-lint'
-Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'olexsmir/gopher.nvim'
-
-Plug 'antoinemadec/FixCursorHold.nvim'
-Plug 'kosayoda/nvim-lightbulb'
-Plug 'RRethy/vim-illuminate'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-buffer'
@@ -25,18 +13,32 @@ Plug 'uga-rosa/cmp-dictionary'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'onsails/lspkind-nvim'
+Plug 'kosayoda/nvim-lightbulb'
+Plug 'RRethy/vim-illuminate'
 Plug 'simrat39/symbols-outline.nvim'
 
 let g:copilot_no_tab_map = v:true
 Plug 'github/copilot.vim'
 imap <silent><script><expr> <C-Y> copilot#Accept("\<CR>")
 
-" git
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+
+Plug 'b0o/schemastore.nvim'
+Plug 'jose-elias-alvarez/typescript.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'olexsmir/gopher.nvim'
+
+" helpers
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
-
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'windwp/nvim-ts-autotag'
+Plug 'folke/todo-comments.nvim'
+Plug 'b3nj5m1n/kommentary'
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'editorconfig/editorconfig-vim'
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
@@ -59,17 +61,15 @@ Plug 'nvim-treesitter/playground'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
-Plug 'windwp/nvim-ts-autotag'
-Plug 'folke/todo-comments.nvim'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'b3nj5m1n/kommentary'
-Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+" color
 Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
 
+" set guicursor=n-v-c-sm:ver25,i-ci-ve:ver25,r-cr-o:hor20
+
 colorscheme white
-set background=dark
+set background=light
 set pumblend=5
 
 set nu
@@ -111,7 +111,6 @@ nnoremap <C-c> <Esc>
 inoremap <C-c> <Esc>
 nnoremap <leader>t <C-w>v:Ex<CR>
 
-
 autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType vim,lua setlocal ts=4 sts=4 sw=4 expandtab
@@ -128,9 +127,9 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " hightlight on yank
-augroup LuaHighlight
-    autocmd!
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
-augroup END
+" augroup LuaHighlight
+"     autocmd!
+"     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+" augroup END
 
 let g:omni_sql_no_default_maps = 1
