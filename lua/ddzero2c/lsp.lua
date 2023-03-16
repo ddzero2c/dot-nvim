@@ -142,7 +142,7 @@ lsp.gopls.setup({
 			env = {
 				GOFLAGS = "-tags=wireinject,e2e",
 			},
-			gofumpt = true,
+			gofumpt = false,
 		},
 	},
 })
