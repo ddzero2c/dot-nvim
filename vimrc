@@ -31,8 +31,8 @@ Plug 'olexsmir/gopher.nvim'
 
 " helpers
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'windwp/nvim-ts-autotag'
@@ -115,8 +115,8 @@ autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
 autocmd FileType vim,lua setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
-autocmd FileType javascript,javascriptreact,typescript,typescriptreact setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType yaml,json setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType javascript,javascriptreact,typescript,typescriptreact,graphql setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType yaml,json,sql setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType helm,dockerfile,terraform,hcl setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType css,sass,scss,html setlocal ts=2 sts=2 sw=2 expandtab
 
