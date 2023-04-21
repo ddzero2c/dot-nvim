@@ -41,12 +41,12 @@ end
 cmp.setup({
     window = {
         completion = {
-            -- rounded border; thin-style scrollbar
             border = "single",
             scrollbar = "║",
+            col_offset = -3,
+            side_padding = 0,
         },
         documentation = {
-            -- no border; native-style scrollbar
             border = "single",
             scrollbar = "║",
         },
@@ -56,6 +56,7 @@ cmp.setup({
             vim.fn["vsnip#anonymous"](args.body)
         end,
     },
+    preselect = cmp.PreselectMode.None,
     mapping = {
         ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
         ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
@@ -64,30 +65,14 @@ cmp.setup({
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
         }),
-        ["<C-j>"] = cmp.mapping.confirm({ select = true }),
+        ["<CR>"] = cmp.mapping.confirm({
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+        }),
         ["<Tab>"] = cmp.mapping(cmp_next, { "i", "s" }),
         ["<S-Tab>"] = cmp.mapping(cmp_prev, { "i", "s" }),
         ["<C-n>"] = cmp.mapping(cmp_next, { "i", "s" }),
         ["<C-p>"] = cmp.mapping(cmp_prev, { "i", "s" }),
-        -- ["<C-n>"] = function(fallback)
-        -- 	if not cmp.select_next_item() then
-        -- 		if vim.bo.buftype ~= "prompt" and has_words_before() then
-        -- 			cmp.complete()
-        -- 		else
-        -- 			fallback()
-        -- 		end
-        -- 	end
-        -- end,
-
-        -- ["<C-p>"] = function(fallback)
-        -- 	if not cmp.select_prev_item() then
-        -- 		if vim.bo.buftype ~= "prompt" and has_words_before() then
-        -- 			cmp.complete()
-        -- 		else
-        -- 			fallback()
-        -- 		end
-        -- 	end
-        -- end,
     },
     sources = {
         { name = "nvim_lsp" },
@@ -105,61 +90,24 @@ cmp.setup({
         },
         { name = "emoji" },
         { name = "dictionary", keyword_length = 2 },
-        -- { name = 'vim-dadbod-completion' },
     },
     formatting = {
-        format = lspkind.cmp_format({}),
+        fields = { "kind", "abbr", "menu" },
+        format = function(entry, vim_item)
+            local kind = lspkind.cmp_format({
+                mode = "symbol_text",
+                maxwidth = 50,
+            })(entry, vim_item)
+            local strings = vim.split(kind.kind, "%s", { trimempty = true })
+            kind.kind = " " .. (strings[1] or "") .. " "
+            kind.menu = "    (" .. (strings[2] or "") .. ")"
+            return kind
+        end,
     },
-    --documentation = {
-    --	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-    --},
 })
-
--- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
--- cmp.setup.cmdline('/', {
--- 	sources = {
--- 		{ name = 'buffer' },
--- 	},
--- })
-
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
--- cmp.setup.cmdline(":", {
--- 	sources = cmp.config.sources({
--- 		{ name = "path" },
--- 	}, {
--- 		{ name = "cmdline" },
--- 	}),
--- })
 
 require("cmp_dictionary").setup({
     dic = {
-        ["*"] = { "/Users/ryder.hsu/.config/nvim/10k.txt" },
+        ["*"] = { os.getenv("HOME") .. "/.config/nvim/10k.txt" },
     },
 })
-
--- _G.vimrc = _G.vimrc or {}
--- _G.vimrc.cmp = _G.vimrc.cmp or {}
--- _G.vimrc.cmp.on_text_changed = function()
--- 	local cursor = vim.api.nvim_win_get_cursor(0)
--- 	local line = vim.api.nvim_get_current_line()
--- 	local before = string.sub(line, 1, cursor[2] + 1)
--- 	if before:match '%s*$' then
--- 		cmp.complete() -- Trigger completion only if the cursor is placed at the end of line.
--- 	end
--- end
--- vim.cmd [[
---   augroup vimrc
---     autocmd
---     autocmd TextChanged,TextChangedI,TextChangedP * call luaeval('vimrc.cmp.on_text_changed()')
---   augroup END
--- ]]
-
--- vim.cmd [[
--- imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
--- smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
--- imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
--- smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
--- imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
--- smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-
--- ]]

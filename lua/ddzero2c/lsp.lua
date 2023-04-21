@@ -137,7 +137,11 @@ lsp.gopls.setup({
     end,
     settings = {
         gopls = {
-            analyses = { unusedparams = true },
+            experimentalPostfixCompletions = true,
+            analyses = {
+                unusedparams = true,
+                shadow = true,
+            },
             staticcheck = true,
             env = {
                 GOFLAGS = "-tags=wireinject,e2e",

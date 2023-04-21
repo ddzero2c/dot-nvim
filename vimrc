@@ -9,9 +9,9 @@ Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
-Plug 'uga-rosa/cmp-dictionary'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/vim-vsnip'
+Plug 'uga-rosa/cmp-dictionary'
 Plug 'onsails/lspkind-nvim'
 Plug 'kosayoda/nvim-lightbulb'
 Plug 'RRethy/vim-illuminate'
@@ -19,7 +19,7 @@ Plug 'simrat39/symbols-outline.nvim'
 
 let g:copilot_no_tab_map = v:true
 Plug 'github/copilot.vim'
-imap <silent><script><expr> <C-Y> copilot#Accept("\<CR>")
+imap <silent><script><expr> <C-j> copilot#Accept("\<CR>")
 
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
