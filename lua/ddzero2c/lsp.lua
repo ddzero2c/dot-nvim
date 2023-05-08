@@ -1,6 +1,4 @@
 local M = {}
-require("mason").setup()
-require("mason-lspconfig").setup()
 require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
 local lsp = require("lspconfig")
 
@@ -66,6 +64,10 @@ local function lsp_setup_keymaps(bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-p>", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-n>", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 end
 
 local function on_attach(client, bufnr)
@@ -84,6 +86,7 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
+-- brew install lua-language-server
 lsp.lua_ls.setup({
     settings = {
         Lua = {
@@ -119,6 +122,7 @@ M.go_import = function()
 end
 
 -- Go LSP --
+-- go install golang.org/x/tools/gopls@latest
 lsp.gopls.setup({
     cmd = {
         "gopls",
@@ -140,7 +144,7 @@ lsp.gopls.setup({
             experimentalPostfixCompletions = true,
             analyses = {
                 unusedparams = true,
-                shadow = true,
+                -- shadow = true,
             },
             staticcheck = true,
             env = {
@@ -151,6 +155,7 @@ lsp.gopls.setup({
     },
 })
 
+-- nnpm install -g typescript typescript-language-serverpm install -g typescript typescript-language-server
 require("typescript").setup({
     server = {
         on_attach = function(client)
@@ -207,6 +212,8 @@ lsp.cssls.setup({
     capabilities = capabilities,
     on_attach = on_attach,
 })
+
+-- npm i -g vscode-langservers-extracted
 lsp.jsonls.setup({
     capabilities = capabilities,
     on_attach = function(client, bufnr)
@@ -220,6 +227,7 @@ lsp.jsonls.setup({
     },
 })
 
+-- yarn global add yaml-language-server
 lsp.yamlls.setup({
     capabilities = capabilities,
     on_attach = function(client, bufnr)
@@ -251,19 +259,7 @@ lsp.rust_analyzer.setup({
     on_attach = on_attach,
 })
 
--- lsp.solidity_ls.setup({
--- 	capabilities = capabilities,
--- 	on_attach = on_attach,
--- 	settings = {
--- 		solidity = {
--- 			linter = "solhint",
--- 			editor = {
--- 				formatOnSave = true,
--- 			},
--- 		},
--- 	},
--- })
---
+-- npm install @ignored/solidity-language-server -g
 lsp.solidity.setup({
     cmd = { 'nomicfoundation-solidity-language-server', '--stdio' },
     filetypes = { 'solidity' },
@@ -272,17 +268,8 @@ lsp.solidity.setup({
     capabilities = capabilities,
     on_attach = on_attach,
 })
--- lsp.solc.setup({
---     capabilities = capabilities,
---     on_attach = on_attach,
---     -- root_dir = require("lspconfig.util").root_pattern(".git"),
--- })
--- lsp.sqls.setup {
---     on_attach = function(client, bufnr)
---         require('sqls').on_attach(client, bufnr)
---     end
--- }
 
+-- npm install -g graphql-language-service-cli
 lsp.graphql.setup({
     capabilities = capabilities,
     on_attach = function(client, bufnr)
@@ -298,7 +285,7 @@ null_ls.setup({
     sources = {
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.sql_formatter.with({
-            args = { "--config=/Users/ryder/.config/nvim/.sql-formatter.json" },
+            args = { "--config=" .. os.getenv("HOME") .. "/.config/nvim/.sql-formatter.json" },
         }),
         null_ls.builtins.formatting.prettier.with({
             extra_args = { "--plugin=prettier-plugin-solidity" },
@@ -331,10 +318,6 @@ null_ls.setup({
 
 M.setup = function()
     local opts = { noremap = true, silent = true }
-    vim.api.nvim_set_keymap("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<C-p>", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<C-n>", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
     lsp_setup_signs()
     lsp_setup_diagnositc()
 end

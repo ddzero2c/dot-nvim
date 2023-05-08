@@ -1,8 +1,6 @@
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
 " lsp & language
-Plug 'williamboman/mason.nvim'
-Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
@@ -19,7 +17,7 @@ Plug 'simrat39/symbols-outline.nvim'
 
 let g:copilot_no_tab_map = v:true
 Plug 'github/copilot.vim'
-imap <silent><script><expr> <C-j> copilot#Accept("\<CR>")
+imap <silent><script><expr> <C-Y> copilot#Accept("\<CR>")
 
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
@@ -40,8 +38,6 @@ Plug 'folke/todo-comments.nvim'
 Plug 'b3nj5m1n/kommentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'editorconfig/editorconfig-vim'
-let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 " UI
 " Plug 'rcarriga/nvim-notify'
@@ -70,7 +66,11 @@ call plug#end()
 
 colorscheme white
 set background=light
+" set background=dark
 set pumblend=5
+
+" don't syntax-highlight long lines
+set synmaxcol=200
 
 set nu
 set rnu
