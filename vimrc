@@ -64,7 +64,7 @@ call plug#end()
 
 " set guicursor=n-v-c-sm:ver25,i-ci-ve:ver25,r-cr-o:hor20
 
-colorscheme white
+colorscheme ghostly
 set background=light
 " set background=dark
 set pumblend=5

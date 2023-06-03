@@ -317,7 +317,6 @@ null_ls.setup({
 })
 
 M.setup = function()
-    local opts = { noremap = true, silent = true }
     lsp_setup_signs()
     lsp_setup_diagnositc()
 end
