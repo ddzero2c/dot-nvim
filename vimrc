@@ -14,6 +14,7 @@ Plug 'onsails/lspkind-nvim'
 Plug 'kosayoda/nvim-lightbulb'
 Plug 'RRethy/vim-illuminate'
 Plug 'simrat39/symbols-outline.nvim'
+Plug 'folke/neodev.nvim'
 
 let g:copilot_no_tab_map = v:true
 Plug 'github/copilot.vim'
@@ -38,6 +39,8 @@ Plug 'folke/todo-comments.nvim'
 Plug 'b3nj5m1n/kommentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'lukas-reineke/indent-blankline.nvim'
+
+Plug 'ddzero2c/go-embedded-sql.nvim'
 
 " UI
 " Plug 'rcarriga/nvim-notify'
@@ -68,6 +71,8 @@ colorscheme ghostly
 set background=light
 " set background=dark
 set pumblend=5
+set spell
+set spelloptions=camel
 
 " don't syntax-highlight long lines
 set synmaxcol=200
@@ -125,11 +130,5 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " record cursor
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
-" hightlight on yank
-" augroup LuaHighlight
-"     autocmd!
-"     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
-" augroup END
 
 let g:omni_sql_no_default_maps = 1

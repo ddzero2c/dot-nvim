@@ -3,6 +3,7 @@ require("ddzero2c.autocomplete")
 require("ddzero2c.debugger")
 --require('ddzero2c.formatter')
 require("ddzero2c.fold")
+require("neodev").setup({})
 
 require("gopher").setup({})
 -- require("noice").setup()

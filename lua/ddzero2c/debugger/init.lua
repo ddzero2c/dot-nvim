@@ -6,33 +6,33 @@ vim.fn.sign_define("DapBreakpoint", { text = "•", texthl = "ErrorMsg", linehl 
 vim.fn.sign_define("DapStopped", { text = "→", texthl = "ErrorMsg", linehl = "", numhl = "Error" })
 
 dapui.setup({
-	icons = { expanded = "▼", collapsed = "⏵", circular = "" },
-	layouts = {
-		{
-			elements = {
-				"stacks",
-			},
-			size = 40,
-			position = "right",
-		},
-		{
-			elements = {
-				-- Elements can be strings or table with id and size keys.
-				-- { id = "scopes", size = 0.25 },
-				"scopes",
-			},
-			size = 12,
-			position = "bottom",
-		},
-	},
+    icons = { expanded = "▼", collapsed = "⏵", circular = "" },
+    layouts = {
+        {
+            elements = {
+                "stacks",
+            },
+            size = 40,
+            position = "right",
+        },
+        {
+            elements = {
+                -- Elements can be strings or table with id and size keys.
+                -- { id = "scopes", size = 0.25 },
+                "scopes",
+            },
+            size = 12,
+            position = "bottom",
+        },
+    },
 })
 
 require("ddzero2c.debugger.go")
 require("dap.ext.vscode").load_launchjs(nil, { go = { "go" } })
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
-	dapui.open()
-	vim.cmd([[
+    dapui.open()
+    vim.cmd([[
         nnoremap <silent> c :lua require('dap').continue()<CR>
         nnoremap <silent> b :lua require('dap').toggle_breakpoint()<CR>
         nnoremap <silent> n :lua require('dap').step_over()<CR>
@@ -43,10 +43,10 @@ dap.listeners.after.event_initialized["dapui_config"] = function()
 end
 
 nnoremap("<F5>", function()
-	dap.continue({})
+    dap.continue({})
 end)
 nnoremap("<F4>", function()
-	vim.cmd([[
+    vim.cmd([[
         unmap c
         unmap b
         unmap n
@@ -54,10 +54,10 @@ nnoremap("<F4>", function()
         unmap o
         unmap p
     ]])
-	dapui.close()
-	dap.disconnect()
-	dap.close()
+    dapui.close()
+    dap.disconnect()
+    dap.close()
 end)
 nnoremap("<Leader>b", function()
-	dap.toggle_breakpoint()
+    dap.toggle_breakpoint()
 end)
