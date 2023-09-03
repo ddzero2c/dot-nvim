@@ -25,8 +25,11 @@ Plug 'rcarriga/nvim-dap-ui'
 
 Plug 'b0o/schemastore.nvim'
 Plug 'jose-elias-alvarez/typescript.nvim'
-Plug 'jose-elias-alvarez/null-ls.nvim'
+" Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'mhartington/formatter.nvim'
 Plug 'olexsmir/gopher.nvim'
+Plug 'ddzero2c/go-embedded-sql.nvim'
+
 
 " helpers
 Plug 'tpope/vim-fugitive'
@@ -39,8 +42,6 @@ Plug 'folke/todo-comments.nvim'
 Plug 'b3nj5m1n/kommentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'lukas-reineke/indent-blankline.nvim'
-
-Plug 'ddzero2c/go-embedded-sql.nvim'
 
 " UI
 " Plug 'rcarriga/nvim-notify'

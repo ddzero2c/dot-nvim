@@ -74,7 +74,6 @@ require("telescope").load_extension("fzf")
 -- require("telescope").load_extension('noice')
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>p", builtin.find_files, {})
-vim.keymap.set("n", "<leader>g", builtin.live_grep, {})
 
 require("indent_blankline").setup({ show_end_of_line = true })
 require("todo-comments").setup({})

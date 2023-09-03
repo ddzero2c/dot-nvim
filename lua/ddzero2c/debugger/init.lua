@@ -10,19 +10,20 @@ dapui.setup({
     layouts = {
         {
             elements = {
+                -- Elements can be strings or table with id and size keys.
+                -- { id = "scopes", size = 0.25 },
+                "scopes",
+                "repl"
+            },
+            size = 12,
+            position = "bottom",
+        },
+        {
+            elements = {
                 "stacks",
             },
             size = 40,
             position = "right",
-        },
-        {
-            elements = {
-                -- Elements can be strings or table with id and size keys.
-                -- { id = "scopes", size = 0.25 },
-                "scopes",
-            },
-            size = 12,
-            position = "bottom",
         },
     },
 })
@@ -43,8 +44,9 @@ dap.listeners.after.event_initialized["dapui_config"] = function()
 end
 
 nnoremap("<F5>", function()
-    dap.continue({})
+    dap.continue()
 end)
+
 nnoremap("<F4>", function()
     vim.cmd([[
         unmap c
@@ -58,6 +60,7 @@ nnoremap("<F4>", function()
     dap.disconnect()
     dap.close()
 end)
+
 nnoremap("<Leader>b", function()
     dap.toggle_breakpoint()
 end)
