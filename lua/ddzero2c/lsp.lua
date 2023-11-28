@@ -158,8 +158,9 @@ lsp.gopls.setup({
     },
 })
 
--- nnpm install -g typescript typescript-language-serverpm install -g typescript typescript-language-server
-require("typescript").setup({
+-- npm install -g typescript typescript-language-server
+-- require("typescript-tools").setup {}
+--[[ require("typescript").setup({
     server = {
         on_attach = function(client)
             client.server_capabilities.documentFormattingProvider = false
@@ -171,6 +172,12 @@ require("typescript").setup({
             },
         },
     },
+}) ]]
+lsp.tsserver.setup({
+    capabilities = capabilities,
+    on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+    end,
 })
 
 lsp.eslint.setup({
@@ -233,14 +240,14 @@ lsp.jsonls.setup({
     },
 })
 
--- yarn global add yaml-language-server
+-- npm i -g yaml-language-server
 lsp.yamlls.setup({
     capabilities = capabilities,
     on_attach = function(client, bufnr)
         client.server_capabilities.documentFormattingProvider = true
         client.server_capabilities.documentRangeFormattingProvider = true
         on_attach(client, bufnr)
-        lsp_format_autocmd(bufnr)
+        vim.cmd([[autocmd BufWritePost *.yaml,*.yml FormatWrite]])
     end,
     settings = {
         yaml = {
@@ -253,10 +260,10 @@ lsp.yamlls.setup({
     },
 })
 -- npm install -g @tailwindcss/language-server
--- lsp.tailwindcss.setup({
---     capabilities = capabilities,
---     on_attach = on_attach,
--- })
+lsp.tailwindcss.setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
 
 -- Rust LSP --
 -- curl -L https://github.com/rust-analyzer/rust-analyzer/releases/download/2021-10-18/rust-analyzer-aarch64-apple-darwin.gz | gunzip -c - > ~/bin/rust-analyzer && chmod +x ~/bin/rust-analyzer
@@ -283,7 +290,7 @@ lsp.graphql.setup({
     capabilities = capabilities,
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
-        lsp_format_autocmd(bufnr)
+        vim.cmd([[autocmd BufWritePost *.graphql,*.graphqls FormatWrite]])
     end,
 })
 
@@ -336,18 +343,18 @@ require("formatter").setup {
     log_level = vim.log.levels.WARN,
     -- All formatter configurations are opt-in
     filetype = {
-        css = {
-            require("formatter.filetypes.css").prettier,
-        },
+        css = { require("formatter.filetypes.css").prettier },
+        graphql = { require("formatter.filetypes.graphql").prettier },
+        yaml = { require("formatter.filetypes.yaml").prettier },
         solidity = {
             function()
                 return {
-                    exe = "prettier",
+                    exe = "pnpm prettier",
                     args = {
-                        "--plugin",
-                        "prettier-plugin-solidity",
                         "--stdin-filepath",
                         formatter_util.escape_path(formatter_util.get_current_buffer_file_path()),
+                        "--plugin",
+                        "prettier-plugin-solidity",
                     },
                     stdin = true,
                     try_node_modules = true,
@@ -366,7 +373,7 @@ require("formatter").setup {
                     try_node_modules = false,
                 }
             end,
-        }
+        },
     }
 }
 

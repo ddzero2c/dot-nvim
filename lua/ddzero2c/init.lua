@@ -10,6 +10,9 @@ require("gopher").setup({})
 require("symbols-outline").setup()
 
 require("nvim-treesitter.configs").setup({
+    autotag = {
+        enable = true,
+    },
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
@@ -75,7 +78,7 @@ require("telescope").load_extension("fzf")
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>p", builtin.find_files, {})
 
-require("indent_blankline").setup({ show_end_of_line = true })
+require("ibl").setup()
 require("todo-comments").setup({})
 require("colorizer").setup({ "*" }, {
     RGB = true,      -- #RGB hex codes
@@ -107,4 +110,4 @@ require("kommentary.config").configure_language({ "javascriptreact", "typescript
     end,
 })
 
-require("nvim-ts-autotag").setup()
+-- require("nvim-ts-autotag").setup()
