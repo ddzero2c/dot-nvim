@@ -6,8 +6,6 @@ require("ddzero2c.fold")
 require("neodev").setup({})
 
 require("gopher").setup({})
--- require("noice").setup()
-require("symbols-outline").setup()
 
 require("nvim-treesitter.configs").setup({
     autotag = {

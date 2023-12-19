@@ -14,7 +14,6 @@ Plug 'uga-rosa/cmp-dictionary'
 Plug 'onsails/lspkind-nvim'
 Plug 'kosayoda/nvim-lightbulb'
 Plug 'RRethy/vim-illuminate'
-Plug 'simrat39/symbols-outline.nvim'
 Plug 'folke/neodev.nvim'
 
 let g:copilot_no_tab_map = v:true
@@ -41,6 +40,7 @@ Plug 'folke/todo-comments.nvim'
 Plug 'b3nj5m1n/kommentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 
 " UI
 " Plug 'rcarriga/nvim-notify'

@@ -205,6 +205,15 @@ lsp.eslint.setup({
     },
 })
 
+-- SQL
+-- lsp.postgres_lsp.setup({
+--     capabilities = capabilities,
+--     on_attach = function(client, bufnr)
+--         on_attach(client, bufnr)
+--         -- vim.cmd([[autocmd BufWritePost *.sql FormatWrite]])
+--     end,
+-- })
+
 -- Python LSP --
 lsp.pyright.setup({
     capabilities = capabilities,
@@ -364,13 +373,11 @@ require("formatter").setup {
         sql = {
             function()
                 return {
-                    exe = "sql-formatter",
+                    exe = "pg_format",
                     args = {
-                        "--config=" .. os.getenv("HOME") .. "/.config/nvim/.sql-formatter.json",
                         formatter_util.escape_path(formatter_util.get_current_buffer_file_path()),
                     },
                     stdin = true,
-                    try_node_modules = false,
                 }
             end,
         },
