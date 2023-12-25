@@ -160,10 +160,12 @@ local highlight_links = {
         'Debug'
     },
     Visual = {
+        'TelescopeMatching',
+    },
+    Underlined = {
         'LspReferenceText',
         'LspReferenceRead',
         'LspReferenceWrite',
-        'TelescopeMatching',
     },
     Pmenu = {
         'FloatBorder',

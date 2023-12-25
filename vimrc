@@ -13,7 +13,6 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'uga-rosa/cmp-dictionary'
 Plug 'onsails/lspkind-nvim'
 Plug 'kosayoda/nvim-lightbulb'
-Plug 'RRethy/vim-illuminate'
 Plug 'folke/neodev.nvim'
 
 let g:copilot_no_tab_map = v:true
@@ -104,7 +103,7 @@ set nobackup
 set nowritebackup
 set noswapfile
 set cmdheight=1
-set updatetime=250
+set updatetime=100
 set shortmess+=c
 
 " set list

@@ -2,13 +2,6 @@ local M = {}
 require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
 local lsp = require("lspconfig")
 
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-    opts = opts or {}
-    opts.border = "single"
-    return orig_util_open_floating_preview(contents, syntax, opts, ...)
-end
-
 local function lsp_setup_signs()
     local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
     for type, icon in pairs(signs) do
@@ -19,13 +12,8 @@ end
 
 local function lsp_setup_diagnositc()
     vim.diagnostic.config({
-        -- virtual_text = false,
-        virtual_text = {
-            source = "always", -- Or "if_many"
-        },
-        float = {
-            source = "always", -- Or "if_many"
-        },
+        virtual_text = { source = "always", },
+        float = { source = "always", },
         signs = true,
         underline = true,
         update_in_insert = false,
@@ -73,8 +61,28 @@ local function lsp_setup_keymaps(bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>sf', ':lua require("go-embedded-sql").format_sql()<CR>', opts)
 end
 
+local function lsp_setup_highlight(client, bufnr)
+    if client.server_capabilities.documentHighlightProvider then
+        vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+        vim.api.nvim_clear_autocmds { buffer = bufnr, group = "lsp_document_highlight" }
+        vim.api.nvim_create_autocmd("CursorHold", {
+            callback = vim.lsp.buf.document_highlight,
+            buffer = bufnr,
+            group = "lsp_document_highlight",
+            desc = "Document Highlight",
+        })
+        vim.api.nvim_create_autocmd("CursorMoved", {
+            callback = vim.lsp.buf.clear_references,
+            buffer = bufnr,
+            group = "lsp_document_highlight",
+            desc = "Clear All the References",
+        })
+    end
+end
+
 local function on_attach(client, bufnr)
     lsp_setup_keymaps(bufnr)
+    lsp_setup_highlight(client, bufnr)
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -106,7 +114,7 @@ lsp.lua_ls.setup({
 })
 
 M.go_import = function()
-    local clients = vim.lsp.buf_get_clients()
+    local clients = vim.lsp.get_active_clients()
     for _, client in pairs(clients) do
         local params = vim.lsp.util.make_range_params(nil, client.offset_encoding)
         params.context = { only = { "source.organizeImports" } }
