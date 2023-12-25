@@ -12,10 +12,10 @@ local colors = {
     white = "#F1F1F1",
     actual_white = "#FFFFFF",
     red = "#C30771",
-    diff_delete = "#FCD5D2",
     red_error = "#ec2100",
     blue = "#008EC4",
     green = "#10A778",
+    diff_delete = "#FCD5D2",
     diff_add = "#CAFFD8",
     light_green = "#5FD7A7",
     light_purple = "#a790d5",
@@ -39,6 +39,20 @@ local colors = {
     string = "#dadada",
     type = "#000000"
 }
+
+if vim.o.background == 'dark' then
+    colors.bg = "#111111"
+    colors.bg_subtle = "#777777"
+    colors.bg_very_subtle = "#666666"
+    colors.bg_ui = "#888888"
+    colors.fg = "#eaeaea"
+    colors.fg_subtle = "#aaaaaa"
+    colors.main = "#a94dbb"
+    colors.string = "#222222"
+    colors.type = "#ffffff"
+    colors.diff_delete = "#FC3333"
+    colors.diff_add = "#22CC55"
+end
 
 local function highlight(group, style)
     local guifg = style.fg or "NONE"
@@ -117,12 +131,21 @@ local function link_highlight(from, to)
 end
 
 local highlight_links = {
+    Normal = {
+        'DapUIVariable',
+        'DapUIFrameName',
+    },
     Constant = {
         'Character',
         'Number',
         'Boolean',
         'Float',
+        '@constant',
 
+        'DapUIThread',
+        'DapUIWatchesValue',
+        'DapUIBreakpointsInfo',
+        'DapUIBreakpointsCurrentLine',
         'DapUIThread',
         'DapUIWatchesValue',
         'DapUIBreakpointsInfo',
@@ -133,7 +156,9 @@ local highlight_links = {
         'Function',
         'TSIdentifier',
         'TSConstructor',
-        '@constructor'
+        '@constructor',
+        '@function',
+        '@method',
     },
     Statement = {
         'Conditional',
@@ -145,12 +170,27 @@ local highlight_links = {
         'Include',
         'Define',
         'Macro',
-        'PreCondit'
+        'PreCondit',
+
+        'DapUIScope',
+        'DapUIDecoration',
+        'DapUIStoppedThread',
+        'DapUILineNumber',
+        'DapUIFloatBorder',
+        'DapUIWatchesHeader',
+        'DapUIBreakpointsPath',
+        'DapUIBreakpointsLine',
     },
     Type = {
         'StorageClass',
         'Structure',
-        'Typedef'
+        'Typedef',
+        '@type',
+        '@structure',
+        '@namespace',
+
+        'DapUIType',
+        'DapUISource',
     },
     Special = {
         'Operator',
@@ -198,7 +238,11 @@ local highlight_links = {
     },
     Comment = {
         'GitSignsCurrentLineBlame'
-    }
+    },
+    Error = {
+        'DapUIWatchesEmpty',
+        'DapUIWatchesError',
+    },
 }
 
 for to, froms in pairs(highlight_links) do
@@ -207,26 +251,6 @@ for to, froms in pairs(highlight_links) do
     end
 end
 
-
--- nvim-dap
-link_highlight('DapUIVariable', 'Normal')
-link_highlight('DapUIScope', 'Statement')
-link_highlight('DapUIType', 'Type')
-link_highlight('DapUIDecoration', 'Statement')
-link_highlight('DapUIThread', 'Constant')
-link_highlight('DapUIStoppedThread', 'Statement')
-link_highlight('DapUIFrameName', 'Normal')
-link_highlight('DapUISource', 'Type')
-link_highlight('DapUILineNumber', 'Statement')
-link_highlight('DapUIFloatBorder', 'Statement')
-link_highlight('DapUIWatchesHeader', 'Statement')
-link_highlight('DapUIWatchesEmpty', 'Error')
-link_highlight('DapUIWatchesValue', 'Constant')
-link_highlight('DapUIWatchesError', 'Error')
-link_highlight('DapUIBreakpointsPath', 'Statement')
-link_highlight('DapUIBreakpointsInfo', 'Constant')
-link_highlight('DapUIBreakpointsCurrentLine', 'Constant')
-link_highlight('DapUIBreakpointsLine', 'DapUILineNumber')
 
 local links = {
     ['@lsp.type.namespace'] = '@namespace',

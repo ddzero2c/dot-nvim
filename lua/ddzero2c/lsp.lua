@@ -13,7 +13,7 @@ end
 local function lsp_setup_diagnositc()
     vim.diagnostic.config({
         virtual_text = { source = "always", },
-        float = { source = "always", },
+        float = { source = "always", border = "single", focusable = false, },
         signs = true,
         underline = true,
         update_in_insert = false,
