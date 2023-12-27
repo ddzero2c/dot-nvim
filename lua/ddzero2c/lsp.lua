@@ -190,9 +190,7 @@ lsp.gopls.setup({
 lsp.tsserver.setup({
     capabilities = capabilities,
     handlers = handlers,
-    on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-    end,
+    on_attach = on_attach,
 })
 
 lsp.eslint.setup({
@@ -239,9 +237,7 @@ lsp.solargraph.setup({
 lsp.cssls.setup({
     handlers = handlers,
     capabilities = capabilities,
-    on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-    end,
+    on_attach = on_attach,
 })
 
 -- npm i -g vscode-langservers-extracted
@@ -262,11 +258,7 @@ lsp.jsonls.setup({
 lsp.yamlls.setup({
     handlers = handlers,
     capabilities = capabilities,
-    on_attach = function(client, bufnr)
-        client.server_capabilities.documentFormattingProvider = true
-        client.server_capabilities.documentRangeFormattingProvider = true
-        on_attach(client, bufnr)
-    end,
+    on_attach = on_attach,
     settings = {
         yaml = {
             schemas = require("schemastore").json.schemas(),
@@ -300,18 +292,14 @@ lsp.solidity.setup({
     root_dir = require("lspconfig.util").find_git_ancestor,
     single_file_support = true,
     capabilities = capabilities,
-    on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-    end,
+    on_attach = on_attach,
 })
 
 -- npm install -g graphql-language-service-cli
 lsp.graphql.setup({
     handlers = handlers,
     capabilities = capabilities,
-    on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-    end,
+    on_attach = on_attach,
 })
 
 require("conform").setup({
