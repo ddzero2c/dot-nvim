@@ -2,6 +2,10 @@ local M = {}
 require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
 local lsp = require("lspconfig")
 
+local handlers = {
+    ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" }),
+}
+
 local function lsp_setup_signs()
     local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
     for type, icon in pairs(signs) do
@@ -99,6 +103,7 @@ table.insert(runtime_path, "lua/?/init.lua")
 
 -- brew install lua-language-server
 lsp.lua_ls.setup({
+    handlers = handlers,
     settings = {
         Lua = {
             runtime = { version = "LuaJIT", path = runtime_path },
@@ -139,6 +144,7 @@ lsp.gopls.setup({
         "gopls",
         "-remote=auto",
     },
+    handlers = handlers,
     capabilities = capabilities,
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
@@ -183,6 +189,7 @@ lsp.gopls.setup({
 }) ]]
 lsp.tsserver.setup({
     capabilities = capabilities,
+    handlers = handlers,
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
     end,
@@ -190,6 +197,7 @@ lsp.tsserver.setup({
 
 lsp.eslint.setup({
     capabilities = capabilities,
+    handlers = handlers,
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
         vim.cmd([[autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll]])
@@ -213,22 +221,15 @@ lsp.eslint.setup({
     },
 })
 
--- SQL
--- lsp.postgres_lsp.setup({
---     capabilities = capabilities,
---     on_attach = function(client, bufnr)
---         on_attach(client, bufnr)
---         -- vim.cmd([[autocmd BufWritePost *.sql FormatWrite]])
---     end,
--- })
-
 -- Python LSP --
 lsp.pyright.setup({
+    handlers = handlers,
     capabilities = capabilities,
     on_attach = on_attach,
 })
 
 lsp.solargraph.setup({
+    handlers = handlers,
     capabilities = capabilities,
     on_attach = on_attach,
 })
@@ -236,10 +237,10 @@ lsp.solargraph.setup({
 -- CSS LSP --
 -- npm i -g vscode-langservers-extracted
 lsp.cssls.setup({
+    handlers = handlers,
     capabilities = capabilities,
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
-        vim.cmd([[autocmd BufWritePost *.css FormatWrite]])
     end,
 })
 
@@ -259,12 +260,12 @@ lsp.jsonls.setup({
 
 -- npm i -g yaml-language-server
 lsp.yamlls.setup({
+    handlers = handlers,
     capabilities = capabilities,
     on_attach = function(client, bufnr)
         client.server_capabilities.documentFormattingProvider = true
         client.server_capabilities.documentRangeFormattingProvider = true
         on_attach(client, bufnr)
-        vim.cmd([[autocmd BufWritePost *.yaml,*.yml FormatWrite]])
     end,
     settings = {
         yaml = {
@@ -278,6 +279,7 @@ lsp.yamlls.setup({
 })
 -- npm install -g @tailwindcss/language-server
 lsp.tailwindcss.setup({
+    handlers = handlers,
     capabilities = capabilities,
     on_attach = on_attach,
 })
@@ -285,12 +287,14 @@ lsp.tailwindcss.setup({
 -- Rust LSP --
 -- curl -L https://github.com/rust-analyzer/rust-analyzer/releases/download/2021-10-18/rust-analyzer-aarch64-apple-darwin.gz | gunzip -c - > ~/bin/rust-analyzer && chmod +x ~/bin/rust-analyzer
 lsp.rust_analyzer.setup({
+    handlers = handlers,
     capabilities = capabilities,
     on_attach = on_attach,
 })
 
 -- npm install @ignored/solidity-language-server -g
 lsp.solidity.setup({
+    handlers = handlers,
     cmd = { 'nomicfoundation-solidity-language-server', '--stdio' },
     filetypes = { 'solidity' },
     root_dir = require("lspconfig.util").find_git_ancestor,
@@ -298,104 +302,51 @@ lsp.solidity.setup({
     capabilities = capabilities,
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
-        vim.cmd([[autocmd BufWritePost *.sol FormatWrite]])
     end,
 })
 
 -- npm install -g graphql-language-service-cli
 lsp.graphql.setup({
+    handlers = handlers,
     capabilities = capabilities,
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
-        vim.cmd([[autocmd BufWritePost *.graphql,*.graphqls FormatWrite]])
     end,
 })
 
--- local null_ls = require("null-ls")
--- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
--- null_ls.setup({
---     debug = true,
---     sources = {
---         null_ls.builtins.formatting.stylua,
---         null_ls.builtins.formatting.sql_formatter.with({
---             args = { "--config=" .. os.getenv("HOME") .. "/.config/nvim/.sql-formatter.json" },
---         }),
---         null_ls.builtins.formatting.prettier.with({
---             extra_args = { "--plugin=prettier-plugin-solidity" },
---             filetypes = {
---                 "json",
---                 "jsonc",
---                 "yaml",
---                 "markdown",
---                 "markdown.mdx",
---                 "graphql",
---                 "handlebars",
---                 "solidity",
---             },
---         }),
---     },
---     on_attach = function(client, bufnr)
---         if client.supports_method("textDocument/formatting") then
---             vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
---             vim.api.nvim_create_autocmd("BufWritePre", {
---                 group = augroup,
---                 buffer = bufnr,
---                 callback = function()
---                     -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
---                     vim.lsp.buf.format({ bufnr = bufnr })
---                 end,
---             })
---         end
---     end,
--- })
-
--- Utilities for creating configurations
-local formatter_util = require "formatter.util"
-
--- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
-require("formatter").setup {
-    -- Enable or disable logging
-    logging = true,
-    -- Set the log level
-    log_level = vim.log.levels.WARN,
-    -- All formatter configurations are opt-in
-    filetype = {
-        css = { require("formatter.filetypes.css").prettier },
-        graphql = { require("formatter.filetypes.graphql").prettier },
-        yaml = { require("formatter.filetypes.yaml").prettier },
+require("conform").setup({
+    formatters_by_ft = {
+        sql = { "pg_format" },
+        css = { "prettier" },
+        graphql = { "prettier" },
+        yaml = { "prettier" },
+        solidity = { "solidity" },
+        -- ["*"] = { "codespell" },
+        ["_"] = { "trim_whitespace" },
+    },
+    format_on_save = {
+        timeout_ms = 500,
+        lsp_fallback = true,
+    },
+    formatters = {
         solidity = {
-            function()
-                return {
-                    exe = "pnpm prettier",
-                    args = {
-                        "--stdin-filepath",
-                        formatter_util.escape_path(formatter_util.get_current_buffer_file_path()),
-                        "--plugin",
-                        "prettier-plugin-solidity",
-                    },
-                    stdin = true,
-                    try_node_modules = true,
-                }
-            end,
+            inherit = false,
+            command = require("conform.util").find_executable({
+                "node_modules/.bin/prettier",
+            }, "prettier"),
+            args = {
+                "--stdin-filepath",
+                "$FILENAME",
+                "--plugin",
+                "prettier-plugin-solidity",
+            },
         },
-        sql = {
-            function()
-                return {
-                    exe = "pg_format",
-                    args = {
-                        formatter_util.escape_path(formatter_util.get_current_buffer_file_path()),
-                    },
-                    stdin = true,
-                }
-            end,
-        },
-    }
-}
+    },
+})
 
 M.setup = function()
     lsp_setup_signs()
     lsp_setup_diagnositc()
-    vim.cmd([[autocmd BufWritePost *.sql FormatWrite]])
 end
 
 return M

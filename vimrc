@@ -23,7 +23,8 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
 Plug 'b0o/schemastore.nvim'
-Plug 'mhartington/formatter.nvim'
+" Plug 'mhartington/formatter.nvim'
+Plug 'stevearc/conform.nvim'
 Plug 'olexsmir/gopher.nvim'
 Plug 'ddzero2c/go-embedded-sql.nvim'
 
@@ -67,8 +68,8 @@ call plug#end()
 " set guicursor=n-v-c-sm:ver25,i-ci-ve:ver25,r-cr-o:hor20
 
 colorscheme ghostly
-" set background=light
-set background=dark
+set background=light
+" set background=dark
 set pumblend=5
 set spell
 set spelloptions=camel

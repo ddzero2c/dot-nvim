@@ -2,8 +2,9 @@ require("cmp_nvim_lsp").setup()
 local cmp = require("cmp")
 local lspkind = require("lspkind")
 
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+
 vim.cmd([[
-set completeopt=menu,menuone,noselect
 let g:vsnip_filetypes = {}
 let g:vsnip_filetypes.javascriptreact = ['javascript']
 let g:vsnip_filetypes.typescriptreact = ['typescript']
@@ -67,7 +68,7 @@ cmp.setup({
         }),
         ["<C-j>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
+            -- select = true,
         }),
         ["<Tab>"] = cmp.mapping(cmp_next, { "i", "s" }),
         ["<S-Tab>"] = cmp.mapping(cmp_prev, { "i", "s" }),
@@ -76,7 +77,7 @@ cmp.setup({
     },
     sources = {
         { name = "nvim_lsp" },
-        { name = "nvim_lsp_signature_help" },
+        { name = "nvim_lsp_signature_help", view = { entries = { name = 'wildmenu', separator = '|' } } },
         { name = "nvim_lua" },
         -- { name = 'vsnip' },
         { name = "path" },
