@@ -207,9 +207,6 @@ lsp.eslint.setup({
         "typescript",
         "typescriptreact",
         "typescript.tsx",
-        "vue",
-        "svelte",
-        "astro",
     },
     settings = {
         codeActionOnSave = {
@@ -221,12 +218,6 @@ lsp.eslint.setup({
 
 -- Python LSP --
 lsp.pyright.setup({
-    handlers = handlers,
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
-
-lsp.solargraph.setup({
     handlers = handlers,
     capabilities = capabilities,
     on_attach = on_attach,
@@ -300,36 +291,6 @@ lsp.graphql.setup({
     handlers = handlers,
     capabilities = capabilities,
     on_attach = on_attach,
-})
-
-require("conform").setup({
-    formatters_by_ft = {
-        sql = { "pg_format" },
-        css = { "prettier" },
-        graphql = { "prettier" },
-        yaml = { "prettier" },
-        solidity = { "solidity" },
-        -- ["*"] = { "codespell" },
-        ["_"] = { "trim_whitespace" },
-    },
-    format_on_save = {
-        timeout_ms = 500,
-        lsp_fallback = true,
-    },
-    formatters = {
-        solidity = {
-            inherit = false,
-            command = require("conform.util").find_executable({
-                "node_modules/.bin/prettier",
-            }, "prettier"),
-            args = {
-                "--stdin-filepath",
-                "$FILENAME",
-                "--plugin",
-                "prettier-plugin-solidity",
-            },
-        },
-    },
 })
 
 M.setup = function()
