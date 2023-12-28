@@ -1,5 +1,5 @@
-require('config.lazy')
 require('config.colorscheme')
+require('config.lazy')
 require('config.settings')
 
 require('lazy').setup {
@@ -106,6 +106,9 @@ require('lazy').setup {
     { 'tpope/vim-repeat',                    event = "InsertEnter" },
     { 'folke/todo-comments.nvim',            opts = {} },
     { "lukas-reineke/indent-blankline.nvim", opts = {},              main = "ibl" },
+    {
+        'jinh0/eyeliner.nvim', opts = {},
+    },
     {
         'lewis6991/gitsigns.nvim',
         opts = {
