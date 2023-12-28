@@ -40,7 +40,7 @@ dap.listeners.after.event_initialized["dapui_config"] = function()
     ]])
 end
 
-nnoremap("<F4>", function()
+vim.keymap.set('n', '<F4>', function()
     vim.cmd([[
         unmap c
         unmap b
@@ -52,11 +52,7 @@ nnoremap("<F4>", function()
     dapui.close()
     dap.disconnect()
     dap.close()
-end)
-
-nnoremap("<Leader>b", function()
-    dap.toggle_breakpoint()
-end)
+end, { noremap = true })
 
 dap.adapters.go = function(callback)
     local stdout = vim.loop.new_pipe(false)

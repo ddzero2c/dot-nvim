@@ -60,9 +60,6 @@ local function lsp_setup_keymaps(bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-p>", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-n>", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-
-    vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader>sf', ':lua require("go-embedded-sql").format_sql_visual()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>sf', ':lua require("go-embedded-sql").format_sql()<CR>', opts)
 end
 
 local function lsp_setup_highlight(client, bufnr)
