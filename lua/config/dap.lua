@@ -1,6 +1,5 @@
 local dap = require("dap")
 local dapui = require("dapui")
-local nnoremap = require("ddzero2c.keymap").nnoremap
 
 vim.fn.sign_define("DapBreakpoint", { text = "•", texthl = "ErrorMsg", linehl = "", numhl = "" })
 vim.fn.sign_define("DapStopped", { text = "→", texthl = "ErrorMsg", linehl = "", numhl = "Error" })
@@ -41,18 +40,16 @@ dap.listeners.after.event_initialized["dapui_config"] = function()
 end
 
 vim.keymap.set('n', '<F4>', function()
-    vim.cmd([[
-        unmap c
-        unmap b
-        unmap ;
-        unmap i
-        unmap o
-        unmap p
-    ]])
+    pcall(vim.keymap.del, 'n', 'c')
+    pcall(vim.keymap.del, 'n', 'b')
+    pcall(vim.keymap.del, 'n', ';')
+    pcall(vim.keymap.del, 'n', 'i')
+    pcall(vim.keymap.del, 'n', 'o')
+    pcall(vim.keymap.del, 'n', 'p')
     dapui.close()
     dap.disconnect()
     dap.close()
-end, { noremap = true })
+end, { noremap = true, silent = true })
 
 dap.adapters.go = function(callback)
     local stdout = vim.loop.new_pipe(false)
