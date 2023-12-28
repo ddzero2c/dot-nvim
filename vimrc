@@ -41,6 +41,7 @@ Plug 'b3nj5m1n/kommentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+Plug 'stevearc/oil.nvim'
 
 " UI
 " Plug 'rcarriga/nvim-notify'
