@@ -99,11 +99,17 @@ require('lazy').setup {
             require('config.conform')
         end
     },
+    {
+        "kylechui/nvim-surround",
+        version = "*", -- Use for stability; omit to use `main` branch for the latest features
+        event = "VeryLazy",
+        config = function()
+            require("nvim-surround").setup({})
+        end
+    },
     { 'ntpeters/vim-better-whitespace' },
     { 'iamcco/markdown-preview.nvim',        cmd = 'MarkdownPreview' },
     { 'tpope/vim-fugitive',                  event = "CmdLineEnter" },
-    { 'tpope/vim-surround',                  event = "InsertEnter" },
-    { 'tpope/vim-repeat',                    event = "InsertEnter" },
     { 'folke/todo-comments.nvim',            opts = {} },
     { "lukas-reineke/indent-blankline.nvim", opts = {},              main = "ibl" },
     {

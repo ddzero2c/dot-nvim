@@ -100,8 +100,6 @@ highlight("VisualNOS", { bg = colors.bg_subtle })
 highlight("WildMenu", { fg = colors.bg, bg = colors.fg })
 highlight("Folded", { fg = colors.gray4 })
 highlight("FoldColumn", { fg = colors.bg_subtle })
-highlight('EyelinerPrimary', { fg = colors.black, gui = 'underline' })
-highlight('EyelinerSecondary', { fg = colors.black, gui = 'underline' })
 highlight("DiffAdd", { fg = colors.black, bg = colors.diff_add })
 highlight("DiffDelete", { fg = colors.black, bg = colors.diff_delete })
 highlight("DiffChange", { fg = colors.black, bg = colors.diff_add })
@@ -208,6 +206,9 @@ local highlight_links = {
         'LspReferenceText',
         'LspReferenceRead',
         'LspReferenceWrite',
+        'EyelinerPrimary',
+        'EyelinerSecondary',
+
     },
     Pmenu = {
         'FloatBorder',
