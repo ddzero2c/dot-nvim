@@ -3,6 +3,7 @@ require('config.lazy')
 require('config.settings')
 
 require('lazy').setup {
+    { 'folke/neodev.nvim',    ft = { 'lua' }, opts = {}, },
     {
         'neovim/nvim-lspconfig',
         ft = {
@@ -18,7 +19,6 @@ require('lazy').setup {
         main = 'config.lsp',
         opts = {},
     },
-    { 'folke/neodev.nvim',    ft = { 'lua' }, opts = {}, },
     { 'olexsmir/gopher.nvim', opts = {},      cmd = { 'GoImpl', 'GoTagRm', 'GoTagAdd', 'GoInstallDeps' } },
     {
         'config/go-embedded-sql.nvim',
@@ -110,11 +110,9 @@ require('lazy').setup {
     { 'ntpeters/vim-better-whitespace' },
     { 'iamcco/markdown-preview.nvim',        cmd = 'MarkdownPreview' },
     { 'tpope/vim-fugitive',                  event = "CmdLineEnter" },
+    { 'jinh0/eyeliner.nvim',                 opts = {} },
     { 'folke/todo-comments.nvim',            opts = {} },
     { "lukas-reineke/indent-blankline.nvim", opts = {},              main = "ibl" },
-    {
-        'jinh0/eyeliner.nvim', opts = {},
-    },
     {
         'lewis6991/gitsigns.nvim',
         opts = {
