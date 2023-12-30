@@ -3,7 +3,6 @@ require('config.lazy')
 require('config.settings')
 
 require('lazy').setup {
-    { 'folke/neodev.nvim',    ft = { 'lua' }, opts = {}, },
     {
         'neovim/nvim-lspconfig',
         ft = {
@@ -13,33 +12,15 @@ require('lazy').setup {
             'json', 'yaml', 'graphql',
         },
         dependencies = {
+            { 'hrsh7th/cmp-nvim-lsp' },
             { 'kosayoda/nvim-lightbulb' },
             { 'b0o/schemastore.nvim' },
+            { 'folke/neodev.nvim' },
+            { 'olexsmir/gopher.nvim', },
+            { 'ddzero2c/go-embedded-sql.nvim' },
         },
         main = 'config.lsp',
         opts = {},
-    },
-    { 'olexsmir/gopher.nvim', opts = {},      cmd = { 'GoImpl', 'GoTagRm', 'GoTagAdd', 'GoInstallDeps' } },
-    {
-        'config/go-embedded-sql.nvim',
-        keys = {
-            {
-                "<leader>sf",
-                function()
-                    require("go-embedded-sql").format_sql()
-                end,
-                mode = "n",
-                desc = "FormatInlineSql",
-            },
-            {
-                "<leader>sf",
-                function()
-                    require("go-embedded-sql").format_sql_visual()
-                end,
-                mode = "v",
-                desc = "VisualFormatInlineSql",
-            },
-        }
     },
     {
         'hrsh7th/nvim-cmp',
@@ -61,6 +42,7 @@ require('lazy').setup {
     },
     {
         'github/copilot.vim',
+        event = "VeryLazy",
         config = function()
             vim.g.copilot_no_tab_map = true
             vim.api.nvim_set_keymap('i', '<C-Y>', 'copilot#Accept("<CR>")', { expr = true, silent = true })
@@ -132,6 +114,7 @@ require('lazy').setup {
     },
     {
         'b3nj5m1n/kommentary',
+        event = "VeryLazy",
         dependencies = {
             { 'JoosepAlviste/nvim-ts-context-commentstring' },
         },

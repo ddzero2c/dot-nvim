@@ -1,7 +1,17 @@
 local M = {}
-require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
-local lsp = require("lspconfig")
 
+require("neodev").setup({})
+local lsp = require("lspconfig")
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
+}
+
+require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
+require('gopher').setup({})
+local jsonschemas = require("schemastore").json.schemas()
+local go_embedded_sql = require('go-embedded-sql')
 local handlers = {
     ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" }),
 }
@@ -36,30 +46,21 @@ end
 
 local function lsp_setup_keymaps(bufnr)
     local opts = { noremap = true, silent = true }
-    -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "gy", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(
-        bufnr,
-        "n",
-        "<leader>wl",
-        "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
-        opts
-    )
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-p>", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-n>", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+    vim.keymap.set("n", "gy", vim.lsp.buf.type_definition, opts)
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+    vim.keymap.set("n", "<leader>f", vim.lsp.buf.formatting, opts)
+    vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+    vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, opts)
+    vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, opts)
+    vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+    vim.keymap.set("n", "<leader>sf", go_embedded_sql.format_sql, opts)
+    vim.keymap.set("v", "<leader>sf", go_embedded_sql.format_sql_visual, opts)
 end
 
 local function lsp_setup_highlight(client, bufnr)
@@ -86,36 +87,7 @@ local function on_attach(client, bufnr)
     lsp_setup_highlight(client, bufnr)
 end
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true,
-}
--- Lua LSP --
--- brew install lua-language-server
--- :PlugInstall lua-language-server
-local runtime_path = vim.split(package.path, ";")
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
-
--- brew install lua-language-server
-lsp.lua_ls.setup({
-    handlers = handlers,
-    settings = {
-        Lua = {
-            runtime = { version = "LuaJIT", path = runtime_path },
-            diagnostics = { globals = { "vim" } },
-            workspace = { library = vim.api.nvim_get_runtime_file("", true) },
-            telemetry = { enable = false },
-        },
-    },
-    on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-        lsp_format_autocmd(bufnr)
-    end,
-})
-
-M.go_import = function()
+local function go_import()
     local clients = vim.lsp.get_active_clients()
     for _, client in pairs(clients) do
         local params = vim.lsp.util.make_range_params(nil, client.offset_encoding)
@@ -134,165 +106,99 @@ M.go_import = function()
     end
 end
 
--- Go LSP --
--- go install golang.org/x/tools/gopls@latest
-lsp.gopls.setup({
-    cmd = {
-        "gopls",
-        "-remote=auto",
+local lsp_configurations = {
+    lua_ls = {}, -- brew install lua-language-server
+    tsserver = {},
+    pyright = {},
+    graphql = {},     -- npm install -g graphql-language-service-cli
+    tailwindcss = {}, -- npm install -g @tailwindcss/language-server
+    -- npm i -g yaml-language-server
+    yamlls = {
+        settings = { yaml = { schemas = jsonschemas, validate = { enable = true } } },
     },
-    handlers = handlers,
-    capabilities = capabilities,
-    on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-        vim.api.nvim_create_autocmd("BufWritePre", {
-            pattern = { "*.go" },
-            callback = function()
-                M.go_import()
-                vim.lsp.buf.format({ timeout_ms = 3000 })
-            end,
-        })
-    end,
-    settings = {
-        gopls = {
-            experimentalPostfixCompletions = true,
-            analyses = {
-                unusedparams = true,
-                -- shadow = true,
-            },
-            staticcheck = true,
-            env = {
-                GOFLAGS = "-tags=wireinject,e2e",
-            },
-            gofumpt = false,
+    -- curl -L https://github.com/rust-analyzer/rust-analyzer/releases/download/2021-10-18/rust-analyzer-aarch64-apple-darwin.gz | gunzip -c - > ~/bin/rust-analyzer && chmod +x ~/bin/rust-analyzer
+    rust_analyzer = {},
+    -- npm install @ignored/solidity-language-server -g
+    solidity = {
+        cmd = { 'nomicfoundation-solidity-language-server', '--stdio' },
+        filetypes = { 'solidity' },
+        root_dir = require("lspconfig.util").find_git_ancestor,
+        single_file_support = true,
+    },
+    -- go install golang.org/x/tools/gopls@latest
+    gopls = {
+        cmd = {
+            "gopls",
+            "-remote=auto",
         },
-    },
-})
-
--- npm install -g typescript typescript-language-server
--- require("typescript-tools").setup {}
---[[ require("typescript").setup({
-    server = {
-        on_attach = function(client)
-            client.server_capabilities.documentFormattingProvider = false
-            client.server_capabilities.documentRangeFormattingProvider = false
+        on_attach = function(client, bufnr)
+            on_attach(client, bufnr)
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                pattern = { "*.go" },
+                callback = function()
+                    go_import()
+                    vim.lsp.buf.format({ timeout_ms = 3000 })
+                end,
+            })
         end,
-        init_options = {
-            preferences = {
-                disableSuggestions = true,
+        settings = {
+            gopls = {
+                experimentalPostfixCompletions = true,
+                analyses = {
+                    unusedparams = true,
+                    -- shadow = true,
+                },
+                staticcheck = true,
+                env = {
+                    GOFLAGS = "-tags=wireinject,e2e",
+                },
+                gofumpt = false,
             },
         },
     },
-}) ]]
-lsp.tsserver.setup({
-    capabilities = capabilities,
-    handlers = handlers,
-    on_attach = on_attach,
-})
-
-lsp.eslint.setup({
-    capabilities = capabilities,
-    handlers = handlers,
-    on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-        vim.cmd([[autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll]])
-    end,
-    filetypes = {
-        "javascript",
-        "javascriptreact",
-        "javascript.jsx",
-        "typescript",
-        "typescriptreact",
-        "typescript.tsx",
+    -- npm i -g vscode-langservers-extracted
+    cssls = {},
+    jsonls = {
+        on_attach = function(client, bufnr)
+            on_attach(client, bufnr)
+            lsp_format_autocmd(bufnr)
+        end,
+        settings = { json = { schemas = jsonschemas } },
     },
-    settings = {
-        codeActionOnSave = {
-            enable = true,
-            mode = "all",
+    eslint = {
+        on_attach = function(client, bufnr)
+            on_attach(client, bufnr)
+            vim.cmd([[autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll]])
+        end,
+        filetypes = {
+            "javascript",
+            "javascriptreact",
+            "javascript.jsx",
+            "typescript",
+            "typescriptreact",
+            "typescript.tsx",
         },
-    },
-})
-
--- Python LSP --
-lsp.pyright.setup({
-    handlers = handlers,
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
-
--- CSS LSP --
--- npm i -g vscode-langservers-extracted
-lsp.cssls.setup({
-    handlers = handlers,
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
-
--- npm i -g vscode-langservers-extracted
-lsp.jsonls.setup({
-    capabilities = capabilities,
-    on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-        lsp_format_autocmd(bufnr)
-    end,
-    settings = {
-        json = {
-            schemas = require("schemastore").json.schemas(),
-        },
-    },
-})
-
--- npm i -g yaml-language-server
-lsp.yamlls.setup({
-    handlers = handlers,
-    capabilities = capabilities,
-    on_attach = on_attach,
-    settings = {
-        yaml = {
-            schemas = require("schemastore").json.schemas(),
-            validate = { enable = true },
-            format = {
-                singleQuote = true,
+        settings = {
+            codeActionOnSave = {
+                enable = true,
+                mode = "all",
             },
         },
     },
-})
--- npm install -g @tailwindcss/language-server
-lsp.tailwindcss.setup({
-    handlers = handlers,
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
+}
 
--- Rust LSP --
--- curl -L https://github.com/rust-analyzer/rust-analyzer/releases/download/2021-10-18/rust-analyzer-aarch64-apple-darwin.gz | gunzip -c - > ~/bin/rust-analyzer && chmod +x ~/bin/rust-analyzer
-lsp.rust_analyzer.setup({
-    handlers = handlers,
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
-
--- npm install @ignored/solidity-language-server -g
-lsp.solidity.setup({
-    handlers = handlers,
-    cmd = { 'nomicfoundation-solidity-language-server', '--stdio' },
-    filetypes = { 'solidity' },
-    root_dir = require("lspconfig.util").find_git_ancestor,
-    single_file_support = true,
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
-
--- npm install -g graphql-language-service-cli
-lsp.graphql.setup({
-    handlers = handlers,
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
 
 M.setup = function()
     lsp_setup_signs()
     lsp_setup_diagnositc()
+    for name, config in pairs(lsp_configurations) do
+        config.capabilities = config.capabilities or capabilities
+        config.handlers = config.handlers or handlers
+        config.on_attach = config.on_attach or on_attach
+        if lsp[name] then
+            lsp[name].setup(config)
+        end
+    end
 end
 
 return M

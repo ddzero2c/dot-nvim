@@ -32,9 +32,9 @@ vim.g.omni_sql_no_default_maps = 1
 
 -- Mappings
 vim.g.mapleader = " "
-vim.api.nvim_set_keymap('n', '<C-c>', '<Esc>', { noremap = true })
-vim.api.nvim_set_keymap('i', '<C-c>', '<Esc>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>t', '<C-w>v:Ex<CR>', { noremap = true })
+vim.keymap.set('n', '<C-c>', '<Esc>')
+vim.keymap.set('i', '<C-c>', '<Esc>')
+vim.keymap.set('n', '<leader>t', '<C-w>v:Ex<CR>')
 
 vim.cmd [[
 " filetypes
