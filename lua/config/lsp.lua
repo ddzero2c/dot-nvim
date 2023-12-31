@@ -24,7 +24,7 @@ local function lsp_setup_signs()
     end
 end
 
-local function lsp_setup_diagnositc()
+local function lsp_setup_diagnostic()
     vim.diagnostic.config({
         virtual_text = { source = "always", },
         float = { source = "always", border = "single", focusable = false, },
@@ -107,11 +107,15 @@ local function go_import()
 end
 
 local lsp_configurations = {
-    lua_ls = {}, -- brew install lua-language-server
+    -- brew install lua-language-server
+    lua_ls = {},
     tsserver = {},
+    typos_lsp = { root_dir = require("lspconfig.util").find_git_ancestor },
     pyright = {},
-    graphql = {},     -- npm install -g graphql-language-service-cli
-    tailwindcss = {}, -- npm install -g @tailwindcss/language-server
+    -- npm install -g graphql-language-service-cli
+    graphql = {},
+    -- npm install -g @tailwindcss/language-server
+    tailwindcss = {},
     -- npm i -g yaml-language-server
     yamlls = {
         settings = { yaml = { schemas = jsonschemas, validate = { enable = true } } },
@@ -190,7 +194,7 @@ local lsp_configurations = {
 
 M.setup = function()
     lsp_setup_signs()
-    lsp_setup_diagnositc()
+    lsp_setup_diagnostic()
     for name, config in pairs(lsp_configurations) do
         config.capabilities = config.capabilities or capabilities
         config.handlers = config.handlers or handlers

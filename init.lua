@@ -6,8 +6,7 @@ require('lazy').setup {
     {
         'neovim/nvim-lspconfig',
         ft = {
-            'go', 'python', 'rust', 'solidity',
-            'lua',
+            'go', 'python', 'rust', 'solidity', 'lua',
             'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'css',
             'json', 'yaml', 'graphql',
         },
