@@ -35,17 +35,8 @@ local function lsp_setup_diagnostic()
     })
 end
 
-local function lsp_format_autocmd(bufnr)
-    vim.api.nvim_create_autocmd("BufWritePre", {
-        buffer = bufnr,
-        callback = function()
-            vim.lsp.buf.format({ timeout_ms = 3000 })
-        end,
-    })
-end
-
 local function lsp_setup_keymaps(bufnr)
-    local opts = { noremap = true, silent = true }
+    local opts = { buffer = bufnr }
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
@@ -87,7 +78,7 @@ local function on_attach(client, bufnr)
     lsp_setup_highlight(client, bufnr)
 end
 
-local function go_import()
+local function organize_import()
     local clients = vim.lsp.get_active_clients()
     for _, client in pairs(clients) do
         local params = vim.lsp.util.make_range_params(nil, client.offset_encoding)
@@ -139,10 +130,7 @@ local lsp_configurations = {
             on_attach(client, bufnr)
             vim.api.nvim_create_autocmd("BufWritePre", {
                 pattern = { "*.go" },
-                callback = function()
-                    go_import()
-                    vim.lsp.buf.format({ timeout_ms = 3000 })
-                end,
+                callback = organize_import,
             })
         end,
         settings = {
@@ -163,16 +151,16 @@ local lsp_configurations = {
     -- npm i -g vscode-langservers-extracted
     cssls = {},
     jsonls = {
-        on_attach = function(client, bufnr)
-            on_attach(client, bufnr)
-            lsp_format_autocmd(bufnr)
-        end,
+        on_attach = on_attach,
         settings = { json = { schemas = jsonschemas } },
     },
     eslint = {
         on_attach = function(client, bufnr)
             on_attach(client, bufnr)
-            vim.cmd([[autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll]])
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                buffer = bufnr,
+                command = "EslintFixAll",
+            })
         end,
         filetypes = {
             "javascript",
