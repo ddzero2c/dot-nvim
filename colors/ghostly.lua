@@ -197,18 +197,14 @@ local highlight_links = {
         'SpecialChar',
         'Tag',
         'SpecialComment',
-        'Debug'
+        'Debug',
     },
     Visual = {
         'TelescopeMatching',
     },
     Underlined = {
-        'LspReferenceText',
-        'LspReferenceRead',
-        'LspReferenceWrite',
         'EyelinerPrimary',
         'EyelinerSecondary',
-
     },
     Pmenu = {
         'FloatBorder',
@@ -238,6 +234,9 @@ local highlight_links = {
         'GitSignsDelete',
         'GitSignsDeleteNr',
         'GitSignsDeleteLn',
+        'LspReferenceText',
+        'LspReferenceRead',
+        'LspReferenceWrite',
     },
     Comment = {
         'GitSignsCurrentLineBlame'
@@ -248,8 +247,8 @@ local highlight_links = {
     },
 }
 
-for to, froms in pairs(highlight_links) do
-    for _, from in ipairs(froms) do
+for to, entries in pairs(highlight_links) do
+    for _, from in ipairs(entries) do
         link_highlight(from, to)
     end
 end

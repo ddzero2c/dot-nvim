@@ -25,7 +25,7 @@ vim.o.backup = false
 vim.o.writebackup = false
 vim.o.swapfile = false
 vim.o.cmdheight = 1
-vim.o.updatetime = 100
+vim.o.updatetime = 25
 vim.o.shortmess = vim.o.shortmess .. "c"
 vim.o.fillchars = "eob: ,foldopen:▼,foldclose:⏵"
 vim.g.omni_sql_no_default_maps = 1
@@ -47,9 +47,6 @@ autocmd FileType yaml,json,sql setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType helm,dockerfile,terraform,hcl setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType css,sass,scss,html setlocal ts=2 sts=2 sw=2 expandtab
 
-" JSON comment syntax highlighting
-autocmd FileType json syntax match Comment +\/\/.\+$+
-
 "Record cursor position
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 ]]
