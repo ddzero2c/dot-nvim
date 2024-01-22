@@ -91,6 +91,7 @@ cmp.setup({
         },
         { name = "emoji" },
         { name = "dictionary", keyword_length = 2 },
+        { name = "git" },
     },
     formatting = {
         fields = { "kind", "abbr", "menu" },
@@ -112,3 +113,5 @@ require("cmp_dictionary").setup({
         ["*"] = { os.getenv("HOME") .. "/.config/nvim/10k.txt" },
     },
 })
+
+require("cmp_git").setup()

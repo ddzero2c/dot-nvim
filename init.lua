@@ -25,6 +25,7 @@ require('lazy').setup {
         'hrsh7th/nvim-cmp',
         event = "InsertEnter",
         dependencies = {
+            { 'nvim-lua/plenary.nvim' },
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'hrsh7th/cmp-nvim-lua' },
             { 'hrsh7th/cmp-buffer' },
@@ -34,6 +35,7 @@ require('lazy').setup {
             { 'hrsh7th/cmp-vsnip' },
             { 'uga-rosa/cmp-dictionary' },
             { 'onsails/lspkind-nvim' },
+            { 'petertriho/cmp-git' },
         },
         config = function()
             require('config.cmp')

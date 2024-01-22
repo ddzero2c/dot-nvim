@@ -1,3 +1,12 @@
+local lsp_fallback = setmetatable({
+    javascript = false,
+    javascriptreact = false,
+    typescript = false,
+    typescriptreact = false,
+}, {
+    __index = function() return true end,
+})
+
 require("conform").setup({
     formatters_by_ft = {
         sql = { "pg_format" },
@@ -8,10 +17,12 @@ require("conform").setup({
         -- ["*"] = { "codespell" },
         ["_"] = { "trim_whitespace" },
     },
-    format_on_save = {
-        timeout_ms = 500,
-        lsp_fallback = true,
-    },
+    format_on_save = function(buf)
+        return {
+            timeout_ms = 500,
+            lsp_fallback = lsp_fallback[vim.bo[buf].filetype],
+        }
+    end,
     formatters = {
         solidity = {
             inherit = false,
