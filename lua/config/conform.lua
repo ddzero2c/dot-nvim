@@ -36,5 +36,13 @@ require("conform").setup({
                 "prettier-plugin-solidity",
             },
         },
+        injected = {
+            options = {
+                ignore_errors = true,
+                lang_to_formatters = {
+                    json = { "jq" },
+                },
+            },
+        }
     },
 })

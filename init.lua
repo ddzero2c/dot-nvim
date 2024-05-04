@@ -68,7 +68,8 @@ require('lazy').setup {
             },
         },
         dependencies = {
-            'rcarriga/nvim-dap-ui'
+            'rcarriga/nvim-dap-ui',
+            'nvim-neotest/nvim-nio',
         },
         config = function()
             require("config.dap")
@@ -131,6 +132,7 @@ require('lazy').setup {
             { 'nvim-lua/plenary.nvim' },
             { 'nvim-treesitter/nvim-treesitter-textobjects' },
             { 'nvim-treesitter/playground' },
+            -- { 'nvim-treesitter/nvim-treesitter-context' },
         },
         config = function()
             require("config.treesitter")

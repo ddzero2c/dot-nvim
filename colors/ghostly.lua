@@ -41,15 +41,15 @@ local colors = {
 }
 
 if vim.o.background == 'dark' then
-    colors.bg = "#111111"
+    colors.bg = "#232323"
     colors.bg_subtle = "#777777"
     colors.bg_very_subtle = "#666666"
     colors.bg_ui = "#888888"
     colors.fg = "#eaeaea"
-    colors.fg_subtle = "#aaaaaa"
-    colors.main = "#a94dbb"
-    colors.string = "#222222"
-    colors.type = "#ffffff"
+    colors.fg_subtle = "#999999"
+    colors.main = "#a96dbb"
+    colors.string = "#333333"
+    colors.type = "#eaeaea"
     colors.diff_delete = "#FC3333"
     colors.diff_add = "#22CC55"
 end
@@ -72,6 +72,8 @@ highlight("Identifier", { fg = colors.fg })
 highlight("Statement", { fg = colors.fg_subtle, gui = "bold" })
 highlight("Type", { fg = colors.type, gui = "bold" })
 highlight("Special", { fg = colors.main, gui = "bold" })
+highlight("TreesitterContext", { gui = "italic" })
+highlight("TreesitterContextBottom", { gui = "italic,underline" })
 
 highlight("LspCodeLens", { fg = colors.bg_subtle, gui = "underline" })
 highlight("Underlined", { fg = colors.fg, gui = "underline" })
@@ -199,12 +201,18 @@ local highlight_links = {
         'SpecialComment',
         'Debug',
     },
+    String = {
+        "@text.literal.block"
+    },
     Visual = {
         'TelescopeMatching',
     },
     Underlined = {
         'EyelinerPrimary',
         'EyelinerSecondary',
+        'LspReferenceText',
+        'LspReferenceRead',
+        'LspReferenceWrite',
     },
     Pmenu = {
         'FloatBorder',
@@ -234,9 +242,6 @@ local highlight_links = {
         'GitSignsDelete',
         'GitSignsDeleteNr',
         'GitSignsDeleteLn',
-        'LspReferenceText',
-        'LspReferenceRead',
-        'LspReferenceWrite',
     },
     Comment = {
         'GitSignsCurrentLineBlame'

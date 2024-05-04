@@ -114,18 +114,9 @@ local lsp_configurations = {
     -- curl -L https://github.com/rust-analyzer/rust-analyzer/releases/download/2021-10-18/rust-analyzer-aarch64-apple-darwin.gz | gunzip -c - > ~/bin/rust-analyzer && chmod +x ~/bin/rust-analyzer
     rust_analyzer = {},
     -- npm install @ignored/solidity-language-server -g
-    solidity = {
-        cmd = { 'nomicfoundation-solidity-language-server', '--stdio' },
-        filetypes = { 'solidity' },
-        root_dir = require("lspconfig.util").find_git_ancestor,
-        single_file_support = true,
-    },
+    solidity_ls_nomicfoundation = {},
     -- go install golang.org/x/tools/gopls@latest
     gopls = {
-        cmd = {
-            "gopls",
-            "-remote=auto",
-        },
         on_attach = function(client, bufnr)
             on_attach(client, bufnr)
             vim.api.nvim_create_autocmd("BufWritePre", {
