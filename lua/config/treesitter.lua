@@ -1,7 +1,9 @@
--- require 'treesitter-context'.setup {
---     max_lines = 1, -- How many lines the window should span. Values <= 0 mean no limit.
---     trim_scope = 'inner',
--- }
+local M = {}
+
+require 'treesitter-context'.setup {
+    max_lines = 1, -- How many lines the window should span. Values <= 0 mean no limit.
+    trim_scope = 'inner',
+}
 require("nvim-treesitter.configs").setup({
     autotag = {
         enable = true,
@@ -36,3 +38,16 @@ require("nvim-treesitter.configs").setup({
         },
     },
 })
+
+M.setup = function()
+    local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+    vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+    vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+    -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
+    vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
+    vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
+    vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
+    vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
+end
+
+return M

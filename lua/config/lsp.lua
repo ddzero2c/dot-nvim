@@ -8,10 +8,7 @@ capabilities.textDocument.foldingRange = {
     lineFoldingOnly = true,
 }
 
-require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
-require('gopher').setup({})
 local jsonschemas = require("schemastore").json.schemas()
-local go_embedded_sql = require('go-embedded-sql')
 local handlers = {
     ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" }),
 }
@@ -50,8 +47,6 @@ local function lsp_setup_keymaps(bufnr)
     vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, opts)
     vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, opts)
     vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
-    vim.keymap.set("n", "<leader>sf", go_embedded_sql.format_sql, opts)
-    vim.keymap.set("v", "<leader>sf", go_embedded_sql.format_sql_visual, opts)
 end
 
 local function lsp_setup_highlight(client, bufnr)
@@ -100,7 +95,6 @@ end
 local lsp_configurations = {
     -- brew install lua-language-server
     lua_ls = {},
-    tsserver = {},
     typos_lsp = { root_dir = require("lspconfig.util").find_git_ancestor },
     pyright = {},
     -- npm install -g graphql-language-service-cli
@@ -172,6 +166,7 @@ local lsp_configurations = {
 
 
 M.setup = function()
+    require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
     lsp_setup_signs()
     lsp_setup_diagnostic()
     for name, config in pairs(lsp_configurations) do

@@ -4,19 +4,45 @@ require('config.settings')
 
 require('lazy').setup {
     {
-        'neovim/nvim-lspconfig',
-        ft = {
-            'go', 'python', 'rust', 'solidity', 'lua',
-            'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'css',
-            'json', 'yaml', 'graphql',
+        'akinsho/flutter-tools.nvim',
+        ft = 'dart',
+        lazy = false,
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'stevearc/dressing.nvim', -- optional for vim.ui.select
         },
+        config = true,
+        otps = {},
+    },
+    {
+        "pmizio/typescript-tools.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "neovim/nvim-lspconfig",
+            "folke/neodev.nvim",
+        },
+        opts = {},
+    },
+    {
+        'ddzero2c/go-embedded-sql.nvim',
+        ft = 'go',
+        config = function()
+            vim.keymap.set("n", "<leader>sf", require('go-embedded-sql').format_sql)
+            vim.keymap.set("v", "<leader>sf", require('go-embedded-sql').format_sql_visual)
+        end,
+    },
+    {
+        'olexsmir/gopher.nvim',
+        ft = 'go',
+        opts = {},
+    },
+    {
+        'neovim/nvim-lspconfig',
+        event = "VeryLazy",
         dependencies = {
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'kosayoda/nvim-lightbulb' },
             { 'b0o/schemastore.nvim' },
-            { 'folke/neodev.nvim' },
-            { 'olexsmir/gopher.nvim', },
-            { 'ddzero2c/go-embedded-sql.nvim' },
         },
         main = 'config.lsp',
         opts = {},
@@ -75,6 +101,12 @@ require('lazy').setup {
             require("config.dap")
         end
     },
+    -- {
+    --     'stevearc/overseer.nvim',
+    --     opts = {
+    --         dap = false,
+    --     },
+    -- },
     {
         'stevearc/conform.nvim',
         event = { "BufWritePre" },
@@ -92,11 +124,11 @@ require('lazy').setup {
         end
     },
     { 'ntpeters/vim-better-whitespace' },
-    { 'iamcco/markdown-preview.nvim',        cmd = 'MarkdownPreview' },
-    { 'tpope/vim-fugitive',                  event = "CmdLineEnter" },
-    { 'jinh0/eyeliner.nvim',                 opts = {} },
-    { 'folke/todo-comments.nvim',            opts = {} },
-    { "lukas-reineke/indent-blankline.nvim", opts = {},              main = "ibl" },
+    { 'iamcco/markdown-preview.nvim',  cmd = 'MarkdownPreview' },
+    { 'tpope/vim-fugitive',            event = "CmdLineEnter" },
+    { 'jinh0/eyeliner.nvim',           opts = {} },
+    { 'folke/todo-comments.nvim',      opts = {} },
+    { "shellRaining/hlchunk.nvim",     event = "UIEnter",      opts = {} },
     {
         'lewis6991/gitsigns.nvim',
         opts = {
@@ -132,11 +164,10 @@ require('lazy').setup {
             { 'nvim-lua/plenary.nvim' },
             { 'nvim-treesitter/nvim-treesitter-textobjects' },
             { 'nvim-treesitter/playground' },
-            -- { 'nvim-treesitter/nvim-treesitter-context' },
+            { 'nvim-treesitter/nvim-treesitter-context' },
         },
-        config = function()
-            require("config.treesitter")
-        end,
+        main = 'config.treesitter',
+        opts = {},
         build = ':TSUpdate'
     },
     {

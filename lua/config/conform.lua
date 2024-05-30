@@ -16,6 +16,7 @@ require("conform").setup({
         solidity = { "solidity" },
         -- ["*"] = { "codespell" },
         ["_"] = { "trim_whitespace" },
+        ["*"] = { "injected" }
     },
     format_on_save = function(buf)
         return {

@@ -101,4 +101,6 @@ dap.configurations.go = {
     }
 }
 
+-- require("overseer").patch_dap(true)
+-- require("dap.ext.vscode").json_decode = require("overseer.json").decode
 require("dap.ext.vscode").load_launchjs(nil, { go = { "go" } })
