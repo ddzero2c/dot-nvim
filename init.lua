@@ -103,12 +103,6 @@ require('lazy').setup {
             require("config.dap")
         end
     },
-    -- {
-    --     'stevearc/overseer.nvim',
-    --     opts = {
-    --         dap = false,
-    --     },
-    -- },
     {
         'stevearc/conform.nvim',
         event = { "BufWritePre" },
@@ -128,9 +122,12 @@ require('lazy').setup {
     { 'ntpeters/vim-better-whitespace' },
     { 'iamcco/markdown-preview.nvim',  cmd = 'MarkdownPreview' },
     { 'tpope/vim-fugitive',            event = "CmdLineEnter" },
-    { 'jinh0/eyeliner.nvim',           opts = {} },
     { 'folke/todo-comments.nvim',      opts = {} },
-    { "shellRaining/hlchunk.nvim",     event = "UIEnter",      opts = {} },
+    {
+        'nvimdev/indentmini.nvim',
+        event = { "BufReadPre", "BufNewFile" },
+        opts = {},
+    },
     {
         'lewis6991/gitsigns.nvim',
         opts = {
@@ -141,18 +138,17 @@ require('lazy').setup {
             },
         },
     },
-    {
-        'windwp/nvim-ts-autotag',
-        ft = {
-            'astro', 'glimmer', 'handlebars', 'html', 'javascript', 'jsx', 'markdown',
-            'php', 'rescript', 'svelte', 'tsx', 'typescript', 'vue', 'xml'
-        },
-    },
+    -- {
+    --     'windwp/nvim-ts-autotag',
+    --     ft = {
+    --         'astro', 'glimmer', 'handlebars', 'html', 'javascript', 'jsx', 'markdown',
+    --         'php', 'rescript', 'svelte', 'tsx', 'typescript', 'vue', 'xml'
+    --     },
+    -- },
     {
         "folke/ts-comments.nvim",
         opts = {},
         event = "VeryLazy",
-        enabled = vim.fn.has("nvim-0.10.0") == 1,
     },
     { 'stevearc/oil.nvim', opts = { use_default_keymaps = false } },
     {
@@ -161,7 +157,6 @@ require('lazy').setup {
             { 'nvim-lua/popup.nvim' },
             { 'nvim-lua/plenary.nvim' },
             { 'nvim-treesitter/nvim-treesitter-textobjects' },
-            { 'nvim-treesitter/playground' },
             { 'nvim-treesitter/nvim-treesitter-context' },
         },
         main = 'config.treesitter',
@@ -186,21 +181,14 @@ require('lazy').setup {
         end,
     },
     {
-        'norcalli/nvim-colorizer.lua',
-        init = function()
-            vim.o.termguicolors = true
-        end,
-        config = function()
-            require("colorizer").setup({ "*" }, {
-                RGB = true,      -- #RGB hex codes
-                RRGGBB = true,   -- #RRGGBB hex codes
-                RRGGBBAA = true, -- #RRGGBBAA hex codes
-                rgb_fn = true,   -- CSS rgb() and rgba() functions
-                hsl_fn = true,   -- CSS hsl() and hsla() functions
-                css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                css_fn = true,   -- Enable all CSS *functions*: rgb_fn, hsl_fn
-            })
-        end,
+        'uga-rosa/ccc.nvim',
+        opts = {
+            highlighter = {
+                auto_enable = true,
+                lsp = true,
+            },
+        },
+        event = "UIEnter",
     },
     {
         "dstein64/vim-startuptime",
