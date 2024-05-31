@@ -250,6 +250,18 @@ local highlight_links = {
         'DapUIWatchesEmpty',
         'DapUIWatchesError',
     },
+    ErrorMsg = {
+        'DiagnosticError',
+    },
+    WarningMsg = {
+        'DiagnosticWarn',
+    },
+    HintMsg = {
+        'DiagnosticHint',
+    },
+    InfoMsg = {
+        'DiagnosticInfo',
+    },
 }
 
 for to, entries in pairs(highlight_links) do
@@ -274,6 +286,50 @@ local links = {
     ['@lsp.type.method'] = '@method',
     ['@lsp.type.macro'] = '@macro',
     ['@lsp.type.decorator'] = '@function',
+    --
+    -- ['@variable.parameter'] = '@parameter',
+    -- ['@variable.member'] = '@field',
+    -- ['@module'] = '@namespace',
+    -- ['@number.float'] = '@float',
+    -- ['@string.special.symbol'] = '@symbol',
+    -- ['@string.regexp'] = '@string.regex',
+    -- ['@markup.strong'] = '@text.strong',
+    -- ['@markup.italic'] = '@text.emphasis',
+    -- ['@markup.underline'] = '@text.underline',
+    -- ['@markup.strikethrough'] = '@text.strike',
+    -- ['@markup.heading'] = '@text.title',
+    -- ['@markup.quote'] = '@text.quote',
+    -- ['@markup.link.url'] = '@text.uri',
+    -- ['@markup.math'] = '@text.math',
+    -- ['@markup.environment'] = '@text.environment',
+    -- ['@markup.environment.name'] = '@text.environment.name',
+    -- ['@markup.link'] = '@text.reference',
+    -- ['@markup.raw'] = '@text.literal',
+    -- ['@markup.raw.block'] = '@text.literal.block',
+    -- ['@markup.link.label'] = '@string.special',
+    -- ['@markup.list'] = '@punctuation.special',
+    --
+    -- ['@function.method'] = '@method',
+    -- ['@function.method.call'] = '@method.call',
+    -- ['@comment.todo'] = '@text.todo',
+    -- ['@comment.error'] = '@text.danger',
+    -- ['@comment.warning'] = '@text.warning',
+    -- ['@comment.hint'] = '@text.note',
+    -- ['@comment.info'] = '@text.note',
+    -- ['@comment.note'] = '@text.note',
+    -- ['@comment.ok'] = '@text.note',
+    -- ['@diff.plus'] = '@text.diff.add',
+    -- ['@diff.minus'] = '@text.diff.delete',
+    -- ['@diff.delta'] = '@text.diff.change',
+    -- ['@string.special.url'] = '@text.uri',
+    -- ['@keyword.directive'] = '@preproc',
+    -- ['@keyword.storage'] = '@storageclass',
+    -- ['@keyword.directive'] = '@define',
+    -- ['@keyword.conditional'] = '@conditional',
+    -- ['@keyword.debug'] = '@debug',
+    -- ['@keyword.exception'] = '@exception',
+    -- ['@keyword.import'] = '@include',
+    -- ['@keyword.repeat'] = '@repeat',
 }
 for newgroup, oldgroup in pairs(links) do
     vim.api.nvim_set_hl(0, newgroup, { link = oldgroup, default = true })

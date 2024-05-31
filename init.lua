@@ -45,7 +45,9 @@ require('lazy').setup {
             { 'b0o/schemastore.nvim' },
         },
         main = 'config.lsp',
-        opts = {},
+        opts = {
+            inlay_hints = { enabled = true },
+        },
     },
     {
         'hrsh7th/nvim-cmp',
@@ -147,14 +149,10 @@ require('lazy').setup {
         },
     },
     {
-        'b3nj5m1n/kommentary',
+        "folke/ts-comments.nvim",
+        opts = {},
         event = "VeryLazy",
-        dependencies = {
-            { 'JoosepAlviste/nvim-ts-context-commentstring' },
-        },
-        config = function()
-            require("config.kommentary")
-        end
+        enabled = vim.fn.has("nvim-0.10.0") == 1,
     },
     { 'stevearc/oil.nvim', opts = { use_default_keymaps = false } },
     {

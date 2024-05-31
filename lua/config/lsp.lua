@@ -23,8 +23,8 @@ end
 
 local function lsp_setup_diagnostic()
     vim.diagnostic.config({
-        virtual_text = { source = "always", },
-        float = { source = "always", border = "single", focusable = false, },
+        virtual_text = { source = true, },
+        float = { source = true, border = "single", focusable = true, },
         signs = true,
         underline = true,
         update_in_insert = false,
@@ -74,7 +74,7 @@ local function on_attach(client, bufnr)
 end
 
 local function organize_import()
-    local clients = vim.lsp.get_active_clients()
+    local clients = vim.lsp.get_clients()
     for _, client in pairs(clients) do
         local params = vim.lsp.util.make_range_params(nil, client.offset_encoding)
         params.context = { only = { "source.organizeImports" } }
@@ -130,6 +130,15 @@ local lsp_configurations = {
                     GOFLAGS = "-tags=wireinject,e2e",
                 },
                 gofumpt = false,
+                -- hints = {
+                --     rangeVariableTypes = true,
+                --     parameterNames = true,
+                --     constantValues = true,
+                --     assignVariableTypes = true,
+                --     compositeLiteralFields = true,
+                --     compositeLiteralTypes = true,
+                --     functionTypeParameters = true,
+                -- },
             },
         },
     },
