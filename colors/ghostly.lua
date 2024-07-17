@@ -76,6 +76,7 @@ highlight("TreesitterContext", { gui = "italic" })
 highlight("TreesitterContextBottom", { gui = "italic,underline" })
 
 highlight("LspCodeLens", { fg = colors.bg_subtle, gui = "underline" })
+highlight("LspInlayHint", { fg = colors.bg_subtle, gui = "underline" })
 highlight("Underlined", { fg = colors.fg, gui = "underline" })
 highlight("Ignore", { fg = colors.bg })
 highlight("Error", { fg = colors.actual_white, bg = colors.red_error, gui = "undercurl" })

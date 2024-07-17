@@ -47,6 +47,10 @@ local function lsp_setup_keymaps(bufnr)
     vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, opts)
     vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, opts)
     vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+    vim.keymap.set("n", "<leader>i", function()
+        local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
+        vim.lsp.inlay_hint.enable(enabled == false, { bufnr = bufnr })
+    end)
 end
 
 local function lsp_setup_highlight(client, bufnr)
@@ -71,6 +75,9 @@ end
 local function on_attach(client, bufnr)
     lsp_setup_keymaps(bufnr)
     lsp_setup_highlight(client, bufnr)
+    -- if client.supports_method("textDocument/inlayHint") or client.server_capabilities.inlayHintProvider then
+    --     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    -- end
 end
 
 local function organize_import()
@@ -111,6 +118,7 @@ local lsp_configurations = {
     solidity_ls_nomicfoundation = {},
     -- go install golang.org/x/tools/gopls@latest
     gopls = {
+        cmd = { "gopls", "--remote=auto" },
         on_attach = function(client, bufnr)
             on_attach(client, bufnr)
             vim.api.nvim_create_autocmd("BufWritePre", {
@@ -130,15 +138,15 @@ local lsp_configurations = {
                     GOFLAGS = "-tags=wireinject,e2e",
                 },
                 gofumpt = false,
-                -- hints = {
-                --     rangeVariableTypes = true,
-                --     parameterNames = true,
-                --     constantValues = true,
-                --     assignVariableTypes = true,
-                --     compositeLiteralFields = true,
-                --     compositeLiteralTypes = true,
-                --     functionTypeParameters = true,
-                -- },
+                hints = {
+                    rangeVariableTypes = true,
+                    parameterNames = true,
+                    constantValues = true,
+                    -- assignVariableTypes = true,
+                    compositeLiteralFields = true,
+                    compositeLiteralTypes = true,
+                    functionTypeParameters = true,
+                },
             },
         },
     },

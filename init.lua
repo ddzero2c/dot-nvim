@@ -12,7 +12,7 @@ require('lazy').setup {
             'stevearc/dressing.nvim', -- optional for vim.ui.select
         },
         config = true,
-        otps = {},
+        opts = {},
     },
     {
         "pmizio/typescript-tools.nvim",
@@ -21,7 +21,15 @@ require('lazy').setup {
             "neovim/nvim-lspconfig",
             "folke/neodev.nvim",
         },
-        opts = {},
+        opts = {
+            settings = {
+                tsserver_file_preferences = {
+                    includeInlayParameterNameHints = "all",
+                    includeCompletionsForModuleExports = true,
+                    quotePreference = "auto",
+                },
+            },
+        },
     },
     {
         'ddzero2c/go-embedded-sql.nvim',
@@ -166,6 +174,7 @@ require('lazy').setup {
     {
         'nvim-telescope/telescope.nvim',
         dependencies = {
+            { 'nvim-lua/plenary.nvim' },
             { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
         },
         cmd = 'Telescope',
