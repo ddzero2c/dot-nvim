@@ -181,6 +181,18 @@ local lsp_configurations = {
     },
 }
 
+local none_ls = require("null-ls")
+local none_ls_utils = require("null-ls.utils")
+local cspell = require('cspell')
+none_ls.setup {
+    sources = {
+        cspell.diagnostics,
+        cspell.code_actions,
+    },
+    root_dir = none_ls_utils.root_pattern(".git"),
+    fallback_severity = vim.diagnostic.severity.INFO,
+}
+
 
 M.setup = function()
     require("nvim-lightbulb").setup({ autocmd = { enabled = true } })

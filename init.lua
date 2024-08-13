@@ -51,6 +51,8 @@ require('lazy').setup {
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'kosayoda/nvim-lightbulb' },
             { 'b0o/schemastore.nvim' },
+            { "nvimtools/none-ls.nvim" },
+            { "davidmh/cspell.nvim" },
         },
         main = 'config.lsp',
         opts = {
@@ -198,14 +200,5 @@ require('lazy').setup {
             },
         },
         event = "UIEnter",
-    },
-    {
-        "dstein64/vim-startuptime",
-        -- lazy-load on a command
-        cmd = "StartupTime",
-        -- init is called during startup. Configuration for vim plugins typically should be set in an init function
-        init = function()
-            vim.g.startuptime_tries = 10
-        end,
     },
 }
