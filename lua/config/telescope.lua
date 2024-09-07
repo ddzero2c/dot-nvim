@@ -7,10 +7,10 @@ require("telescope").setup({
                 ["<C-k>"] = telescope_action.move_selection_previous,
             },
         },
-        sorting_strategy = "ascending",
-        layout_config = {
-            prompt_position = "top",
-        },
+        -- sorting_strategy = "ascending",
+        -- layout_config = {
+        --     prompt_position = "top",
+        -- },
     },
     extensions = {
         fzf = {

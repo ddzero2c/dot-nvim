@@ -11,12 +11,13 @@ require("conform").setup({
     formatters_by_ft = {
         sql = { "pg_format" },
         css = { "prettier" },
-        graphql = { "prettier" },
-        yaml = { "prettier" },
+        graphql = { "prettier", },
+        -- yaml = { "prettier", args = "--single-quote" },
         solidity = { "solidity" },
         -- ["*"] = { "codespell" },
+        python = { "isort", "black" },
         ["_"] = { "trim_whitespace" },
-        ["*"] = { "injected" }
+        -- ["*"] = { "injected" }
     },
     format_on_save = function(buf)
         return {

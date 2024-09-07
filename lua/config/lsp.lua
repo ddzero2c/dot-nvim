@@ -102,7 +102,7 @@ end
 local lsp_configurations = {
     -- brew install lua-language-server
     lua_ls = {},
-    typos_lsp = { root_dir = require("lspconfig.util").find_git_ancestor },
+    -- typos_lsp = { root_dir = require("lspconfig.util").find_git_ancestor },
     pyright = {},
     -- npm install -g graphql-language-service-cli
     graphql = {},
@@ -110,7 +110,13 @@ local lsp_configurations = {
     tailwindcss = {},
     -- npm i -g yaml-language-server
     yamlls = {
-        settings = { yaml = { schemas = jsonschemas, validate = { enable = true } } },
+        settings = {
+            yaml = {
+                schemas = jsonschemas,
+                validate = { enable = true },
+                format = { enable = true, singleQuote = true }
+            }
+        },
     },
     -- curl -L https://github.com/rust-analyzer/rust-analyzer/releases/download/2021-10-18/rust-analyzer-aarch64-apple-darwin.gz | gunzip -c - > ~/bin/rust-analyzer && chmod +x ~/bin/rust-analyzer
     rust_analyzer = {},
@@ -186,8 +192,8 @@ local none_ls_utils = require("null-ls.utils")
 local cspell = require('cspell')
 none_ls.setup {
     sources = {
-        cspell.diagnostics,
-        cspell.code_actions,
+        -- cspell.diagnostics,
+        -- cspell.code_actions,
     },
     root_dir = none_ls_utils.root_pattern(".git"),
     fallback_severity = vim.diagnostic.severity.INFO,
