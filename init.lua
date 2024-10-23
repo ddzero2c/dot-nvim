@@ -1,6 +1,9 @@
-require('config.colorscheme')
+vim.cmd.colorscheme('ghostly')
+vim.o.background = 'dark'
+
 require('config.lazy')
-require('config.settings')
+require('config.set')
+require('config.remap')
 
 require('lazy').setup {
     {

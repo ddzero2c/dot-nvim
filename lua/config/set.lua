@@ -28,15 +28,9 @@ vim.o.updatetime = 25
 vim.o.shortmess = vim.o.shortmess .. "c"
 vim.o.fillchars = "eob: ,foldopen:▼,foldclose:⏵"
 vim.g.omni_sql_no_default_maps = 1
+vim.o.scrolloff = 8
 
 -- Mappings
-vim.g.mapleader = " "
--- vim.keymap.set('n', '<C-c>', '<Esc>')
-vim.keymap.set('i', '<C-c>', '<Esc>')
--- vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
--- vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-vim.keymap.set("n", "<C-l>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-h>", "<cmd>cprev<CR>zz")
 
 vim.cmd [[
 " filetypes
