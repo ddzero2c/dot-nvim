@@ -31,9 +31,12 @@ vim.g.omni_sql_no_default_maps = 1
 
 -- Mappings
 vim.g.mapleader = " "
-vim.keymap.set('n', '<C-c>', '<Esc>')
+-- vim.keymap.set('n', '<C-c>', '<Esc>')
 vim.keymap.set('i', '<C-c>', '<Esc>')
-vim.keymap.set('n', '<leader>t', '<C-w>v:Ex<CR>')
+-- vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+-- vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set("n", "<C-l>", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<C-h>", "<cmd>cprev<CR>zz")
 
 vim.cmd [[
 " filetypes
@@ -49,3 +52,16 @@ autocmd FileType css,sass,scss,html setlocal ts=2 sts=2 sw=2 expandtab
 "Record cursor position
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 ]]
+
+vim.api.nvim_create_user_command('RG', function(opts)
+    local search_term = opts.args
+    local results = vim.fn.system('rg --vimgrep ' .. vim.fn.shellescape(search_term))
+    vim.fn.setqflist({}, ' ', {
+        title = 'Search Results',
+        lines = vim.split(results, '\n', { trimempty = true })
+    })
+    vim.cmd('copen')
+end, {
+    nargs = '+',
+    desc = 'Search using ripgrep and populate quickfix list'
+})

@@ -46,8 +46,8 @@ local function lsp_setup_keymaps(bufnr)
     vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
     vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, opts)
     vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, opts)
-    vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
-    vim.keymap.set("n", "<leader>i", function()
+    vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, opts)
+    vim.keymap.set("n", "<leader>ih", function()
         local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
         vim.lsp.inlay_hint.enable(enabled == false, { bufnr = bufnr })
     end)
@@ -100,6 +100,7 @@ local function organize_import()
 end
 
 local lsp_configurations = {
+    zls = {},
     -- brew install lua-language-server
     lua_ls = {},
     -- typos_lsp = { root_dir = require("lspconfig.util").find_git_ancestor },

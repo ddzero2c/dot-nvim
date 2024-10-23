@@ -43,7 +43,7 @@ cmp.setup({
     window = {
         completion = {
             border = "single",
-            scrollbar = "║",
+            scrollbar = true,
             col_offset = -3,
             side_padding = 0,
         },
@@ -105,12 +105,6 @@ cmp.setup({
             kind.menu = "    (" .. (strings[2] or "") .. ")"
             return kind
         end,
-    },
-})
-
-require("cmp_dictionary").setup({
-    dic = {
-        ["*"] = { os.getenv("HOME") .. "/.config/nvim/10k.txt" },
     },
 })
 

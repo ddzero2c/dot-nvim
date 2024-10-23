@@ -4,6 +4,14 @@ require('config.settings')
 
 require('lazy').setup {
     {
+        'stevearc/dressing.nvim',
+        opts = {
+            input = { border = "single" },
+            nui = { border = "single" },
+            builtin = { border = "single" },
+        }
+    },
+    {
         'akinsho/flutter-tools.nvim',
         ft = 'dart',
         lazy = false,
@@ -31,14 +39,14 @@ require('lazy').setup {
             },
         },
     },
-    {
-        'ddzero2c/go-embedded-sql.nvim',
-        ft = 'go',
-        config = function()
-            vim.keymap.set("n", "<leader>sf", require('go-embedded-sql').format_sql)
-            vim.keymap.set("v", "<leader>sf", require('go-embedded-sql').format_sql_visual)
-        end,
-    },
+    -- {
+    --     'ddzero2c/go-embedded-sql.nvim',
+    --     ft = 'go',
+    --     config = function()
+    --         vim.keymap.set("n", "<leader>sf", require('go-embedded-sql').format_sql)
+    --         vim.keymap.set("v", "<leader>sf", require('go-embedded-sql').format_sql_visual)
+    --     end,
+    -- },
     {
         'olexsmir/gopher.nvim',
         ft = 'go',
@@ -78,6 +86,37 @@ require('lazy').setup {
         config = function()
             require('config.cmp')
         end
+    },
+    {
+        "olimorris/codecompanion.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "stevearc/dressing.nvim", -- Optional: Improves `vim.ui.select`
+        },
+        opts = {
+            strategies = {
+                chat = {
+                    adapter = "copilot",
+                    keymaps = {
+                        close = {
+                            modes = {
+                                n = "<C-x>",
+                                i = "<C-x>",
+                            },
+                        },
+                    }
+                },
+                inline = { adapter = "copilot", },
+                agent = { adapter = "copilot", },
+            },
+        },
+        config = function(_, opts)
+            require('codecompanion').setup(opts)
+            vim.api.nvim_set_keymap("v", "ga", "<cmd>'<,'>CodeCompanion<cr>", { noremap = true, silent = true })
+            vim.api.nvim_set_keymap("n", "<leader>ai", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+            vim.cmd([[cab cc CodeCompanion]])
+        end,
     },
     {
         'github/copilot.vim',
@@ -160,7 +199,15 @@ require('lazy').setup {
         opts = {},
         event = "VeryLazy",
     },
-    { 'stevearc/oil.nvim', opts = { use_default_keymaps = false } },
+    {
+        'stevearc/oil.nvim',
+        opts = {
+            use_default_keymaps = false,
+            keymaps = {
+                ["<CR>"] = "actions.select",
+            }
+        }
+    },
     {
         'nvim-treesitter/nvim-treesitter',
         dependencies = {
@@ -200,5 +247,28 @@ require('lazy').setup {
             },
         },
         event = "UIEnter",
+    },
+    {
+        'laytan/cloak.nvim',
+        opts = {
+            enabled = true,
+            cloak_character = "*",
+            highlight_group = "Comment",
+            patterns = {
+                {
+                    file_pattern = {
+                        ".env*",
+                        "wrangler.toml",
+                        ".dev.vars",
+                    },
+                    cloak_pattern = "=.+"
+                },
+            },
+        },
+        config = function(_, opts)
+            require("cloak").setup(opts)
+            vim.api.nvim_set_keymap("n", "<leader>P", "<cmd>CloakToggle<cr>",
+                { noremap = true, silent = true })
+        end,
     },
 }

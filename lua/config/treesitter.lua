@@ -10,9 +10,9 @@ require("nvim-treesitter.configs").setup({
         "yaml", "json", "javascript", "typescript", "html", "css", "scss", "jsonc", "json5", "tsx",
         "go", "dart", "python", "rust", "java", "php", "ruby", "bash", "lua", "dockerfile", "graphql",
     },
-    autotag = {
-        enable = true,
-    },
+    -- autotag = {
+    --     enable = true,
+    -- },
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,

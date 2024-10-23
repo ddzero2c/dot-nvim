@@ -1,17 +1,4 @@
-local telescope_action = require("telescope.actions")
 require("telescope").setup({
-    defaults = {
-        mappings = {
-            i = {
-                ["<C-j>"] = telescope_action.move_selection_next,
-                ["<C-k>"] = telescope_action.move_selection_previous,
-            },
-        },
-        -- sorting_strategy = "ascending",
-        -- layout_config = {
-        --     prompt_position = "top",
-        -- },
-    },
     extensions = {
         fzf = {
             fuzzy = true,                   -- false will only do exact matching

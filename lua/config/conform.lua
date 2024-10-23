@@ -21,7 +21,7 @@ require("conform").setup({
     },
     format_on_save = function(buf)
         return {
-            timeout_ms = 500,
+            timeout_ms = 1000,
             lsp_fallback = lsp_fallback[vim.bo[buf].filetype],
         }
     end,
