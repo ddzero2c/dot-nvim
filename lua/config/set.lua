@@ -1,6 +1,6 @@
 vim.o.pumblend = 5
-vim.o.spell = true
-vim.o.spelloptions = "camel"
+-- vim.o.spell = true
+-- vim.o.spelloptions = "camel"
 vim.o.synmaxcol = 200
 vim.o.number = true
 vim.o.relativenumber = true
@@ -24,38 +24,8 @@ vim.o.backup = false
 vim.o.writebackup = false
 vim.o.swapfile = false
 vim.o.cmdheight = 1
-vim.o.updatetime = 25
+vim.o.updatetime = 50
 vim.o.shortmess = vim.o.shortmess .. "c"
 vim.o.fillchars = "eob: ,foldopen:▼,foldclose:⏵"
 vim.g.omni_sql_no_default_maps = 1
 vim.o.scrolloff = 8
-
--- Mappings
-
-vim.cmd [[
-" filetypes
-autocmd FileType sh setlocal ts=4 sts=4 sw=4 noexpandtab
-autocmd FileType java,go setlocal ts=4 sts=4 sw=4 noexpandtab
-autocmd FileType vim,lua setlocal ts=4 sts=4 sw=4 expandtab
-autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
-autocmd FileType javascript,javascriptreact,typescript,typescriptreact,graphql setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType yaml,json,sql setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType helm,dockerfile,terraform,hcl setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType css,sass,scss,html setlocal ts=2 sts=2 sw=2 expandtab
-
-"Record cursor position
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-]]
-
-vim.api.nvim_create_user_command('RG', function(opts)
-    local search_term = opts.args
-    local results = vim.fn.system('rg --vimgrep ' .. vim.fn.shellescape(search_term))
-    vim.fn.setqflist({}, ' ', {
-        title = 'Search Results',
-        lines = vim.split(results, '\n', { trimempty = true })
-    })
-    vim.cmd('copen')
-end, {
-    nargs = '+',
-    desc = 'Search using ripgrep and populate quickfix list'
-})

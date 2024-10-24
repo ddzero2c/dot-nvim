@@ -1,132 +1,42 @@
-vim.cmd.colorscheme('ghostly')
-vim.o.background = 'dark'
-
+require('config.colorscheme')
 require('config.lazy')
 require('config.set')
 require('config.remap')
+require('config.autocmd')
 
 require('lazy').setup {
     {
-        'stevearc/dressing.nvim',
-        opts = {
-            input = { border = "single" },
-            nui = { border = "single" },
-            builtin = { border = "single" },
-        }
-    },
-    {
-        'akinsho/flutter-tools.nvim',
-        ft = 'dart',
-        lazy = false,
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            'stevearc/dressing.nvim', -- optional for vim.ui.select
-        },
-        config = true,
-        opts = {},
-    },
-    {
-        "pmizio/typescript-tools.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "neovim/nvim-lspconfig",
-            "folke/neodev.nvim",
-        },
-        opts = {
-            settings = {
-                tsserver_file_preferences = {
-                    includeInlayParameterNameHints = "all",
-                    includeCompletionsForModuleExports = true,
-                    quotePreference = "auto",
-                },
-            },
-        },
-    },
-    -- {
-    --     'ddzero2c/go-embedded-sql.nvim',
-    --     ft = 'go',
-    --     config = function()
-    --         vim.keymap.set("n", "<leader>sf", require('go-embedded-sql').format_sql)
-    --         vim.keymap.set("v", "<leader>sf", require('go-embedded-sql').format_sql_visual)
-    --     end,
-    -- },
-    {
-        'olexsmir/gopher.nvim',
-        ft = 'go',
-        opts = {},
-    },
-    {
         'neovim/nvim-lspconfig',
-        event = "VeryLazy",
         dependencies = {
             { 'hrsh7th/cmp-nvim-lsp' },
-            { 'kosayoda/nvim-lightbulb' },
-            { 'b0o/schemastore.nvim' },
-            { "nvimtools/none-ls.nvim" },
-            { "davidmh/cspell.nvim" },
-        },
-        main = 'config.lsp',
-        opts = {
-            inlay_hints = { enabled = true },
-        },
-    },
-    {
-        'hrsh7th/nvim-cmp',
-        event = "InsertEnter",
-        dependencies = {
+            { 'hrsh7th/nvim-cmp' },
             { 'nvim-lua/plenary.nvim' },
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'hrsh7th/cmp-nvim-lua' },
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-path' },
             { 'hrsh7th/cmp-nvim-lsp-signature-help' },
-            { 'hrsh7th/vim-vsnip' },
-            { 'hrsh7th/cmp-vsnip' },
-            { 'uga-rosa/cmp-dictionary' },
-            { 'onsails/lspkind-nvim' },
             { 'petertriho/cmp-git' },
+            { "folke/neodev.nvim" },
+            { "Bilal2453/luvit-meta",               lazy = true },
+            { "kosayoda/nvim-lightbulb" },
+            { 'b0o/schemastore.nvim' },
+            { 'olexsmir/gopher.nvim' },
+            { "pmizio/typescript-tools.nvim" },
         },
-        config = function()
-            require('config.cmp')
-        end
+        config = function() require('config.lsp') end
     },
+    --
     {
         "olimorris/codecompanion.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
-            "stevearc/dressing.nvim", -- Optional: Improves `vim.ui.select`
-        },
-        opts = {
-            strategies = {
-                chat = {
-                    adapter = "copilot",
-                    keymaps = {
-                        close = {
-                            modes = {
-                                n = "<C-x>",
-                                i = "<C-x>",
-                            },
-                        },
-                    }
-                },
-                inline = { adapter = "copilot", },
-                agent = { adapter = "copilot", },
-            },
-        },
-        config = function(_, opts)
-            require('codecompanion').setup(opts)
-            vim.api.nvim_set_keymap("v", "ga", "<cmd>'<,'>CodeCompanion<cr>", { noremap = true, silent = true })
-            vim.api.nvim_set_keymap("n", "<leader>ai", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
-            vim.cmd([[cab cc CodeCompanion]])
-        end,
+        config = function() require('config.codecompanion') end,
     },
     {
         'github/copilot.vim',
         event = "VeryLazy",
         config = function()
             vim.g.copilot_no_tab_map = true
-            vim.api.nvim_set_keymap('i', '<C-Y>', 'copilot#Accept("<CR>")', { expr = true, silent = true })
+            vim.api.nvim_set_keymap('i', '<C-j>', 'copilot#Accept("<CR>")', { expr = true, silent = true })
         end
     },
     {
@@ -134,16 +44,12 @@ require('lazy').setup {
         keys = {
             {
                 "<F5>",
-                function()
-                    require('dap').continue()
-                end,
+                function() require('dap').continue() end,
                 desc = "Debug",
             },
             {
                 "<leader>b",
-                function()
-                    require('dap').toggle_breakpoint()
-                end,
+                function() require('dap').toggle_breakpoint() end,
                 desc = "Breakpoint",
             },
         },
@@ -151,35 +57,30 @@ require('lazy').setup {
             'rcarriga/nvim-dap-ui',
             'nvim-neotest/nvim-nio',
         },
-        config = function()
-            require("config.dap")
-        end
+        config = function() require("config.dap") end
     },
     {
         'stevearc/conform.nvim',
         event = { "BufWritePre" },
         cmd = { "ConformInfo" },
-        config = function()
-            require('config.conform')
-        end
+        config = function() require('config.conform') end
     },
     {
         "kylechui/nvim-surround",
-        version = "*", -- Use for stability; omit to use `main` branch for the latest features
+        version = "*",
         event = "VeryLazy",
-        config = function()
-            require("nvim-surround").setup({})
-        end
+        opts = {},
     },
     { 'ntpeters/vim-better-whitespace' },
     { 'iamcco/markdown-preview.nvim',  cmd = 'MarkdownPreview' },
-    { 'tpope/vim-fugitive',            event = "CmdLineEnter" },
-    { 'folke/todo-comments.nvim',      opts = {} },
+    { 'folke/todo-comments.nvim',      opts = {},              event = "VeryLazy" },
+    { "folke/ts-comments.nvim",        opts = {},              event = "VeryLazy" },
     {
         'nvimdev/indentmini.nvim',
         event = { "BufReadPre", "BufNewFile" },
         opts = {},
     },
+    { 'tpope/vim-fugitive', event = "CmdLineEnter" },
     {
         'lewis6991/gitsigns.nvim',
         opts = {
@@ -189,18 +90,6 @@ require('lazy').setup {
                 virt_text_pos = "eol",
             },
         },
-    },
-    -- {
-    --     'windwp/nvim-ts-autotag',
-    --     ft = {
-    --         'astro', 'glimmer', 'handlebars', 'html', 'javascript', 'jsx', 'markdown',
-    --         'php', 'rescript', 'svelte', 'tsx', 'typescript', 'vue', 'xml'
-    --     },
-    -- },
-    {
-        "folke/ts-comments.nvim",
-        opts = {},
-        event = "VeryLazy",
     },
     {
         'stevearc/oil.nvim',
@@ -219,9 +108,8 @@ require('lazy').setup {
             { 'nvim-treesitter/nvim-treesitter-textobjects' },
             { 'nvim-treesitter/nvim-treesitter-context' },
         },
-        main = 'config.treesitter',
-        opts = {},
-        build = ':TSUpdate'
+        build = ':TSUpdate',
+        config = function() require('config.treesitter') end,
     },
     {
         'nvim-telescope/telescope.nvim',
@@ -237,18 +125,11 @@ require('lazy').setup {
                 desc = "FindFiles",
             },
         },
-        config = function()
-            require("config.telescope")
-        end,
+        config = function() require("config.telescope") end,
     },
     {
         'uga-rosa/ccc.nvim',
-        opts = {
-            highlighter = {
-                auto_enable = true,
-                lsp = true,
-            },
-        },
+        opts = { highlighter = { auto_enable = true, lsp = true } },
         event = "UIEnter",
     },
     {
@@ -270,7 +151,7 @@ require('lazy').setup {
         },
         config = function(_, opts)
             require("cloak").setup(opts)
-            vim.api.nvim_set_keymap("n", "<leader>P", "<cmd>CloakToggle<cr>",
+            vim.api.nvim_set_keymap("n", "<leader>i", "<cmd>CloakToggle<cr>",
                 { noremap = true, silent = true })
         end,
     },
