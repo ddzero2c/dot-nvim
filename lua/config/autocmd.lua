@@ -64,4 +64,3 @@ end, {
     nargs = '+',
     desc = 'Search using ripgrep and populate quickfix list'
 })
-vim.cmd.ca('rg', 'RG')

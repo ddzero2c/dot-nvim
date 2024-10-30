@@ -1,4 +1,4 @@
-vim.o.pumblend = 5
+-- vim.o.pumblend = 100
 -- vim.o.spell = true
 -- vim.o.spelloptions = "camel"
 vim.o.synmaxcol = 200
@@ -28,4 +28,3 @@ vim.o.updatetime = 50
 vim.o.shortmess = vim.o.shortmess .. "c"
 vim.o.fillchars = "eob: ,foldopen:▼,foldclose:⏵"
 vim.g.omni_sql_no_default_maps = 1
-vim.o.scrolloff = 8

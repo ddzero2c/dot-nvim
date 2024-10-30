@@ -49,6 +49,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
         vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
         vim.keymap.set("n", "<leader>q", vim.diagnostic.setqflist, opts)
+        vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, opts)
+        vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, opts)
     end,
 })
 
@@ -155,6 +157,22 @@ cmp.setup({
     mapping = cmp.mapping.preset.insert({
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-n>'] = function()
+            if vim.snippet.active({ direction = 1 }) then
+                vim.snippet.jump(1)
+            else
+                cmp.select_next_item()
+            end
+        end,
+        ['<C-p>'] = function()
+            if vim.snippet.active({ direction = -1 }) then
+                vim.snippet.jump(-1)
+            else
+                cmp.select_prev_item()
+            end
+        end,
+
         -- ["<C-j>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace }),
+        -- ["<C-y>"] = cmp.config.disable,
     }),
 })

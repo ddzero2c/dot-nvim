@@ -27,7 +27,7 @@ local colors = {
 }
 
 if vim.o.background == 'dark' then
-    colors.bg = "#232323"
+    colors.bg = "none"
     colors.bg_subtle = "#777777"
     colors.bg_very_subtle = "#666666"
     colors.bg_ui = "#888888"
@@ -48,7 +48,29 @@ local function highlight(group, style)
     vim.cmd(string.format('highlight %s guifg=%s guibg=%s guisp=%s gui=%s', group, guifg, guibg, guisp, gui))
 end
 
+
+-- NvimDarkBlue    NvimLightBlue
+-- NvimDarkCyan    NvimLightCyan
+-- NvimDarkGray1   NvimLightGray1
+-- NvimDarkGray2   NvimLightGray2
+-- NvimDarkGray3   NvimLightGray3
+-- NvimDarkGray4   NvimLightGray4
+-- NvimDarkGreen   NvimLightGreen
+-- NvimDarkMagenta NvimLightMagenta
+-- NvimDarkRed     NvimLightRed
+-- NvimDarkYellow  NvimLightYellow
+
 -- Highlight groups
+-- vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
+-- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+-- vim.api.nvim_set_hl(0, 'String', { bg = 'NvimDarkGray3' })
+-- vim.api.nvim_set_hl(0, 'Comment', { fg = 'NvimLightGray4', italic = true })
+-- vim.api.nvim_set_hl(0, 'Constant', { bold = true, italic = true })
+-- vim.api.nvim_set_hl(0, 'Statement', { fg = 'NvimLightGray4', bold = true })
+-- vim.api.nvim_set_hl(0, 'Type', { bold = true })
+-- vim.api.nvim_set_hl(0, 'Special', { fg = '#a95dbb', bold = true })
+-- vim.api.nvim_set_hl(0, 'NonText', { fg = 'NvimLightGray4' })
+
 highlight("Normal", { fg = colors.fg, bg = colors.bg })
 highlight("String", { fg = colors.fg, bg = colors.str })
 highlight("Cursor", { fg = colors.fg, bg = colors.bg_ui })
@@ -100,7 +122,7 @@ highlight("SpellCap", { gui = "undercurl", sp = colors.green })
 highlight("SpellRare", { gui = "undercurl", sp = colors.blue })
 highlight("SpellLocal", { gui = "undercurl", sp = colors.green })
 
-highlight("Pmenu", { fg = colors.fg, bg = colors.bg })
+highlight("Pmenu", { fg = colors.fg, })
 highlight("PmenuSel", { fg = colors.fg, bg = colors.bg_subtle, gui = "bold" })
 highlight("PmenuSbar", { fg = colors.fg, bg = colors.bg_very_subtle })
 highlight("PmenuThumb", { fg = colors.bg, bg = colors.fg })
@@ -123,6 +145,7 @@ local highlight_links = {
     Normal = {
         'DapUIVariable',
         'DapUIFrameName',
+        'Identifier',
     },
     Constant = {
         'Character',
@@ -235,6 +258,8 @@ local highlight_links = {
     Comment = {
         'GitSignsCurrentLineBlame',
         'IndentLine',
+        'TreesitterContext',
+        'TreesitterContextSeparator',
     },
     Error = {
         'DapUIWatchesEmpty',

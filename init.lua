@@ -36,7 +36,12 @@ require('lazy').setup {
         event = "VeryLazy",
         config = function()
             vim.g.copilot_no_tab_map = true
-            vim.api.nvim_set_keymap('i', '<C-j>', 'copilot#Accept("<CR>")', { expr = true, silent = true })
+            vim.keymap.set('i', '<C-j>', 'copilot#Accept("\\<CR>")', {
+                expr = true,
+                replace_keycodes = false
+            })
+            -- vim.keymap.set('i', '<Tab>', '<Plug>(copilot-next)')
+            -- vim.keymap.set('i', '<S-Tab>', '<Plug>(copilot-previous)')
         end
     },
     {
