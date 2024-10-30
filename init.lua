@@ -28,8 +28,12 @@ require('lazy').setup {
     },
     --
     {
-        "olimorris/codecompanion.nvim",
-        config = function() require('config.codecompanion') end,
+        'ddzero2c/aider.nvim',
+        dir = '~/dev/aider.nvim',
+        dependencies = {
+            { 'echasnovski/mini.nvim', version = '*' },
+        },
+        config = function() require('config.aider') end
     },
     {
         'github/copilot.vim',

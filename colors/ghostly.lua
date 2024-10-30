@@ -27,7 +27,7 @@ local colors = {
 }
 
 if vim.o.background == 'dark' then
-    colors.bg = "none"
+    colors.bg = "#232323"
     colors.bg_subtle = "#777777"
     colors.bg_very_subtle = "#666666"
     colors.bg_ui = "#888888"
@@ -36,8 +36,8 @@ if vim.o.background == 'dark' then
     colors.special = "#a95dbb"
     colors.str = "#333333"
     colors.type = "#fffff"
-    colors.diff_delete = "#FC3333"
-    colors.diff_add = "#22CC55"
+    colors.diff_delete = "#9F2828"
+    colors.diff_add = "#27422A"
 end
 
 local function highlight(group, style)
@@ -114,7 +114,7 @@ highlight("FoldColumn", { fg = colors.bg_subtle })
 highlight("DiffAdd", { fg = colors.fg, bg = colors.diff_add })
 highlight("DiffDelete", { fg = colors.fg, bg = colors.diff_delete })
 highlight("DiffChange", { fg = colors.fg, bg = colors.diff_add })
-highlight("DiffText", { fg = colors.fg, bg = colors.green })
+highlight("DiffText", { gui = 'reverse' })
 highlight("SignColumn", { fg = colors.green })
 
 highlight("SpellBad", { gui = "undercurl", sp = colors.red })
