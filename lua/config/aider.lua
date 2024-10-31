@@ -6,8 +6,8 @@ vim.api.nvim_set_hl(0, 'MiniDiffOverDelete', { fg = 'Gray', strikethrough = true
 vim.api.nvim_set_hl(0, 'MiniDiffOverContext', { fg = 'Gray', strikethrough = true })
 
 require('aider').setup({
-    mode = 'inline',
-    floating_opts = {
+    -- mode = 'inline',
+    float_opts = {
         border = 'single',
     },
 })

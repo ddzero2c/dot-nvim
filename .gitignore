@@ -2,3 +2,5 @@
 spell/**
 .DS_Store
 .aider.*
+.aider*
+.env
