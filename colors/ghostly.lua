@@ -40,13 +40,6 @@ if vim.o.background == 'dark' then
     colors.diff_add = "#27422A"
 end
 
-local function highlight(group, style)
-    local guifg = style.fg or "NONE"
-    local guibg = style.bg or "NONE"
-    local guisp = style.sp or "NONE"
-    local gui = style.gui or "NONE"
-    vim.cmd(string.format('highlight %s guifg=%s guibg=%s guisp=%s gui=%s', group, guifg, guibg, guisp, gui))
-end
 
 
 -- NvimDarkBlue    NvimLightBlue
@@ -71,75 +64,71 @@ end
 -- vim.api.nvim_set_hl(0, 'Special', { fg = '#a95dbb', bold = true })
 -- vim.api.nvim_set_hl(0, 'NonText', { fg = 'NvimLightGray4' })
 
-highlight("Normal", { fg = colors.fg, bg = colors.bg })
-highlight("String", { fg = colors.fg, bg = colors.str })
-highlight("Cursor", { fg = colors.fg, bg = colors.bg_ui })
-highlight("Comment", { fg = colors.bg_subtle, gui = "italic" })
-highlight("Constant", { fg = colors.fg_subtle, gui = "bold,italic" })
-highlight("Identifier", { fg = colors.fg })
-highlight("Statement", { fg = colors.fg_subtle, gui = "bold" })
-highlight("Type", { fg = colors.type, gui = "bold" })
-highlight("Special", { fg = colors.special, gui = "bold" })
-highlight("TreesitterContext", { gui = "italic" })
-highlight("TreesitterContextBottom", { gui = "italic,underline" })
+vim.api.nvim_set_hl(0, "Normal", { fg = colors.fg, bg = colors.bg })
+vim.api.nvim_set_hl(0, "String", { fg = colors.fg, bg = colors.str })
+vim.api.nvim_set_hl(0, "Cursor", { fg = colors.fg, bg = colors.bg_ui })
+vim.api.nvim_set_hl(0, "Comment", { fg = colors.bg_subtle, italic = true })
+vim.api.nvim_set_hl(0, "Constant", { fg = colors.fg_subtle, bold = true, italic = true })
+vim.api.nvim_set_hl(0, "Identifier", { fg = colors.fg })
+vim.api.nvim_set_hl(0, "Statement", { fg = colors.fg_subtle, bold = true })
+vim.api.nvim_set_hl(0, "Type", { fg = colors.type, bold = true })
+vim.api.nvim_set_hl(0, "Special", { fg = colors.special, bold = true })
+vim.api.nvim_set_hl(0, "TreesitterContext", { italic = true })
+vim.api.nvim_set_hl(0, "TreesitterContextBottom", { italic = true, underline = true })
 
-highlight("LspCodeLens", { fg = colors.bg_subtle, gui = "underline" })
-highlight("LspInlayHint", { fg = colors.bg_subtle, gui = "underline" })
-highlight("Underlined", { fg = colors.fg, gui = "underline" })
-highlight("Ignore", { fg = colors.bg })
-highlight("Error", { fg = colors.bg, bg = colors.red, gui = "undercurl" })
-highlight("Todo", { fg = colors.special, gui = "underline" })
-highlight("SpecialKey", { fg = colors.green })
-highlight("NonText", { fg = colors.bg_very_subtle })
-highlight("Directory", { fg = colors.blue })
-highlight("ErrorMsg", { fg = colors.red, gui = "bold" })
-highlight("WarningMsg", { fg = colors.yellow, gui = "bold" })
-highlight("HintMsg", { fg = colors.fg })
-highlight("InfoMsg", { fg = colors.fg })
-highlight("IncSearch", { bg = colors.yellow, fg = colors.bg })
-highlight("Search", { bg = colors.yellow, fg = colors.bg })
-highlight("MoreMsg", { fg = colors.bg_subtle, gui = "bold" })
-highlight("LineNr", { fg = colors.bg_subtle })
-highlight("CursorLineNr", { fg = colors.special, bg = colors.bg_very_subtle })
-highlight("Question", { fg = colors.red })
-highlight("StatusLine", { fg = colors.bg, bg = colors.bg_ui })
-highlight("StatusLineNC", { fg = colors.bg, bg = colors.bg_subtle })
-highlight("VertSplit", { fg = colors.bg_ui, })
-highlight("Title", { fg = colors.blue })
-highlight("Visual", { fg = colors.bg, bg = colors.bg_ui })
-highlight("VisualNOS", { bg = colors.bg_subtle })
-highlight("WildMenu", { fg = colors.bg, bg = colors.fg })
-highlight("Folded", { fg = colors.bg_subtle })
-highlight("FoldColumn", { fg = colors.bg_subtle })
-highlight("DiffAdd", { fg = colors.fg, bg = colors.diff_add })
-highlight("DiffDelete", { fg = colors.fg, bg = colors.diff_delete })
-highlight("DiffChange", { fg = colors.fg, bg = colors.diff_add })
-highlight("DiffText", { gui = 'reverse' })
-highlight("SignColumn", { fg = colors.green })
+vim.api.nvim_set_hl(0, "LspCodeLens", { fg = colors.bg_subtle, underline = true })
+vim.api.nvim_set_hl(0, "LspInlayHint", { fg = colors.bg_subtle, underline = true })
+vim.api.nvim_set_hl(0, "Underlined", { fg = colors.fg, underline = true })
+vim.api.nvim_set_hl(0, "Ignore", { fg = colors.bg })
+vim.api.nvim_set_hl(0, "Error", { fg = colors.bg, bg = colors.red, undercurl = true })
+vim.api.nvim_set_hl(0, "Todo", { fg = colors.special, underline = true })
+vim.api.nvim_set_hl(0, "SpecialKey", { fg = colors.green })
+vim.api.nvim_set_hl(0, "NonText", { fg = colors.bg_very_subtle })
+vim.api.nvim_set_hl(0, "Directory", { fg = colors.blue })
+vim.api.nvim_set_hl(0, "ErrorMsg", { fg = colors.red, bold = true })
+vim.api.nvim_set_hl(0, "WarningMsg", { fg = colors.yellow, bold = true })
+vim.api.nvim_set_hl(0, "HintMsg", { fg = colors.fg })
+vim.api.nvim_set_hl(0, "InfoMsg", { fg = colors.fg })
+vim.api.nvim_set_hl(0, "IncSearch", { bg = colors.yellow, fg = colors.bg })
+vim.api.nvim_set_hl(0, "Search", { bg = colors.yellow, fg = colors.bg })
+vim.api.nvim_set_hl(0, "MoreMsg", { fg = colors.bg_subtle, bold = true })
+vim.api.nvim_set_hl(0, "LineNr", { fg = colors.bg_subtle })
+vim.api.nvim_set_hl(0, "CursorLineNr", { fg = colors.special, bg = colors.bg_very_subtle })
+vim.api.nvim_set_hl(0, "Question", { fg = colors.red })
+vim.api.nvim_set_hl(0, "StatusLine", { fg = colors.bg, bg = colors.bg_ui })
+vim.api.nvim_set_hl(0, "StatusLineNC", { fg = colors.bg, bg = colors.bg_subtle })
+vim.api.nvim_set_hl(0, "VertSplit", { fg = colors.bg_ui })
+vim.api.nvim_set_hl(0, "Title", { fg = colors.blue })
+vim.api.nvim_set_hl(0, "Visual", { fg = colors.bg, bg = colors.bg_ui })
+vim.api.nvim_set_hl(0, "VisualNOS", { bg = colors.bg_subtle })
+vim.api.nvim_set_hl(0, "WildMenu", { fg = colors.bg, bg = colors.fg })
+vim.api.nvim_set_hl(0, "Folded", { fg = colors.bg_subtle })
+vim.api.nvim_set_hl(0, "FoldColumn", { fg = colors.bg_subtle })
+vim.api.nvim_set_hl(0, "DiffAdd", { fg = colors.fg, bg = colors.diff_add })
+vim.api.nvim_set_hl(0, "DiffDelete", { fg = colors.fg, bg = colors.diff_delete })
+vim.api.nvim_set_hl(0, "DiffChange", { fg = colors.fg, bg = colors.diff_add })
+vim.api.nvim_set_hl(0, "DiffText", { reverse = true })
+vim.api.nvim_set_hl(0, "SignColumn", { fg = colors.green })
 
-highlight("SpellBad", { gui = "undercurl", sp = colors.red })
-highlight("SpellCap", { gui = "undercurl", sp = colors.green })
-highlight("SpellRare", { gui = "undercurl", sp = colors.blue })
-highlight("SpellLocal", { gui = "undercurl", sp = colors.green })
+vim.api.nvim_set_hl(0, "SpellBad", { undercurl = true, sp = colors.red })
+vim.api.nvim_set_hl(0, "SpellCap", { undercurl = true, sp = colors.green })
+vim.api.nvim_set_hl(0, "SpellRare", { undercurl = true, sp = colors.blue })
+vim.api.nvim_set_hl(0, "SpellLocal", { undercurl = true, sp = colors.green })
 
-highlight("Pmenu", { fg = colors.fg, })
-highlight("PmenuSel", { fg = colors.fg, bg = colors.bg_subtle, gui = "bold" })
-highlight("PmenuSbar", { fg = colors.fg, bg = colors.bg_very_subtle })
-highlight("PmenuThumb", { fg = colors.bg, bg = colors.fg })
+vim.api.nvim_set_hl(0, "Pmenu", { fg = colors.fg })
+vim.api.nvim_set_hl(0, "PmenuSel", { fg = colors.fg, bg = colors.bg_subtle, bold = true })
+vim.api.nvim_set_hl(0, "PmenuSbar", { fg = colors.fg, bg = colors.bg_very_subtle })
+vim.api.nvim_set_hl(0, "PmenuThumb", { fg = colors.bg, bg = colors.fg })
 
-highlight("TabLine", { fg = colors.fg, bg = colors.bg_very_subtle })
-highlight("TabLineSel", { fg = colors.bg, bg = colors.bg_ui, gui = "bold" })
-highlight("TabLineFill", { fg = colors.fg, bg = colors.bg })
-highlight("CursorColumn", { bg = colors.bg_very_subtle })
-highlight("CursorLine", { gui = "underline" })
-highlight("ColorColumn", { bg = colors.bg_subtle })
+vim.api.nvim_set_hl(0, "TabLine", { fg = colors.fg, bg = colors.bg_very_subtle })
+vim.api.nvim_set_hl(0, "TabLineSel", { fg = colors.bg, bg = colors.bg_ui, bold = true })
+vim.api.nvim_set_hl(0, "TabLineFill", { fg = colors.fg, bg = colors.bg })
+vim.api.nvim_set_hl(0, "CursorColumn", { bg = colors.bg_very_subtle })
+vim.api.nvim_set_hl(0, "CursorLine", { underline = true })
+vim.api.nvim_set_hl(0, "ColorColumn", { bg = colors.bg_subtle })
 
-highlight("MatchParen", { bg = colors.bg_subtle, fg = colors.fg })
-highlight("qfLineNr", { fg = colors.bg_subtle })
-
-local function link_highlight(from, to)
-    vim.cmd(string.format('hi! link %s %s', from, to))
-end
+vim.api.nvim_set_hl(0, "MatchParen", { bg = colors.bg_subtle, fg = colors.fg })
+vim.api.nvim_set_hl(0, "qfLineNr", { fg = colors.bg_subtle })
 
 local highlight_links = {
     Normal = {
@@ -281,7 +270,7 @@ local highlight_links = {
 
 for to, entries in pairs(highlight_links) do
     for _, from in ipairs(entries) do
-        link_highlight(from, to)
+        vim.api.nvim_set_hl(0, from, { link = to })
     end
 end
 
