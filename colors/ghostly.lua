@@ -35,7 +35,7 @@ if vim.o.background == 'dark' then
     colors.fg_subtle = "#999999"
     colors.special = "#a95dbb"
     colors.str = "#333333"
-    colors.type = "#fffff"
+    colors.type = "#ffffff"
     colors.diff_delete = "#9F2828"
     colors.diff_add = "#27422A"
 end
