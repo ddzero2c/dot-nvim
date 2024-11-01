@@ -1,5 +1,5 @@
 require 'treesitter-context'.setup {
-    max_lines = 1, -- How many lines the window should span. Values <= 0 mean no limit.
+    -- max_lines = 1, -- How many lines the window should span. Values <= 0 mean no limit.
     trim_scope = 'inner',
 }
 require("nvim-treesitter.configs").setup({

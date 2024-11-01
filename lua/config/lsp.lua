@@ -23,7 +23,10 @@ lspconfig_defaults.capabilities = vim.tbl_deep_extend(
 lspconfig_defaults.handlers = vim.tbl_deep_extend(
     'force',
     lspconfig_defaults.handlers,
-    { ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" }) }
+    {
+        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" }),
+        -- ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' }),
+    }
 )
 
 vim.diagnostic.config({
@@ -51,6 +54,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("n", "<leader>q", vim.diagnostic.setqflist, opts)
         vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, opts)
         vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, opts)
+        -- Setup document highlight autocmds
+        local group = vim.api.nvim_create_augroup("LSPDocumentHighlight", { clear = true })
+        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+            group = group,
+            buffer = event.buf,
+            callback = vim.lsp.buf.document_highlight,
+        })
+        vim.api.nvim_create_autocmd("CursorMoved", {
+            group = group,
+            buffer = event.buf,
+            callback = vim.lsp.buf.clear_references,
+        })
     end,
 })
 
