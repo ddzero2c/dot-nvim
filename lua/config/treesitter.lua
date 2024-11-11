@@ -1,5 +1,5 @@
 require 'treesitter-context'.setup {
-    -- max_lines = 1, -- How many lines the window should span. Values <= 0 mean no limit.
+    max_lines = 1, -- How many lines the window should span. Values <= 0 mean no limit.
     trim_scope = 'inner',
 }
 require("nvim-treesitter.configs").setup({
@@ -35,15 +35,19 @@ require("nvim-treesitter.configs").setup({
                 ["ic"] = "@class.inner",
                 ["ia"] = "@parameter.inner",
                 ["aa"] = "@parameter.outer",
+                ["ir"] = "@return.inner",
+                ["ar"] = "@return.outer",
             },
         },
         swap = {
             enable = true,
             swap_next = {
                 ["<leader>a"] = "@parameter.inner",
+                ["<leader>r"] = "@return.inner",
             },
             swap_previous = {
                 ["<leader>A"] = "@parameter.inner",
+                ["<leader>R"] = "@return.outer",
             },
         },
     },

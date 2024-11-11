@@ -22,7 +22,8 @@ require('lazy').setup {
             { "kosayoda/nvim-lightbulb" },
             { 'b0o/schemastore.nvim' },
             { 'olexsmir/gopher.nvim' },
-            { "pmizio/typescript-tools.nvim" },
+            -- { "pmizio/typescript-tools.nvim" },
+            { 'yioneko/nvim-vtsls' },
         },
         config = function() require('config.lsp') end
     },
