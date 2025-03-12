@@ -1,20 +1,43 @@
 -- vim.opt.signcolumn = 'yes'
+-- require("blink.cmp").setup({
+--     accept = { auto_brackets = { enabled = true } },
+--     trigger = { signature_help = { enabled = true } },
+--     windows = {
+--         autocomplete = {
+--             border = "single",
+--             selection = 'auto_insert',
+--             draw = 'minimal',
+--             -- draw = {
+--             --     columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
+--             -- },
+--         },
+--         documentation = { border = "single" },
+--         signature_help = { border = "single" },
+--     },
+--     highlight = {
+--         use_nvim_cmp_as_default = true,
+--     },
+-- })
 require("neodev").setup({})
 require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
 require("gopher").setup({})
-require("vtsls").config({})
--- require("typescript-tools").setup({
---     {
---         settings = {
---             tsserver_file_preferences = {
---                 includeInlayParameterNameHints = "all",
---                 includeCompletionsForModuleExports = true,
---                 quotePreference = "auto"
---             }
---         }
---     }
--- })
+require("flutter-tools").setup({
+    flutter_lookup_cmd = "asdf where flutter"
+})
+-- require("vtsls").config({})
+require("typescript-tools").setup({
+    {
+        settings = {
+            tsserver_file_preferences = {
+                includeInlayParameterNameHints = "all",
+                includeCompletionsForModuleExports = true,
+                quotePreference = "auto"
+            }
+        }
+    }
+})
 local lspconfig_defaults = require('lspconfig').util.default_config
+-- lspconfig_defaults.capabilities = require('blink.cmp').get_lsp_capabilities(lspconfig_defaults.capabilities)
 lspconfig_defaults.capabilities = vim.tbl_deep_extend('force', lspconfig_defaults.capabilities,
     require('cmp_nvim_lsp').default_capabilities())
 lspconfig_defaults.handlers = vim.tbl_deep_extend('force',
@@ -49,28 +72,28 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("n", "<leader>q", vim.diagnostic.setqflist, opts)
         vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, opts)
         vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, opts)
-        -- Setup document highlight autocmds only if server supports it
-        local client = vim.lsp.get_client_by_id(event.data.client_id)
-        if client and client.server_capabilities.documentHighlightProvider then
-            local group = vim.api.nvim_create_augroup("LSPDocumentHighlight",
-                { clear = true })
-            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-                group = group,
-                buffer = event.buf,
-                callback = vim.lsp.buf.document_highlight
-            })
-            vim.api.nvim_create_autocmd("CursorMoved", {
-                group = group,
-                buffer = event.buf,
-                callback = vim.lsp.buf.clear_references
-            })
-        end
+        -- -- Setup document highlight autocmds only if server supports it
+        -- local client = vim.lsp.get_client_by_id(event.data.client_id)
+        -- if client and client.server_capabilities.documentHighlightProvider then
+        --     local group = vim.api.nvim_create_augroup("LSPDocumentHighlight",
+        --         { clear = true })
+        --     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+        --         group = group,
+        --         buffer = event.buf,
+        --         callback = vim.lsp.buf.document_highlight
+        --     })
+        --     vim.api.nvim_create_autocmd("CursorMoved", {
+        --         group = group,
+        --         buffer = event.buf,
+        --         callback = vim.lsp.buf.clear_references
+        --     })
+        -- end
     end
 })
 
 local jsonschemas = require("schemastore").json.schemas()
 local lsp = require('lspconfig')
-lsp.vtsls.setup({})
+-- lsp.vtsls.setup({})
 lsp.zls.setup({})
 lsp.lua_ls.setup({})
 lsp.pylsp.setup({

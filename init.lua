@@ -8,34 +8,36 @@ require('lazy').setup {
     {
         'neovim/nvim-lspconfig',
         dependencies = {
+            { 'nvim-lua/plenary.nvim' },
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'hrsh7th/nvim-cmp' },
-            { 'nvim-lua/plenary.nvim' },
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'hrsh7th/cmp-nvim-lua' },
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-path' },
             { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+            -- { 'saghen/blink.cmp',       version = 'v0.*', lazy = false },
             { 'petertriho/cmp-git' },
             { "folke/neodev.nvim" },
             { "Bilal2453/luvit-meta",               lazy = true },
             { "kosayoda/nvim-lightbulb" },
             { 'b0o/schemastore.nvim' },
             { 'olexsmir/gopher.nvim' },
-            -- { "pmizio/typescript-tools.nvim" },
-            { 'yioneko/nvim-vtsls' },
+            { 'nvim-flutter/flutter-tools.nvim' },
+            { "pmizio/typescript-tools.nvim" },
+            -- { 'yioneko/nvim-vtsls' },
         },
         config = function() require('config.lsp') end
     },
     --
-    {
-        'ddzero2c/aider.nvim',
-        dir = '~/dev/aider.nvim',
-        dependencies = {
-            { 'echasnovski/mini.nvim', version = '*' },
-        },
-        config = function() require('config.aider') end
-    },
+    -- {
+    --     'ddzero2c/aider.nvim',
+    --     dir = '~/dev/aider.nvim',
+    --     dependencies = {
+    --         { 'echasnovski/mini.nvim', version = '*' },
+    --     },
+    --     config = function() require('config.aider') end
+    -- },
     {
         {
             "supermaven-inc/supermaven-nvim",

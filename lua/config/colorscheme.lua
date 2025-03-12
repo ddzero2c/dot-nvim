@@ -4,7 +4,7 @@
 
 -- syntax
 if vim.o.background == 'dark' then
-    vim.api.nvim_set_hl(0, 'String', { fg = 'none', bg = 'NvimDarkGray3' })
+    vim.api.nvim_set_hl(0, 'String', { fg = 'none', bg = '#3a3a3a' })
     vim.api.nvim_set_hl(0, 'Statement', { fg = 'NvimLightGray4', bold = true })
     vim.api.nvim_set_hl(0, 'Special', { fg = '#6a91bc', bold = true })
     vim.api.nvim_set_hl(0, 'Type', { bold = true })
