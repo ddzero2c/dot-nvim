@@ -1,23 +1,3 @@
--- vim.opt.signcolumn = 'yes'
--- require("blink.cmp").setup({
---     accept = { auto_brackets = { enabled = true } },
---     trigger = { signature_help = { enabled = true } },
---     windows = {
---         autocomplete = {
---             border = "single",
---             selection = 'auto_insert',
---             draw = 'minimal',
---             -- draw = {
---             --     columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
---             -- },
---         },
---         documentation = { border = "single" },
---         signature_help = { border = "single" },
---     },
---     highlight = {
---         use_nvim_cmp_as_default = true,
---     },
--- })
 require("neodev").setup({})
 require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
 require("gopher").setup({})
@@ -72,26 +52,25 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("n", "<leader>q", vim.diagnostic.setqflist, opts)
         vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, opts)
         vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, opts)
-        -- -- Setup document highlight autocmds only if server supports it
-        -- local client = vim.lsp.get_client_by_id(event.data.client_id)
-        -- if client and client.server_capabilities.documentHighlightProvider then
-        --     local group = vim.api.nvim_create_augroup("LSPDocumentHighlight",
-        --         { clear = true })
-        --     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-        --         group = group,
-        --         buffer = event.buf,
-        --         callback = vim.lsp.buf.document_highlight
-        --     })
-        --     vim.api.nvim_create_autocmd("CursorMoved", {
-        --         group = group,
-        --         buffer = event.buf,
-        --         callback = vim.lsp.buf.clear_references
-        --     })
-        -- end
+        -- Setup document highlight autocmds only if server supports it
+        local client = vim.lsp.get_client_by_id(event.data.client_id)
+        if client and client.server_capabilities.documentHighlightProvider then
+            local group = vim.api.nvim_create_augroup("LSPDocumentHighlight",
+                { clear = true })
+            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+                group = group,
+                buffer = event.buf,
+                callback = vim.lsp.buf.document_highlight
+            })
+            vim.api.nvim_create_autocmd("CursorMoved", {
+                group = group,
+                buffer = event.buf,
+                callback = vim.lsp.buf.clear_references
+            })
+        end
     end
 })
 
-local jsonschemas = require("schemastore").json.schemas()
 local lsp = require('lspconfig')
 -- lsp.vtsls.setup({})
 lsp.zls.setup({})
@@ -125,6 +104,7 @@ lsp.eslint.setup({
     settings = { codeActionOnSave = { enable = true, mode = "all" } }
 
 })
+local jsonschemas = require("schemastore").json.schemas()
 lsp.jsonls.setup({ settings = { json = { schemas = jsonschemas } } })
 lsp.yamlls.setup({
     settings = {
@@ -137,8 +117,7 @@ lsp.yamlls.setup({
 })
 lsp.solidity_ls_nomicfoundation.setup({})
 lsp.gopls.setup({
-    on_attach = function(cli, bufnr)
-        -- lspfmt.on_attach(cli, bufnr)
+    on_attach = function(_, bufnr)
         vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = bufnr,
             callback = function()
@@ -167,10 +146,9 @@ lsp.gopls.setup({
             experimentalPostfixCompletions = true,
             analyses = {
                 unusedparams = true
-                -- shadow = true,
             },
             staticcheck = true,
-            env = { GOFLAGS = "-tags=wireinject,e2e" },
+            env = { GOFLAGS = "-tags=wireinject" },
             gofumpt = false,
             hints = {
                 rangeVariableTypes = true,
@@ -185,7 +163,6 @@ lsp.gopls.setup({
     }
 })
 
-require("cmp_git").setup()
 local cmp = require('cmp')
 
 cmp.setup({
@@ -194,39 +171,18 @@ cmp.setup({
         documentation = { border = "single", scrollbar = "║" }
     },
     sources = {
-        { name = "nvim_lsp" }, {
-        name = "nvim_lsp_signature_help",
-        view = { entries = { name = 'wildmenu', separator = '|' } }
-    }, { name = "nvim_lua" }, { name = "path" }, {
-        name = "buffer",
-        option = {
-            get_bufnrs = function()
-                return vim.api.nvim_list_bufs()
-            end
-        }
-    }, { name = "emoji" }, { name = "dictionary", keyword_length = 2 },
-        { name = "git" }
+        { name = "nvim_lsp" },
+        { name = "nvim_lsp_signature_help", view = { entries = { name = 'wildmenu', separator = '|' } } },
+        { name = "nvim_lua" }, { name = "path" },
+        { name = "buffer",     option = { get_bufnrs = function() return vim.api.nvim_list_bufs() end } },
+        { name = "emoji" },
+        { name = "dictionary", keyword_length = 2 },
     },
     snippet = { expand = function(args) vim.snippet.expand(args.body) end },
     mapping = cmp.mapping.preset.insert({
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-n>'] = function()
-            if vim.snippet.active({ direction = 1 }) then
-                vim.snippet.jump(1)
-            else
-                cmp.select_next_item()
-            end
-        end,
-        ['<C-p>'] = function()
-            if vim.snippet.active({ direction = -1 }) then
-                vim.snippet.jump(-1)
-            else
-                cmp.select_prev_item()
-            end
-        end
-
-        -- ["<C-j>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace }),
-        -- ["<C-y>"] = cmp.config.disable,
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
     })
 })

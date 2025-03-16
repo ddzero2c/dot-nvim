@@ -29,15 +29,15 @@ require('lazy').setup {
         },
         config = function() require('config.lsp') end
     },
-    --
-    -- {
-    --     'ddzero2c/aider.nvim',
-    --     dir = '~/dev/aider.nvim',
-    --     dependencies = {
-    --         { 'echasnovski/mini.nvim', version = '*' },
-    --     },
-    --     config = function() require('config.aider') end
-    -- },
+
+    {
+        'ddzero2c/aider.nvim',
+        dir = '~/dev/aider.nvim',
+        dependencies = {
+            { 'echasnovski/mini.nvim', version = '*' },
+        },
+        config = function() require('config.aider') end
+    },
     {
         {
             "supermaven-inc/supermaven-nvim",
