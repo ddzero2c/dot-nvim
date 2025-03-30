@@ -1,6 +1,7 @@
--- vim.o.pumblend = 100
+vim.o.pumblend = 5
 -- vim.o.spell = true
 -- vim.o.spelloptions = "camel"
+vim.o.winborder = 'single'
 vim.o.synmaxcol = 200
 vim.o.number = true
 vim.o.relativenumber = true

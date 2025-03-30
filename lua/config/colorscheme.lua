@@ -24,11 +24,12 @@ end
 -- ui
 vim.api.nvim_set_hl(0, 'Normal', {})
 vim.api.nvim_set_hl(0, 'NormalFloat', {})
+vim.api.nvim_set_hl(0, 'Pmenu', { bg = '#444444' })
 vim.api.nvim_set_hl(0, "TabLine", {})
 
 local highlight_links = {
     Normal = { 'Identifier', 'Delimiter', 'Function', '@constructor' },
-    NormalFloat = { 'Pmenu' },
+    -- NormalFloat = { 'Pmenu' },
     Comment = { 'IndentLine' },
     Constant = { 'Character', 'Number', 'Boolean', 'Float', '@constant' },
     Special = { 'Operator' },

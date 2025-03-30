@@ -1,35 +1,7 @@
-require("neodev").setup({})
-require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
-require("gopher").setup({})
-require("flutter-tools").setup({
-    flutter_lookup_cmd = "asdf where flutter"
-})
--- require("vtsls").config({})
-require("typescript-tools").setup({
-    {
-        settings = {
-            tsserver_file_preferences = {
-                includeInlayParameterNameHints = "all",
-                includeCompletionsForModuleExports = true,
-                quotePreference = "auto"
-            }
-        }
-    }
-})
-local lspconfig_defaults = require('lspconfig').util.default_config
--- lspconfig_defaults.capabilities = require('blink.cmp').get_lsp_capabilities(lspconfig_defaults.capabilities)
-lspconfig_defaults.capabilities = vim.tbl_deep_extend('force', lspconfig_defaults.capabilities,
-    require('cmp_nvim_lsp').default_capabilities())
-lspconfig_defaults.handlers = vim.tbl_deep_extend('force',
-    lspconfig_defaults.handlers, {
-        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover,
-            { border = "single" })
-        -- ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' }),
-    })
-
+vim.o.completeopt = "menu,noselect,popup,fuzzy"
 vim.diagnostic.config({
     virtual_text = { source = true },
-    float = { source = true, border = "single", focusable = true },
+    float = { source = true, focusable = true },
     signs = true,
     underline = true,
     update_in_insert = false,
@@ -37,45 +9,60 @@ vim.diagnostic.config({
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
-    desc = 'LSP actions',
-    callback = function(event)
-        local opts = { buffer = event.buf }
-        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+    callback = function(ev)
+        -- grn in Normal mode maps to vim.lsp.buf.rename()
+        -- grr in Normal mode maps to vim.lsp.buf.references()
+        -- gri in Normal mode maps to vim.lsp.buf.implementation()
+        -- gO in Normal mode maps to vim.lsp.buf.document_symbol() (this is analogous to the gO mappings in help buffers and :Man page buffers to show a “table of contents”)
+        -- gra in Normal and Visual mode maps to vim.lsp.buf.code_action()
+        -- CTRL-S in Insert and Select mode maps to vim.lsp.buf.signature_help()
+        -- [d and ]d move between diagnostics in the current buffer ([D jumps to the first diagnostic, ]D jumps to the last)
+
+        -- [q, ]q, [Q, ]Q, [CTRL-Q, ]CTRL-Q navigate through the quickfix list
+        -- [l, ]l, [L, ]L, [CTRL-L, ]CTRL-L navigate through the location list
+        -- [t, ]t, [T, ]T, [CTRL-T, ]CTRL-T navigate through the tag matchlist
+        -- [a, ]a, [A, ]A navigate through the argument list
+        -- [b, ]b, [B, ]B navigate through the buffer list
+        -- [<Space>, ]<Space> add an empty line above and below the cursor
+        local opts = { buffer = ev.buf }
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-        vim.keymap.set("n", "gy", vim.lsp.buf.type_definition, opts)
-        vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
         vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
         vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
         vim.keymap.set("n", "<leader>q", vim.diagnostic.setqflist, opts)
         vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, opts)
         vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, opts)
-        -- Setup document highlight autocmds only if server supports it
-        local client = vim.lsp.get_client_by_id(event.data.client_id)
-        if client and client.server_capabilities.documentHighlightProvider then
+
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+        if client == nil then
+            return
+        end
+        local ms = vim.lsp.protocol.Methods
+        if client:supports_method(ms.textDocument_completion) then
+            -- client.server_capabilities.completionProvider.triggerCharacters = vim.split("qwertyuiopasdfghjklzxcvbnm.", "")
+            vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+        end
+
+        if client:supports_method(ms.textDocument_documentHighlight) then
             local group = vim.api.nvim_create_augroup("LSPDocumentHighlight",
                 { clear = true })
             vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
                 group = group,
-                buffer = event.buf,
+                buffer = ev.buf,
                 callback = vim.lsp.buf.document_highlight
             })
             vim.api.nvim_create_autocmd("CursorMoved", {
                 group = group,
-                buffer = event.buf,
+                buffer = ev.buf,
                 callback = vim.lsp.buf.clear_references
             })
         end
-    end
+    end,
 })
 
-local lsp = require('lspconfig')
--- lsp.vtsls.setup({})
-lsp.zls.setup({})
-lsp.lua_ls.setup({})
-lsp.pylsp.setup({
+local lspcfg = require('lspconfig')
+lspcfg.zls.setup({})
+lspcfg.lua_ls.setup({})
+lspcfg.pylsp.setup({
     settings = {
         pylsp = {
             plugins = {
@@ -89,10 +76,10 @@ lsp.pylsp.setup({
         }
     }
 })
-lsp.graphql.setup({})
-lsp.tailwindcss.setup({})
-lsp.cssls.setup({})
-lsp.eslint.setup({
+lspcfg.graphql.setup({})
+lspcfg.tailwindcss.setup({})
+lspcfg.cssls.setup({})
+lspcfg.eslint.setup({
     on_attach = function(_, bufnr)
         vim.api.nvim_create_autocmd("BufWritePre",
             { buffer = bufnr, command = "EslintFixAll" })
@@ -105,8 +92,8 @@ lsp.eslint.setup({
 
 })
 local jsonschemas = require("schemastore").json.schemas()
-lsp.jsonls.setup({ settings = { json = { schemas = jsonschemas } } })
-lsp.yamlls.setup({
+lspcfg.jsonls.setup({ settings = { json = { schemas = jsonschemas } } })
+lspcfg.yamlls.setup({
     settings = {
         yaml = {
             schemas = jsonschemas,
@@ -115,8 +102,8 @@ lsp.yamlls.setup({
         }
     }
 })
-lsp.solidity_ls_nomicfoundation.setup({})
-lsp.gopls.setup({
+lspcfg.solidity_ls_nomicfoundation.setup({})
+lspcfg.gopls.setup({
     on_attach = function(_, bufnr)
         vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = bufnr,
@@ -140,49 +127,6 @@ lsp.gopls.setup({
             end,
         })
     end,
-    cmd = { "gopls", "--remote=auto" },
-    settings = {
-        gopls = {
-            experimentalPostfixCompletions = true,
-            analyses = {
-                unusedparams = true
-            },
-            staticcheck = true,
-            env = { GOFLAGS = "-tags=wireinject" },
-            gofumpt = false,
-            hints = {
-                rangeVariableTypes = true,
-                parameterNames = true,
-                constantValues = true,
-                -- assignVariableTypes = true,
-                compositeLiteralFields = true,
-                compositeLiteralTypes = true,
-                functionTypeParameters = true
-            }
-        }
-    }
-})
-
-local cmp = require('cmp')
-
-cmp.setup({
-    window = {
-        completion = { border = "single", scrollbar = true },
-        documentation = { border = "single", scrollbar = "║" }
-    },
-    sources = {
-        { name = "nvim_lsp" },
-        { name = "nvim_lsp_signature_help", view = { entries = { name = 'wildmenu', separator = '|' } } },
-        { name = "nvim_lua" }, { name = "path" },
-        { name = "buffer",     option = { get_bufnrs = function() return vim.api.nvim_list_bufs() end } },
-        { name = "emoji" },
-        { name = "dictionary", keyword_length = 2 },
-    },
-    snippet = { expand = function(args) vim.snippet.expand(args.body) end },
-    mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-    })
+    cmd = { "gopls" },
+    settings = { gopls = { env = { GOFLAGS = "-tags=wireinject" } } }
 })
