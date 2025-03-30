@@ -1,4 +1,4 @@
-vim.o.pumblend = 5
+-- vim.o.pumblend = 5
 -- vim.o.spell = true
 -- vim.o.spelloptions = "camel"
 vim.o.winborder = 'single'

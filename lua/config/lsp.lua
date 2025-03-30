@@ -1,4 +1,38 @@
 vim.o.completeopt = "menu,noselect,popup,fuzzy"
+local cmp = require 'cmp'
+cmp.setup({
+    snippet = { expand = function(args) vim.snippet.expand(args.body) end },
+    window = {
+        completion = { border = "single", scrollbar = true },
+        documentation = { border = "single", scrollbar = "." }
+    },
+    entries = { name = 'custom', selection_order = 'near_cursor' },
+    mapping = cmp.mapping.preset.insert({
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<C-y>'] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+    }),
+    sources = cmp.config.sources(
+        { { name = 'nvim_lua' } },
+        { { name = 'nvim_lsp' }, { name = 'nvim_lsp_signature_help' } },
+        { { name = 'buffer' }, { name = 'path' } },
+        { { name = 'emoji' } }
+    ),
+    formatting = {
+        format = function(entry, vim_item)
+            vim_item.menu = ({
+                nvim_lua = "[LUA]",
+                nvim_lsp = "[LSP]",
+                buffer = "[BUF]",
+                emoji = "[EMO]",
+            })[entry.source.name]
+            return vim_item
+        end
+    }
+})
+
+
 vim.diagnostic.config({
     virtual_text = { source = true },
     float = { source = true, focusable = true },
@@ -32,37 +66,66 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, opts)
         vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, opts)
 
-        local client = vim.lsp.get_client_by_id(ev.data.client_id)
-        if client == nil then
-            return
-        end
-        local ms = vim.lsp.protocol.Methods
-        if client:supports_method(ms.textDocument_completion) then
-            -- client.server_capabilities.completionProvider.triggerCharacters = vim.split("qwertyuiopasdfghjklzxcvbnm.", "")
-            vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
-        end
+        -- local client = vim.lsp.get_client_by_id(ev.data.client_id)
+        -- if client == nil then
+        --     return
+        -- end
+        -- local ms = vim.lsp.protocol.Methods
+        -- if client:supports_method(ms.textDocument_completion) then
+        --     client.server_capabilities.completionProvider.triggerCharacters = vim.split("qwertyuiopasdfghjklzxcvbnm.", "")
+        --     vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+        -- end
 
-        if client:supports_method(ms.textDocument_documentHighlight) then
-            local group = vim.api.nvim_create_augroup("LSPDocumentHighlight",
-                { clear = true })
-            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-                group = group,
-                buffer = ev.buf,
-                callback = vim.lsp.buf.document_highlight
-            })
-            vim.api.nvim_create_autocmd("CursorMoved", {
-                group = group,
-                buffer = ev.buf,
-                callback = vim.lsp.buf.clear_references
-            })
-        end
+        -- if client:supports_method(ms.textDocument_documentHighlight) then
+        --     local group = vim.api.nvim_create_augroup("LSPDocumentHighlight",
+        --         { clear = true })
+        --     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+        --         group = group,
+        --         buffer = ev.buf,
+        --         callback = vim.lsp.buf.document_highlight
+        --     })
+        --     vim.api.nvim_create_autocmd("CursorMoved", {
+        --         group = group,
+        --         buffer = ev.buf,
+        --         callback = vim.lsp.buf.clear_references
+        --     })
+        -- end
+
+        --     if client:supports_method(ms.textDocument_signatureHelp) then
+        --         vim.api.nvim_create_autocmd("InsertCharPre", {
+        --             buffer = ev.buf,
+        --             callback = function()
+        --                 local char = vim.v.char
+        --                 if char == "(" or char == "," or char == " " then
+        --                     vim.schedule(function()
+        --                         vim.lsp.buf_request(
+        --                             ev.buf,
+        --                             ms.textDocument_signatureHelp,
+        --                             vim.lsp.util.make_position_params(),
+        --                             function(err, result, ctx, config)
+        --                                 if err or not result or not result.signatures or #result.signatures == 0 then
+        --                                     return
+        --                                 end
+        --
+        --                                 -- 使用 vim.lsp.handlers 處理結果
+        --                                 vim.lsp.handlers['textDocument/signatureHelp'](err, result, ctx, config)
+        --                             end
+        --                         )
+        --                     end)
+        --                 end
+        --             end
+        --         })
+        --     end
     end,
 })
 
-local lspcfg = require('lspconfig')
-lspcfg.zls.setup({})
-lspcfg.lua_ls.setup({})
-lspcfg.pylsp.setup({
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local lspconfig = require('lspconfig')
+lspconfig.util.default_config.capabilities = capabilities
+
+lspconfig.zls.setup({})
+lspconfig.lua_ls.setup({})
+lspconfig.pylsp.setup({
     settings = {
         pylsp = {
             plugins = {
@@ -76,10 +139,10 @@ lspcfg.pylsp.setup({
         }
     }
 })
-lspcfg.graphql.setup({})
-lspcfg.tailwindcss.setup({})
-lspcfg.cssls.setup({})
-lspcfg.eslint.setup({
+lspconfig.graphql.setup({})
+lspconfig.tailwindcss.setup({})
+lspconfig.cssls.setup({})
+lspconfig.eslint.setup({
     on_attach = function(_, bufnr)
         vim.api.nvim_create_autocmd("BufWritePre",
             { buffer = bufnr, command = "EslintFixAll" })
@@ -92,8 +155,8 @@ lspcfg.eslint.setup({
 
 })
 local jsonschemas = require("schemastore").json.schemas()
-lspcfg.jsonls.setup({ settings = { json = { schemas = jsonschemas } } })
-lspcfg.yamlls.setup({
+lspconfig.jsonls.setup({ settings = { json = { schemas = jsonschemas } } })
+lspconfig.yamlls.setup({
     settings = {
         yaml = {
             schemas = jsonschemas,
@@ -102,8 +165,8 @@ lspcfg.yamlls.setup({
         }
     }
 })
-lspcfg.solidity_ls_nomicfoundation.setup({})
-lspcfg.gopls.setup({
+lspconfig.solidity_ls_nomicfoundation.setup({})
+lspconfig.gopls.setup({
     on_attach = function(_, bufnr)
         vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = bufnr,
