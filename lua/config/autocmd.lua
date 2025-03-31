@@ -18,6 +18,7 @@ set_ft_indent({ "javascript", "javascriptreact", "typescript", "typescriptreact"
 set_ft_indent({ "yaml", "json", "sql" }, 2, true)
 set_ft_indent({ "helm", "dockerfile", "terraform", "hcl" }, 2, true)
 set_ft_indent({ "css", "sass", "scss", "html" }, 2, true)
+set_ft_indent({ "dart" }, 2, true)
 
 vim.api.nvim_create_autocmd("BufReadPost", {
     pattern = "*",

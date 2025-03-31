@@ -18,9 +18,15 @@ return {
         },
         config = function() require('config.lsp') end
     },
-    { "kosayoda/nvim-lightbulb",         opts = { autocmd = { enabled = true } } },
-    { 'olexsmir/gopher.nvim',            opts = {} },
-    { 'nvim-flutter/flutter-tools.nvim', opts = { flutter_lookup_cmd = "asdf where flutter" } },
+    { "kosayoda/nvim-lightbulb", opts = { autocmd = { enabled = true } } },
+    { 'olexsmir/gopher.nvim',    opts = {} },
+    {
+        'nvim-flutter/flutter-tools.nvim',
+        opts = {
+            flutter_lookup_cmd = "asdf where flutter",
+            lsp = { settings = { lineLength = 100 } }
+        }
+    },
     {
         "pmizio/typescript-tools.nvim",
         opts = {
