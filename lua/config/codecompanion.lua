@@ -1,13 +1,27 @@
 require('codecompanion').setup({
     strategies = {
         chat = {
-            adapter = "copilot",
-            keymaps = { close = { modes = { n = "<C-x>", i = "<C-x>", } } }
+            adapter = "anthropic",
+            keymaps = {
+                send = { modes = { n = "<C-s>", i = "<C-s>" } },
+                close = { modes = { n = "<C-c>", i = "<C-c>" } },
+            },
         },
-        inline = { adapter = "copilot", },
-        agent = { adapter = "copilot", },
+        cmd = { adapter = "anthropic" },
+        inline = {
+            adapter = "anthropic",
+            keymaps = {
+                accept_change = {
+                    modes = { n = "ga" },
+                    description = "Accept the suggested change",
+                },
+                reject_change = {
+                    modes = { n = "gr" },
+                    description = "Reject the suggested change",
+                },
+            },
+        },
     },
 })
-vim.api.nvim_set_keymap("v", "ga", "<cmd>'<,'>CodeCompanion<cr>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>ai", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
 vim.cmd.ca('cc', 'CodeCompanion')
+vim.cmd.ca('ccc', 'CodeCompanionChat')

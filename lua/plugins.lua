@@ -19,6 +19,7 @@ return {
         config = function() require('config.lsp') end
     },
     { "kosayoda/nvim-lightbulb", opts = { autocmd = { enabled = true } } },
+    { "j-hui/fidget.nvim",       opts = {} },
     { 'olexsmir/gopher.nvim',    opts = {} },
     {
         'nvim-flutter/flutter-tools.nvim',
@@ -41,14 +42,23 @@ return {
             }
         }
     },
-    {
-        'ddzero2c/aider.nvim',
-        dir = '~/dev/aider.nvim',
-        dependencies = {
-            { 'echasnovski/mini.nvim', version = '*' },
-        },
-        config = function() require('config.aider') end
-    },
+    -- {
+    --     "olimorris/codecompanion.nvim",
+    --     config = function()
+    --         require("config.codecompanion")
+    --         require("config.fidget"):init()
+    --     end,
+    --     dependencies = {
+    --         "nvim-lua/plenary.nvim",
+    --         "nvim-treesitter/nvim-treesitter",
+    --         { "j-hui/fidget.nvim", opts = {} },
+    --     },
+    -- },
+    -- {
+    --     'ddzero2c/aider.nvim',
+    --     dir = '~/dev/aider.nvim',
+    --     config = function() require('config.aider') end
+    -- },
     {
         {
             "supermaven-inc/supermaven-nvim",

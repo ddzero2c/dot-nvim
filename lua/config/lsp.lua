@@ -32,7 +32,6 @@ cmp.setup({
     }
 })
 
-
 vim.diagnostic.config({
     virtual_text = { source = true },
     float = { source = true, focusable = true },

@@ -1,6 +1,6 @@
 -- vim.cmd.colorscheme('ghostly')
 -- vim.o.background = "light"
--- vim.o.background = "dark"
+vim.o.background = "dark"
 
 -- syntax
 if vim.o.background == 'dark' then
@@ -11,12 +11,12 @@ if vim.o.background == 'dark' then
     vim.api.nvim_set_hl(0, 'Constant', { bold = true, italic = true })
     vim.api.nvim_set_hl(0, 'Comment', { fg = 'NvimLightGray4', italic = true })
 else
-    vim.api.nvim_set_hl(0, 'String', { fg = 'none', bg = 'NvimLightGray4' })
+    vim.api.nvim_set_hl(0, 'String', { fg = 'none', bg = '#e3e3e3' })
     vim.api.nvim_set_hl(0, 'Statement', { fg = 'NvimDarkGray4', bold = true })
     vim.api.nvim_set_hl(0, 'Special', { fg = '#6a91bc', bold = true })
     vim.api.nvim_set_hl(0, 'Type', { bold = true })
     vim.api.nvim_set_hl(0, 'Constant', { bold = true, italic = true })
-    vim.api.nvim_set_hl(0, 'Comment', { fg = 'NvimDarkGray3', italic = true })
+    vim.api.nvim_set_hl(0, 'Comment', { fg = 'NvimDarkGray4', italic = true })
     vim.api.nvim_set_hl(0, 'Visual', { bg = 'NvimLightGray3' })
     vim.api.nvim_set_hl(0, 'Cursor', { bg = 'NvimDarkGray3' })
 end
