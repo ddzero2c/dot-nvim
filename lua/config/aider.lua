@@ -1,9 +1,9 @@
 -- local mini_df = require('mini.diff')
 -- mini_df.setup()
-vim.api.nvim_set_hl(0, 'MiniDiffOverAdd', { fg = 'none', bg = 'none' })
-vim.api.nvim_set_hl(0, 'MiniDiffOverChange', { reverse = true })
-vim.api.nvim_set_hl(0, 'MiniDiffOverDelete', { fg = 'Gray', strikethrough = true })
-vim.api.nvim_set_hl(0, 'MiniDiffOverContext', { fg = 'Gray', strikethrough = true })
+-- vim.api.nvim_set_hl(0, 'MiniDiffOverAdd', { fg = 'none', bg = 'none' })
+-- vim.api.nvim_set_hl(0, 'MiniDiffOverChange', { reverse = true })
+-- vim.api.nvim_set_hl(0, 'MiniDiffOverDelete', { fg = 'Gray', strikethrough = true })
+-- vim.api.nvim_set_hl(0, 'MiniDiffOverContext', { fg = 'Gray', strikethrough = true })
 
 require('aider').setup({
     -- mode = 'inline',

@@ -28,14 +28,14 @@ vim.api.nvim_set_hl(0, 'NormalFloat', {})
 vim.api.nvim_set_hl(0, "TabLine", {})
 
 local highlight_links = {
-    Normal = { 'Identifier', 'Delimiter', 'Function', '@constructor' },
+    Normal = { 'Identifier', 'Delimiter', 'Function', '@constructor', 'RenderMarkdownCode' },
     NormalFloat = { 'Pmenu' },
     Comment = { 'IndentLine' },
     Constant = { 'Character', 'Number', 'Boolean', 'Float', '@constant' },
     Special = { 'Operator' },
     Visual = { 'TabLineSel', 'StatusLine', 'PmenuSel', 'TelescopeMatching', 'QuickFixLine' },
     Statement = { 'PreProc' },
-    LineNr = { 'SignColumn', 'ColorColumn' },
+    LineNr = { 'SignColumn', 'ColorColumn', 'RenderMarkdownCodeBorder' },
 }
 
 for to, entries in pairs(highlight_links) do

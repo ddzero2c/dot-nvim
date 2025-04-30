@@ -1,36 +1,71 @@
-vim.o.completeopt = "menu,noselect,popup,fuzzy"
-local cmp = require 'cmp'
-cmp.setup({
-    snippet = { expand = function(args) vim.snippet.expand(args.body) end },
-    window = {
-        completion = { border = "single", scrollbar = true },
-        documentation = { border = "single", scrollbar = "." }
+-- vim.o.completeopt = "menu,noselect,popup,fuzzy"
+require("blink.cmp").setup({
+    keymap = { preset = 'default' },
+    signature = {
+        enabled = true,
+        trigger = {
+            enabled = true,
+        },
     },
-    entries = { name = 'custom', selection_order = 'near_cursor' },
-    mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<C-y>'] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
-    }),
-    sources = cmp.config.sources(
-        { { name = 'nvim_lua' } },
-        { { name = 'nvim_lsp' }, { name = 'nvim_lsp_signature_help' } },
-        { { name = 'buffer' }, { name = 'path' } },
-        { { name = 'emoji' } }
-    ),
-    formatting = {
-        format = function(entry, vim_item)
-            vim_item.menu = ({
-                nvim_lua = "[LUA]",
-                nvim_lsp = "[LSP]",
-                buffer = "[BUF]",
-                emoji = "[EMO]",
-            })[entry.source.name]
-            return vim_item
-        end
-    }
+    appearance = {
+        nerd_font_variant = 'mono'
+    },
+    completion = {
+        list = {
+            selection = {
+                preselect = true,
+                auto_insert = true,
+            }
+        },
+        documentation = { auto_show = true },
+        ghost_text = { enabled = false },
+        keyword = { range = 'prefix' },
+        menu = {
+            draw = {
+                columns = {
+                    { "label",     "label_description", gap = 1 },
+                    { "kind_icon", "source_name",       gap = 1 },
+                },
+            }
+        },
+    },
+    sources = {
+        default = { 'lsp', 'path', 'buffer' },
+    },
+    fuzzy = { implementation = "lua" }
 })
+-- local cmp = require 'cmp'
+-- cmp.setup({
+--     snippet = { expand = function(args) vim.snippet.expand(args.body) end },
+--     window = {
+--         completion = { border = "single", scrollbar = true },
+--         documentation = { border = "single", scrollbar = "." }
+--     },
+--     entries = { name = 'custom', selection_order = 'near_cursor' },
+--     mapping = cmp.mapping.preset.insert({
+--         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+--         ['<C-f>'] = cmp.mapping.scroll_docs(4),
+--         ['<C-e>'] = cmp.mapping.abort(),
+--         ['<C-y>'] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+--     }),
+--     sources = cmp.config.sources(
+--         { { name = 'nvim_lua' } },
+--         { { name = 'nvim_lsp' }, { name = 'nvim_lsp_signature_help' } },
+--         { { name = 'buffer' }, { name = 'path' } },
+--         { { name = 'emoji' } }
+--     ),
+--     formatting = {
+--         format = function(entry, vim_item)
+--             vim_item.menu = ({
+--                 nvim_lua = "[LUA]",
+--                 nvim_lsp = "[LSP]",
+--                 buffer = "[BUF]",
+--                 emoji = "[EMO]",
+--             })[entry.source.name]
+--             return vim_item
+--         end
+--     }
+-- })
 
 vim.diagnostic.config({
     virtual_text = { source = true },
@@ -118,9 +153,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
-lspconfig.util.default_config.capabilities = capabilities
+lspconfig.util.default_config.capabilities = require('blink.cmp').get_lsp_capabilities({
+    textDocument = {
+        foldingRange = {
+            dynamicRegistration = false,
+            lineFoldingOnly = true
+        }
+    }
+})
 
 lspconfig.zls.setup({})
 lspconfig.lua_ls.setup({})

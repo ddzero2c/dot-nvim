@@ -1,15 +1,15 @@
 require('codecompanion').setup({
     strategies = {
         chat = {
-            adapter = "anthropic",
+            adapter = "copilot",
             keymaps = {
                 send = { modes = { n = "<C-s>", i = "<C-s>" } },
-                close = { modes = { n = "<C-c>", i = "<C-c>" } },
+                close = { modes = { n = "<C-x>", i = "<C-x>" } },
             },
         },
-        cmd = { adapter = "anthropic" },
+        cmd = { adapter = "copilot" },
         inline = {
-            adapter = "anthropic",
+            adapter = "copilot",
             keymaps = {
                 accept_change = {
                     modes = { n = "ga" },
