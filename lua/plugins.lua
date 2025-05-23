@@ -13,25 +13,29 @@ return {
                 dependencies = { 'rafamadriz/friendly-snippets' },
                 opts_extend = { "sources.default" }
             },
-            -- { 'hrsh7th/nvim-cmp' },
-            -- { 'hrsh7th/cmp-nvim-lsp' },
-            -- { 'hrsh7th/cmp-nvim-lua' },
-            -- { 'hrsh7th/cmp-buffer' },
-            -- { 'hrsh7th/cmp-path' },
-            -- { 'hrsh7th/cmp-nvim-lsp-signature-help' },
-            -- { 'hrsh7th/cmp-emoji' },
             { 'b0o/schemastore.nvim' },
         },
         config = function() require('config.lsp') end
     },
-    { "kosayoda/nvim-lightbulb", opts = { autocmd = { enabled = true } } },
-    { "j-hui/fidget.nvim",       opts = {} },
-    { 'olexsmir/gopher.nvim',    opts = {} },
+    {
+        "ray-x/go.nvim",
+        config = function()
+            require("go").setup()
+        end,
+        event = { "CmdlineEnter" },
+        ft = { "go", 'gomod' },
+        build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+    },
+    { 'kosayoda/nvim-lightbulb', opts = { autocmd = { enabled = true } } },
+    { 'j-hui/fidget.nvim',       opts = { notification = { override_vim_notify = true } } },
     {
         'nvim-flutter/flutter-tools.nvim',
         opts = {
             flutter_lookup_cmd = "asdf where flutter",
-            lsp = { settings = { lineLength = 100 } }
+            lsp = {
+                settings = { lineLength = 100 },
+                capabilities = { textDocument = { formatting = { dynamicRegistration = false } } },
+            }
         }
     },
     {
@@ -48,50 +52,22 @@ return {
             }
         }
     },
-    -- {
-    --     'ddzero2c/aider.nvim',
-    --     dir = '~/dev/aider.nvim',
-    --     config = function() require('config.aider') end
-    -- },
-    -- {
-    --     "yetone/avante.nvim",
-    --     event = "VeryLazy",
-    --     version = false, -- Never set this value to "*"! Never!
-    --     opts = {
-    --         provider = "copilot",
-    --         system_prompt =
-    --         "DO NOT WRITE ANY COMMENT OR DOC IN CODE BLOCK! PLEASE REPLY AS SHORT AS POSSIBLE IN ZH-TW LANGUAGE!",
-    --         -- copilot = { model = "claude-3.5-sonnet" },
-    --         behaviour = {
-    --             -- enable_claude_text_editor_tool_mode = true,
-    --             -- enable_cursor_planning_mode = true,
-    --         },
-    --         windows = {
-    --             width = 50,
-    --             -- sidebar_header = { align = "left", },
-    --             edit = { border = 'single', },
-    --             ask = { floating = true, border = 'single' },
-    --         }
-    --     },
-    --     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    --     build = "make",
-    --     -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-    --     dependencies = {
-    --         "nvim-treesitter/nvim-treesitter",
-    --         "stevearc/dressing.nvim",
-    --         "nvim-lua/plenary.nvim",
-    --         "MunifTanjim/nui.nvim",
-    --         "zbirenbaum/copilot.lua", -- for providers='copilot'
-    --         {
-    --             -- Make sure to set this up properly if you have lazy=true
-    --             'MeanderingProgrammer/render-markdown.nvim',
-    --             opts = {
-    --                 file_types = { "markdown", "Avante" },
-    --             },
-    --             ft = { "markdown", "Avante" },
-    --         },
-    --     }
-    -- },
+    {
+        'nvimtools/none-ls.nvim',
+        dependencies = {
+            "nvimtools/none-ls-extras.nvim",
+        },
+        config = function()
+            local null_ls = require('null-ls')
+            null_ls.setup({
+                sources = {
+                    null_ls.builtins.diagnostics.trail_space,
+                    null_ls.builtins.formatting.pg_format,
+                    require("none-ls.diagnostics.eslint"),
+                },
+            })
+        end
+    },
     {
         "supermaven-inc/supermaven-nvim",
         opts = {
@@ -115,34 +91,11 @@ return {
     --         -- vim.keymap.set('i', '<S-Tab>', '<Plug>(copilot-previous)')
     --     end
     -- },
-    -- {
-    --     "copilotlsp-nvim/copilot-lsp",
-    --     config = function()
-    --         vim.g.copilot_nes_debounce = 500
-    --         vim.lsp.enable("copilot_ls")
-    --         vim.keymap.set("n", "<tab>", function()
-    --             -- Try to jump to the start of the suggestion edit.
-    --             -- If already at the start, then apply the pending suggestion and jump to the end of the edit.
-    --             local _ = require("copilot-lsp.nes").walk_cursor_start_edit()
-    --                 or (
-    --                     require("copilot-lsp.nes").apply_pending_nes() and require("copilot-lsp.nes").walk_cursor_end_edit()
-    --                 )
-    --         end)
-    --     end,
-    -- },
     {
         'mfussenegger/nvim-dap',
         keys = {
-            {
-                "<F5>",
-                function() require('dap').continue() end,
-                desc = "Debug",
-            },
-            {
-                "<leader>b",
-                function() require('dap').toggle_breakpoint() end,
-                desc = "Breakpoint",
-            },
+            { desc = "Debug",      "<F5>",      function() require('dap').continue() end },
+            { desc = "Breakpoint", "<leader>b", function() require('dap').toggle_breakpoint() end },
         },
         dependencies = {
             'rcarriga/nvim-dap-ui',
@@ -151,22 +104,15 @@ return {
         config = function() require("config.dap") end
     },
     {
-        'stevearc/conform.nvim',
-        event = { "BufWritePre" },
-        cmd = { "ConformInfo" },
-        config = function() require('config.conform') end
-    },
-    {
         "kylechui/nvim-surround",
         version = "*",
         event = "VeryLazy",
         opts = {},
     },
     { 'ntpeters/vim-better-whitespace' },
-    { 'iamcco/markdown-preview.nvim',  cmd = 'MarkdownPreview' },
-    { 'folke/todo-comments.nvim',      opts = {},              event = "VeryLazy" },
-    { "folke/ts-comments.nvim",        opts = {},              event = "VeryLazy" },
-    { 'nvimdev/indentmini.nvim',       opts = {},              event = { "BufReadPre", "BufNewFile" } },
+    { 'folke/todo-comments.nvim',      opts = {},             event = "VeryLazy" },
+    { "folke/ts-comments.nvim",        opts = {},             event = "VeryLazy" },
+    { 'nvimdev/indentmini.nvim',       opts = {},             event = { "BufReadPre", "BufNewFile" } },
     { 'tpope/vim-fugitive',            event = "CmdLineEnter" },
     {
         'lewis6991/gitsigns.nvim',

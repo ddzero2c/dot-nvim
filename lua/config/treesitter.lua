@@ -1,12 +1,18 @@
 require 'treesitter-context'.setup {
-    max_lines = 1, -- How many lines the window should span. Values <= 0 mean no limit.
+    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
     trim_scope = 'inner',
+    mode = 'topline',
+    separator = '─'
 }
 require("nvim-treesitter.configs").setup({
     ensure_installed = {
         "c", "lua", "vim", "vimdoc", "query",
         "yaml", "json", "javascript", "typescript", "html", "css", "scss", "jsonc", "json5", "tsx",
-        "go", "dart", "python", "rust", "java", "php", "ruby", "bash", "lua", "dockerfile", "graphql",
+        "dart", "python", "rust", "java", "php", "ruby", "bash", "lua", "dockerfile", "graphql",
+        "go", "gomod", "gosum", "gotmpl", "sql",
+    },
+    injections = {
+        enable = true,
     },
     -- autotag = {
     --     enable = true,
