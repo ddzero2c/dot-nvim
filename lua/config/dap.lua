@@ -12,7 +12,8 @@ dapui.setup({
                 -- Elements can be strings or table with id and size keys.
                 -- { id = "scopes", size = 0.25 },
                 "scopes",
-                "repl"
+                "repl",
+                "watches"
             },
             size = 12,
             position = "bottom",
