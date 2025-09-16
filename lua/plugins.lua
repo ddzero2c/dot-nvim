@@ -26,8 +26,8 @@ return {
         ft = { "go", 'gomod' },
         build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
     },
-    { 'kosayoda/nvim-lightbulb', opts = { autocmd = { enabled = true } } },
-    { 'j-hui/fidget.nvim',       opts = { notification = { override_vim_notify = true } } },
+    { 'kosayoda/nvim-lightbulb',       opts = { autocmd = { enabled = true } } },
+    -- { 'j-hui/fidget.nvim',       opts = { notification = { override_vim_notify = true } } },
     {
         'nvim-flutter/flutter-tools.nvim',
         opts = {
@@ -92,6 +92,28 @@ return {
     --     end
     -- },
     {
+        "coder/claudecode.nvim",
+        opts = {
+            diff_opts = { vertical_split = false, },
+            terminal = {
+                provider = "external",
+                provider_opts = {
+                    external_terminal_cmd = "echo 'Claude running externally' # %s" -- Dummy command
+                }
+            }
+        },
+        config = true,
+        keys = {
+            { "<leader>a", "<cmd>ClaudeCodeStatus<cr>",     desc = "Claude Code" },
+            -- { "<leader>a",  "<cmd>ClaudeCodeStatus<cr>", desc = "AI/Claude Code" },
+            { "ga",        "<cmd>ClaudeCodeSend<cr>",       mode = "v",          desc = "Send to Claude" },
+            { "ga",        "<cmd>ClaudeCodeAdd %<cr>",      mode = "n",          desc = "Add current buffer" },
+            -- Diff management
+            { "gy",        "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+            { "gn",        "<cmd>ClaudeCodeDiffDeny<cr>",   desc = "Deny diff" },
+        },
+    },
+    {
         'mfussenegger/nvim-dap',
         keys = {
             { desc = "Debug",      "<F5>",      function() require('dap').continue() end },
@@ -110,9 +132,9 @@ return {
         opts = {},
     },
     { 'ntpeters/vim-better-whitespace' },
-    { 'folke/todo-comments.nvim',      opts = {},             event = "VeryLazy" },
-    { "folke/ts-comments.nvim",        opts = {},             event = "VeryLazy" },
-    { 'nvimdev/indentmini.nvim',       opts = {},             event = { "BufReadPre", "BufNewFile" } },
+    { 'folke/todo-comments.nvim',      opts = {},                              event = "VeryLazy" },
+    { "folke/ts-comments.nvim",        opts = {},                              event = "VeryLazy" },
+    { 'nvimdev/indentmini.nvim',       opts = {},                              event = { "BufReadPre", "BufNewFile" } },
     { 'tpope/vim-fugitive',            event = "CmdLineEnter" },
     {
         'lewis6991/gitsigns.nvim',

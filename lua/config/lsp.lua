@@ -142,5 +142,10 @@ setup_lsp('gopls', {
         })
     end,
     cmd = { "gopls" },
-    settings = { gopls = { env = { GOFLAGS = "-tags=wireinject" } } }
+    settings = {
+        gopls = {
+            env = { GOFLAGS = "-tags=wireinject" },
+            -- templateExtensions = { "tmpl", "gotmpl", "gohtml" },
+        }
+    }
 })

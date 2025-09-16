@@ -9,7 +9,8 @@ vim.o.ignorecase = true
 vim.o.wrap = false
 vim.o.mouse = "n"
 vim.o.undofile = true
--- vim.o.winbar = "%f" vim.o.showtabline = 2
+-- vim.o.winbar = "%f"
+-- vim.o.showtabline = 2
 vim.o.autoread = true
 vim.o.laststatus = 3
 vim.o.tabstop = 4

@@ -19,6 +19,7 @@ set_ft_indent({ "yaml", "json", "sql" }, 2, true)
 set_ft_indent({ "helm", "dockerfile", "terraform", "hcl" }, 2, true)
 set_ft_indent({ "css", "sass", "scss", "html" }, 2, true)
 set_ft_indent({ "dart" }, 2, true)
+set_ft_indent({ "gotmpl", "gohtmltmpl" }, 2, false)
 
 vim.api.nvim_create_autocmd("BufReadPost", {
     pattern = "*",
@@ -42,4 +43,18 @@ vim.api.nvim_create_user_command('RG', function(opts)
 end, {
     nargs = '+',
     desc = 'Search using ripgrep and populate quickfix list'
+})
+
+vim.api.nvim_create_user_command('FZF', function()
+    local handle = io.popen('fzf -m')
+    local result = handle:read("*a")
+    handle:close()
+    
+    for file in result:gmatch("[^\n]+") do
+        if file ~= "" then
+            vim.cmd('tabedit ' .. vim.fn.fnameescape(file))
+        end
+    end
+end, {
+    desc = 'Open files with fzf in new tabs'
 })
