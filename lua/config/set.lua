@@ -30,4 +30,5 @@ vim.o.cmdheight = 1
 vim.o.updatetime = 50
 vim.o.shortmess = vim.o.shortmess .. "c"
 vim.o.fillchars = "eob: ,foldopen:▼,foldclose:⏵"
+vim.o.colorcolumn = "120"
 vim.g.omni_sql_no_default_maps = 1

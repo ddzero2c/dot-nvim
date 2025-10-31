@@ -51,6 +51,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- [a, ]a, [A, ]A navigate through the argument list
         -- [b, ]b, [B, ]B navigate through the buffer list
         -- [<Space>, ]<Space> add an empty line above and below the cursor
+        vim.defer_fn(function()
+            if vim.lsp.inlay_hint then
+                vim.lsp.inlay_hint.enable(false, { bufnr = args.buf })
+            end
+        end, 100)
         local opts = { buffer = args.buf }
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
         vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
@@ -60,17 +65,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, opts)
 
         local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-        local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-        if client.supports_method("textDocument/formatting") then
-            vim.api.nvim_clear_autocmds({ group = augroup, buffer = args.buf })
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                group = augroup,
-                buffer = args.buf,
-                callback = function()
-                    vim.lsp.buf.format({ bufnr = args.buf })
-                end,
-            })
-        end
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        -- if client.supports_method("textDocument/formatting") then
+        vim.api.nvim_clear_autocmds({ group = augroup, buffer = args.buf })
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            group = augroup,
+            buffer = args.buf,
+            callback = function()
+                vim.lsp.buf.format({ bufnr = args.buf })
+            end,
+        })
+        -- end
     end,
 })
 
@@ -79,7 +84,7 @@ local capabilities = require('blink.cmp').get_lsp_capabilities({
         foldingRange = {
             dynamicRegistration = false,
             lineFoldingOnly = true
-        }
+        },
     }
 })
 
@@ -88,6 +93,7 @@ local setup_lsp = function(server, opts)
     vim.lsp.enable(server)
 end
 
+setup_lsp('copilot', {})
 setup_lsp('zls', {})
 setup_lsp('lua_ls', {})
 setup_lsp('pylsp', {
@@ -132,15 +138,39 @@ setup_lsp('yamlls', {
 setup_lsp('solidity_ls_nomicfoundation', {})
 setup_lsp('gopls', {
     on_attach = function(client, bufnr)
-        local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+        local augroup = vim.api.nvim_create_augroup("LspGoImport", {})
         vim.api.nvim_create_autocmd("BufWritePre", {
-            pattern = "*.go",
+            group = augroup,
+            buffer = bufnr,
             callback = function()
-                require('go.format').goimports()
+                -- Organize imports
+                local params = vim.lsp.util.make_range_params(nil, client.offset_encoding)
+                params.context = { only = { "source.organizeImports" } }
+                local result = vim.lsp.buf_request_sync(bufnr, "textDocument/codeAction", params, 3000)
+                for _, res in pairs(result or {}) do
+                    for _, r in pairs(res.result or {}) do
+                        if r.edit then
+                            vim.lsp.util.apply_workspace_edit(r.edit, client.offset_encoding)
+                        else
+                            vim.lsp.buf.execute_command(r.command)
+                        end
+                    end
+                end
+                vim.lsp.buf.format({ async = false })
             end,
-            group = format_sync_grp,
         })
     end,
+
+    -- on_attach = function(client, bufnr)
+    --     local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+    --     vim.api.nvim_create_autocmd("BufWritePre", {
+    --         pattern = "*.go",
+    --         callback = function()
+    --             require('go.format').goimports()
+    --         end,
+    --         group = format_sync_grp,
+    --     })
+    -- end,
     cmd = { "gopls" },
     settings = {
         gopls = {

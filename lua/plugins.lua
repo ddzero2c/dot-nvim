@@ -17,23 +17,14 @@ return {
         },
         config = function() require('config.lsp') end
     },
-    {
-        "ray-x/go.nvim",
-        config = function()
-            require("go").setup()
-        end,
-        event = { "CmdlineEnter" },
-        ft = { "go", 'gomod' },
-        build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
-    },
-    { 'kosayoda/nvim-lightbulb',       opts = { autocmd = { enabled = true } } },
-    -- { 'j-hui/fidget.nvim',       opts = { notification = { override_vim_notify = true } } },
+    { 'olexsmir/gopher.nvim',    opts = {} },
+    { 'kosayoda/nvim-lightbulb', opts = { autocmd = { enabled = true } } },
     {
         'nvim-flutter/flutter-tools.nvim',
         opts = {
             flutter_lookup_cmd = "asdf where flutter",
             lsp = {
-                settings = { lineLength = 100 },
+                settings = { lineLength = 120 },
                 capabilities = { textDocument = { formatting = { dynamicRegistration = false } } },
             }
         }
@@ -63,11 +54,31 @@ return {
                 sources = {
                     null_ls.builtins.diagnostics.trail_space,
                     null_ls.builtins.formatting.pg_format,
-                    require("none-ls.diagnostics.eslint"),
+                    -- require("none-ls.diagnostics.eslint"),
                 },
+                debug = true,
             })
         end
     },
+    -- {
+    --     "folke/sidekick.nvim",
+    --     opts = {},
+    --     keys = {
+    --         {
+    --             "<C-j>",
+    --             function()
+    --                 -- if there is a next edit, jump to it, otherwise apply it if any
+    --                 if require("sidekick").nes_jump_or_apply() then
+    --                     return -- jumped or applied
+    --                 end
+    --                 return "<c-j>"
+    --             end,
+    --             mode = { "i", "n" },
+    --             expr = true,
+    --             desc = "Goto/Apply Next Edit Suggestion",
+    --         },
+    --     },
+    -- },
     {
         "supermaven-inc/supermaven-nvim",
         opts = {
@@ -132,9 +143,9 @@ return {
         opts = {},
     },
     { 'ntpeters/vim-better-whitespace' },
-    { 'folke/todo-comments.nvim',      opts = {},                              event = "VeryLazy" },
-    { "folke/ts-comments.nvim",        opts = {},                              event = "VeryLazy" },
-    { 'nvimdev/indentmini.nvim',       opts = {},                              event = { "BufReadPre", "BufNewFile" } },
+    { 'folke/todo-comments.nvim',      opts = {},             event = "VeryLazy" },
+    { "folke/ts-comments.nvim",        opts = {},             event = "VeryLazy" },
+    { 'nvimdev/indentmini.nvim',       opts = {},             event = { "BufReadPre", "BufNewFile" } },
     { 'tpope/vim-fugitive',            event = "CmdLineEnter" },
     {
         'lewis6991/gitsigns.nvim',

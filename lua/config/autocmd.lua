@@ -45,16 +45,10 @@ end, {
     desc = 'Search using ripgrep and populate quickfix list'
 })
 
-vim.api.nvim_create_user_command('FZF', function()
-    local handle = io.popen('fzf -m')
-    local result = handle:read("*a")
-    handle:close()
-    
-    for file in result:gmatch("[^\n]+") do
-        if file ~= "" then
-            vim.cmd('tabedit ' .. vim.fn.fnameescape(file))
+vim.api.nvim_create_autocmd("BufWritePost", {
+    callback = function(args)
+        if vim.lsp.inlay_hint and vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf }) then
+            vim.lsp.inlay_hint.enable(false, { bufnr = args.buf })
         end
-    end
-end, {
-    desc = 'Open files with fzf in new tabs'
+    end,
 })

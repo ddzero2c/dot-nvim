@@ -49,7 +49,7 @@ function setup_colors(bg)
         Special = { 'Operator' },
         Visual = { 'TabLineSel', 'StatusLine', 'PmenuSel', 'TelescopeMatching', 'QuickFixLine' },
         Statement = { 'PreProc' },
-        LineNr = { 'SignColumn', 'ColorColumn', 'RenderMarkdownCodeBorder', 'TreesitterContextSeparator' },
+        LineNr = { 'SignColumn', 'RenderMarkdownCodeBorder', 'TreesitterContextSeparator' },
     }
 
     for to, entries in pairs(highlight_links) do
